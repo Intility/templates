@@ -1,6 +1,8 @@
 # cra-templates
 This repository contains Intility Templates for Create React App. In the future teplates for next.js or other frameworks might be included.
 
+Visit the [Create-React-App Custom Templates docs](https://create-react-app.dev/docs/custom-templates/) for more information.
+
 ## In this repo
 All templates are published under @intility scope.
 
