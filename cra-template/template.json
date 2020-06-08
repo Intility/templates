@@ -9,11 +9,23 @@
       "@types/react-dom": "^16.9.0",
       "@types/jest": "^25.0.0",
       "typescript": "^3.8.0",
-      "@intility/bifrost-react": "latest",
-      "@intility/react-msal": "latest",
-      "@intility/react-adal": "latest",
+      "@intility/bifrost-react": "^1.0.0",
+      "@intility/react-msal": "^3.3.5",
+      "@intility/react-adal": "^3.3.5",
       "@types/react-router-dom": "5.2.0",
+      "@sentry/browser": "^5.17.0",
       "react-router-dom": "5.2.0"
+    },
+    "husky": {
+      "hooks": {
+        "pre-commit": "lint-staged"
+      }
+    },
+    "lint-staged": {
+      "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+        "prettier --write",
+        "git add"
+      ]
     }
   }
 }

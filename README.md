@@ -18,6 +18,15 @@ React developers of Intility.
 
 React & create-react-app.
 
+### Typescript
+### Dockerfile + nginx
+### .npmrc
+### .gitlab-ci.yml
+### .env
+### prettier
+### eslint
+### Visual Studio Code Workspace
+
 ## Available at
 
 These templates are available from the Intility NPM registry, and should be used through create-react-app.

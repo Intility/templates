@@ -1,5 +1,5 @@
 # alternatively node:8-alpine, though not that important as it is a throwaway container
-FROM node:8 AS build
+FROM node:12 AS build
 WORKDIR /src
 
 # install dependencies
@@ -16,4 +16,4 @@ FROM nginxinc/nginx-unprivileged:stable-alpine AS runtime
 COPY nginx/ /etc/nginx/
 
 # copy build files
-COPY --from=build /src/build /app
+COPY --from=build /src/build /usr/share/nginx/html

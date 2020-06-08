@@ -1,0 +1,108 @@
+image: node:12
+
+stages:
+  - build
+  - test
+  - release
+
+variables:
+  OPENSHIFT_SERVER: openshift.intility.no:8443
+  OPENSHIFT_DOMAIN: openshift-inside.intility.no
+  OPENSHIFT_PROJECT: $CI_PROJECT_SLUG
+  SENTRY_URL: https://sentry.intility.no/
+  # Configure this variable in Secure Variables:
+  # OPENSHIFT_TOKEN: my.openshift.token
+  # SENTRY_AUTH_TOKEN: my.sentry.token
+
+build:
+  stage: build
+  variables:
+    REACT_APP_SENTRY_DSN: $SENTRY_DSN
+    REACT_APP_SENTRY_RELEASE: $CI_COMMIT_SHORT_SHA
+    REACT_APP_SENTRY_ENVIRONMENT: $CI_COMMIT_REF_SLUG
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - build
+
+test:
+  stage: test
+  script:
+    - npm install
+    - npm run test
+
+.sonarCube:
+  stage: release
+  script:
+
+.sentry:
+  stage: release
+  image: getsentry/sentry-cli
+  script:
+    - sentry-cli releases new $CI_COMMIT_SHORT_SHA
+    - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
+    - sentry-cli releases files $CI_COMMIT_SHORT_SHA upload-sourcemaps --url-prefix '~' build/static/js --validate --rewrite
+    - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
+    - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e production
+
+.deploy: &deploy
+  tags:
+    - docker
+    - linux
+  before_script:
+    - oc login "$OPENSHIFT_SERVER" --token="$OPENSHIFT_TOKEN" --insecure-skip-tls-verify
+    - oc project "$OPENSHIFT_PROJECT" 2> /dev/null || oc new-project "$OPENSHIFT_PROJECT"
+  script:
+    - 'rm -rf dist/ node_modules/'
+    - 'oc get services $APP 2> /dev/null || oc new-app . --name=$APP --strategy=docker'
+    - 'oc start-build $APP --from-dir=. --wait=true --follow'
+    - 'oc get routes $APP 2> /dev/null || oc create route edge --service $APP --hostname=$APP_HOST'
+
+review:
+  <<: *deploy
+  stage: review
+  variables:
+    APP: review-$CI_COMMIT_REF_SLUG
+    APP_HOST: $OPENSHIFT_PROJECT-$CI_ENVIRONMENT_SLUG.$OPENSHIFT_DOMAIN
+  environment:
+    name: $CI_COMMIT_REF_SLUG
+    url: https://$OPENSHIFT_PROJECT-$CI_COMMIT_REF_SLUG.$OPENSHIFT_DOMAIN
+    on_stop: stop-review
+  only:
+    - branches
+  except:
+    - master
+
+stop-review:
+  <<: *deploy
+  # https://docs.gitlab.com/ee/ci/yaml/#environmentaction
+  # stage should be the same as the review_app in order for the environment to stop automatically when the branch is deleted
+  stage: review
+  script:
+    - oc delete all -l "app=$APP"
+  when: manual
+  variables:
+    APP: review-$CI_COMMIT_REF_SLUG
+    GIT_STRATEGY: none
+  environment:
+    name: $CI_COMMIT_REF_SLUG
+    action: stop
+  only:
+    - branches
+  except:
+    - master
+
+production:
+  <<: *deploy
+  stage: production
+  variables:
+    APP: production
+    APP_HOST: $OPENSHIFT_PROJECT.$OPENSHIFT_DOMAIN
+  environment:
+    name: production
+    url: https://bifrost.$OPENSHIFT_DOMAIN
+  only:
+    - master
+
