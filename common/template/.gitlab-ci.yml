@@ -1,20 +1,25 @@
-image: node:12
-
-stages:
-  - build
-  - test
-  - release
-
 variables:
   OPENSHIFT_SERVER: openshift.intility.no:8443
   OPENSHIFT_DOMAIN: openshift-inside.intility.no
   OPENSHIFT_PROJECT: $CI_PROJECT_SLUG
+  SONAR_HOST_URL: https://sonarqube.intility.no
+  SONAR_PROJECT: $CI_PROJECT_SLUG
   SENTRY_URL: https://sentry.intility.no/
-  # Configure this variable in Secure Variables:
+  SENTRY_PROJECT: $CI_PROJECT_SLUG
+  # Configure these variables in Secure Variables:
   # OPENSHIFT_TOKEN: my.openshift.token
+  # SONAR_TOKEN: my.sonarqube.token
   # SENTRY_AUTH_TOKEN: my.sentry.token
 
+stages:
+  - build
+  - test
+  - analyze
+  - review
+  - production
+
 build:
+  image: node:12
   stage: build
   variables:
     REACT_APP_SENTRY_DSN: $SENTRY_DSN
@@ -28,14 +33,21 @@ build:
       - build
 
 test:
+  image: node:12
   stage: test
   script:
     - npm install
     - npm run test
 
-.sonarCube:
-  stage: release
-  script:
+.sonarqube: 
+  image: sonarsource/sonar-scanner-cli:latest
+  stage: analyze
+  variables:
+    GIT_DEPTH: 0
+  script: sonar-scanner 
+    -Dsonar.qualitygate.wait=true 
+    -Dsonar.projectKey=$SONARQUBE_PROJECT 
+    -Dsonar.projectBaseDir=src/
 
 .sentry:
   stage: release
@@ -47,7 +59,7 @@ test:
     - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
     - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e production
 
-.deploy: &deploy
+.deploy:
   tags:
     - docker
     - linux
@@ -61,10 +73,10 @@ test:
     - 'oc get routes $APP 2> /dev/null || oc create route edge --service $APP --hostname=$APP_HOST'
 
 review:
-  <<: *deploy
+  extends: .deploy
   stage: review
   variables:
-    APP: review-$CI_COMMIT_REF_SLUG
+    APP: $CI_COMMIT_REF_SLUG
     APP_HOST: $OPENSHIFT_PROJECT-$CI_ENVIRONMENT_SLUG.$OPENSHIFT_DOMAIN
   environment:
     name: $CI_COMMIT_REF_SLUG
@@ -76,7 +88,7 @@ review:
     - master
 
 stop-review:
-  <<: *deploy
+  extends: .deploy
   # https://docs.gitlab.com/ee/ci/yaml/#environmentaction
   # stage should be the same as the review_app in order for the environment to stop automatically when the branch is deleted
   stage: review
@@ -84,7 +96,7 @@ stop-review:
     - oc delete all -l "app=$APP"
   when: manual
   variables:
-    APP: review-$CI_COMMIT_REF_SLUG
+    APP: $CI_COMMIT_REF_SLUG
     GIT_STRATEGY: none
   environment:
     name: $CI_COMMIT_REF_SLUG
@@ -95,7 +107,7 @@ stop-review:
     - master
 
 production:
-  <<: *deploy
+  extends: .deploy
   stage: production
   variables:
     APP: production
