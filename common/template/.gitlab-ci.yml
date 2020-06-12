@@ -18,13 +18,15 @@ stages:
   - review
   - production
 
-build:
+# --- build ---
+# 
+# 
+.build:
   image: node:12
   stage: build
   variables:
-    REACT_APP_SENTRY_DSN: $SENTRY_DSN
+    REACT_APP_SENTRY_DSN: my.sentry.dsn
     REACT_APP_SENTRY_RELEASE: $CI_COMMIT_SHORT_SHA
-    REACT_APP_SENTRY_ENVIRONMENT: $CI_COMMIT_REF_SLUG
   script:
     - npm install
     - npm run build
@@ -32,6 +34,23 @@ build:
     paths:
       - build
 
+build-review:
+  extends: .build
+  variables:
+    REACT_APP_SENTRY_ENVIRONMENT: $CI_COMMIT_REF_SLUG
+  only:
+    - branches
+  except:
+    - master
+
+build-production:
+  extends: .build
+  variables:
+    REACT_APP_SENTRY_ENVIRONMENT: production
+  only:
+    - master
+
+# --- test ---
 test:
   image: node:12
   stage: test
@@ -39,16 +58,22 @@ test:
     - npm install
     - npm run test
 
-.sonarqube: 
+# --- sonar ---
+# https://docs.sonarqube.org/latest/analysis/gitlab-cicd/
+# sonar-scanner automatically detects branches, so can run on any branch
+# The image automatically passes SONAR_HOST_URL and SONAR_TOKEN to the cli
+.sonar: 
   image: sonarsource/sonar-scanner-cli:latest
   stage: analyze
   variables:
     GIT_DEPTH: 0
+  allow_failure: true
   script: sonar-scanner 
     -Dsonar.qualitygate.wait=true 
-    -Dsonar.projectKey=$SONARQUBE_PROJECT 
+    -Dsonar.projectKey=$SONAR_PROJECT 
     -Dsonar.projectBaseDir=src/
 
+# --- sentry ---
 .sentry:
   stage: release
   image: getsentry/sentry-cli
@@ -57,8 +82,25 @@ test:
     - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
     - sentry-cli releases files $CI_COMMIT_SHORT_SHA upload-sourcemaps --url-prefix '~' build/static/js --validate --rewrite
     - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
-    - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e production
+    - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e $SENTRY_ENV
 
+.sentry-review:
+  extends: .sentry
+  variables:
+    SENTRY_ENV: $CI_BRANCH_SLUG
+  only:
+    - branches
+  except:
+    - master
+
+.sentry-master:
+  extends: .sentry
+  variables:
+    SENTRY_ENV: production
+  only:
+    - master
+
+# --- deployment ---
 .deploy:
   tags:
     - docker

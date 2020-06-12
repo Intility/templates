@@ -19,7 +19,7 @@ React developers of Intility.
 React & create-react-app.
 
 ### Typescript
-### Dockerfile + nginx
+### Dockerfile
 ### .npmrc
 ### .gitlab-ci.yml
 ### .env

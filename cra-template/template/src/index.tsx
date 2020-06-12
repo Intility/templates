@@ -5,13 +5,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN,
-  release: process.env.REACT_APP_SENTRY_RELEASE,
-  environment: process.env.REACT_APP_SENTRY_ENVIRONMENT
-});
-
-
+if (process.env.environment !== 'development') {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DSN,
+    release: process.env.REACT_APP_SENTRY_RELEASE,
+    environment: process.env.REACT_APP_SENTRY_ENVIRONMENT
+  });
+}
 
 ReactDOM.render(
   <React.StrictMode>
