@@ -1,0 +1,18 @@
+stages:
+  - publish
+
+.publish:
+  image: node:12
+  stage: publish
+  before_script:
+    - cd ${TEMPLATE}
+    - cp ../common/ ./
+    - echo //${ARTIFACTORY_NPM_REGISTRY}:_authToken=${ARTIFACTORY_NPM_TOKEN} > .npmrc
+  script:
+    - npm publish
+  only: tags
+
+cra-template:
+  extends: .publish
+  variables:
+    TEMPLATE: cra-template
