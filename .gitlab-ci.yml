@@ -10,7 +10,8 @@ stages:
     - echo //${ARTIFACTORY_NPM_REGISTRY}:_authToken=${ARTIFACTORY_NPM_TOKEN} > .npmrc
   script:
     - npm publish
-  only: tags
+  only:
+    - tags
 
 cra-template:
   extends: .publish
