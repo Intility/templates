@@ -6,7 +6,7 @@ stages:
   stage: publish
   before_script:
     - cd ${TEMPLATE}
-    - cp -r ../common/ ./
+    - cp -r ../common/* ./
     - echo //${ARTIFACTORY_NPM_REGISTRY}:_authToken=${ARTIFACTORY_NPM_TOKEN} > .npmrc
   script:
     - npm publish
