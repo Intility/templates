@@ -1,19 +1,4 @@
-# alternatively node:8-alpine, though not that important as it is a throwaway container
-FROM node:12 AS build
-WORKDIR /src
-
-# install dependencies
-COPY package*.json .npmrc .
-RUN npm install
-
-# copy all files from repository and create a production build
-COPY . .
-RUN npm run build
-
-FROM nginxinc/nginx-unprivileged:stable-alpine AS runtime
-
-# copy config files
-COPY nginx/ /etc/nginx/
+FROM intility/nginx-unprivileged-react
 
 # copy build files
-COPY --from=build /src/build /usr/share/nginx/html
+COPY build/ /usr/share/nginx/html
