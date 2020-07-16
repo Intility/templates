@@ -1,6 +1,6 @@
 {
   "name": "@intility/cra-template",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "keywords": [
     "react",
     "create-react-app",
@@ -8,6 +8,7 @@
     "typescript"
   ],
   "description": "The base TypeScript template for Create React App.",
+  "main": "template.json",
   "repository": {
     "type": "git",
     "url": "https://gitlab.intility.no/DeveloperServices/cra-templates.git",
