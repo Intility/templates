@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import * as Sentry from "@sentry/browser";
 import "index.css";
 import App from "components/App";
-import MsalProvider from "@intility/react-msal";
+import MsalBrowserProvider from "@intility/react-msal-browser";
 import * as serviceWorker from "serviceWorker";
 
 if (process.env.environment !== "development") {
@@ -29,9 +29,9 @@ const msal = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <MsalProvider config={msal} forced>
+    <MsalBrowserProvider config={msal} forced>
       <App />
-    </MsalProvider>
+    </MsalBrowserProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
