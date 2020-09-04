@@ -28,11 +28,11 @@ const msal = {
 };
 
 ReactDOM.render(
-  <React.StrictMode>
-    <MsalBrowserProvider config={msal} forced>
+  <MsalBrowserProvider config={msal} forced>
+    <React.StrictMode>
       <App />
-    </MsalBrowserProvider>
-  </React.StrictMode>,
+    </React.StrictMode>
+  </MsalBrowserProvider>,
   document.getElementById("root")
 );
 
