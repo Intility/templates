@@ -6,7 +6,7 @@ import App from "components/App";
 import MsalBrowserProvider from "@intility/react-msal-browser";
 import * as serviceWorker from "serviceWorker";
 
-if (process.env.environment !== "development") {
+if (process.env.NODE_ENV !== "development") {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
     release: process.env.REACT_APP_SENTRY_RELEASE,
