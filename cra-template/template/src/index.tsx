@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import * as Sentry from "@sentry/browser";
-import "index.css";
 import App from "components/App";
 import MsalBrowserProvider from "@intility/react-msal-browser";
 import * as serviceWorker from "serviceWorker";
+import { BrowserRouter as Router } from "react-router-dom";
 
 if (process.env.NODE_ENV !== "development") {
   Sentry.init({
@@ -28,11 +28,13 @@ const msal = {
 };
 
 ReactDOM.render(
-  <MsalBrowserProvider config={msal} forced>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </MsalBrowserProvider>,
+  <Router>
+    <MsalBrowserProvider config={msal} forced>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </MsalBrowserProvider>
+  </Router>,
   document.getElementById("root")
 );
 
