@@ -2,7 +2,10 @@
 
 ## Set up authentication
 
-Before you start the application, authentication has to be set up.
+The example code is set up to use authentication. For this to work, an App Registration has to be set up in Azure AD.  
+If you'd like to do this step later, you can remove the `forced` prop provided to `MsalBrowserProvider`.
+
+### UI
 
 Head over to [Azure -> Azure Active Directory -> App registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) with your Intility Account, and create a new registration.
 
@@ -13,6 +16,16 @@ Under `Supported account types`, choose either `Intility AS only - Single tenant
 Under `Redirect URI`, select `Single-page application (SPA)` from the dropdown, and enter `http://localhost:3000`.
 
 Hit the register button, and you will be taken to an overview of your newly created registration. Copy the `Application (Client) ID` GUID, and paste it into the `msal.auth.clientId` field in your `index.tsx` file.
+
+You have now successfully set up authentication, and are able to run `npm start` locally.
+
+### CLI
+
+Login with the Azure CLI and run the following command (rember to modify the displayName)  
+`az rest -u https://graph.microsoft.com/v1.0/applications -m post -b '{\"displayName\":\"MyApp\",\"spa\":{\"redirectUris\":[\"http://localhost:3000\"]}}'`  
+Note: The body is escaped for PowerShell, please check escaping for your terminal of choice.
+
+Copy the `appId` GUID, and paste it into the `msal.auth.clientId` field in your `index.tsx` file.
 
 You have now successfully set up authentication, and are able to run `npm start` locally.
 
