@@ -1,6 +1,6 @@
 # Next steps
 
-## Set up authentication
+## Azure AD Authentication
 
 The example code is set up to use authentication. For this to work, an App Registration has to be set up in Azure AD.  
 If you'd like to do this step later, you can remove the `forced` prop provided to `MsalBrowserProvider`.
@@ -29,6 +29,45 @@ Copy the `appId` GUID, and paste it into the `msal.auth.clientId` field in your 
 
 You have now successfully set up authentication, and are able to run `npm start` locally.
 
+## SonarCube
+
+A SonarQube analyzation job is included in the GitLab pipeline. To set this up, we'll need to create a project in SonarQube, and a token.
+
+### UI
+
+First, we need to [create a new project in SonarQube](https://sonarqube.intility.no/projects/create).
+
+The project key should be the same as the repository slug in GitLab. If you use something other than the repository slug, you'll need to modify the `SONAR_PROJECT` variable in the top of the .gitlab-ci.yml file.
+
+Then in the next step, either generate a new token, or select an existing one.  
+Copy the token and add it to GitLab CI/CD variables with the name `SONAR_TOKEN`.
+
+### CLI
+
+## Sentry
+
+The project comes included with error reporting to Sentry, and a pipeline job to upload sourcemaps and create releases. To set this up, we'll need to create a project in Sentry, the project DSN and an auth token.
+
+### Create Project
+
+Head over to the [Create a new Project page in Sentry](https://sentry.intility.no/organizations/intility/projects/new/).
+
+Under platform, select React.  
+For the project name, use the repository slug from GitLab. If you use something other than the repository slug, you'll need to modify the `SENTRY_PROJECT` variable in the top of the .gitlab-ci.yml file.  
+Select a fitting team, or create a new one, and hit Create.
+
+You'll be taken to a Configure React page. In the code example under Connecting the SDK to Sentry, copy the `dsn` value, and add it to GitLab CI/CD variables with the name `SENTRY_DSN`.
+
+### Acquire Token
+
+Go to the [Auth Token section of your Account Settings](https://sentry.intility.no/settings/account/api/auth-tokens/).
+
+The only needed scope is `project:admin`.
+
+Copy the token and add it to GitLab CI/CD variables with the name `SENTRY_AUTH_TOKEN`.
+
+### CLI
+
 ## Deploying to OpenShift
 
 ### Create project
@@ -51,13 +90,3 @@ Then we have to set the user to admin.
 Lastly, we have to extract the token from the secret presented in the first step.  
 `oc describe secret <secret-name>`  
 Copy the contents from the `token` section and add it to GitLab CI/CD variables with the name `OPENSHIFT_TOKEN`.
-
-### Enable OpenShift job
-
-## Sentry
-
-### ?
-
-## SonarCube
-
-### ?
