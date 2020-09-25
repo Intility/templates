@@ -42,8 +42,6 @@ The project key should be the same as the repository slug in GitLab. If you use 
 Then in the next step, either generate a new token, or select an existing one.  
 Copy the token and add it to GitLab CI/CD variables with the name `SONAR_TOKEN`.
 
-### CLI
-
 ## Sentry
 
 The project comes included with error reporting to Sentry, and a pipeline job to upload sourcemaps and create releases. To set this up, we'll need to create a project in Sentry, the project DSN and an auth token.
