@@ -29,7 +29,7 @@ Copy the `appId` GUID, and paste it into the `msal.auth.clientId` field in your 
 
 You have now successfully set up authentication, and are able to run `npm start` locally.
 
-## SonarCube
+## SonarQube
 
 A SonarQube analyzation job is included in the GitLab pipeline. To set this up, we'll need to create a project in SonarQube, and a token.
 
