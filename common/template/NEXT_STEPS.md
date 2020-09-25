@@ -64,8 +64,6 @@ The only needed scope is `project:admin`.
 
 Copy the token and add it to GitLab CI/CD variables with the name `SENTRY_AUTH_TOKEN`.
 
-### CLI
-
 ## Deploying to OpenShift
 
 ### Create project
