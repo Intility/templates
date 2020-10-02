@@ -1,0 +1,67 @@
+---
+title: Installation
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  groupId="auth-variant"
+  defaultId="auth"
+  values={[
+    { label: 'With Auth', value: 'auth' },
+    { label: 'Authless', value: 'authless' },
+  ]}
+>
+<TabItem value="auth">
+<Tabs
+  groupId="typed"
+  defaultId="typed"
+  values={[
+    { label: 'TypeScript', value: 'typed' },
+    { label: 'JavaScript', value: 'plain' },
+  ]}
+>
+<TabItem value="typed">
+
+```bash
+npx create-react-app my-app --template "@intility"
+```
+
+</TabItem>
+<TabItem value="plain">
+
+```bash
+npx create-react-app my-app --template "@intility/js"
+```
+
+</TabItem>
+</Tabs>
+</TabItem>
+<TabItem value="authless">
+<Tabs
+  groupId="typed"
+  defaultId="typed"
+  values={[
+    { label: 'TypeScript', value: 'typed' },
+    { label: 'JavaScript', value: 'plain' },
+  ]}
+>
+<TabItem value="typed">
+
+```bash
+npx create-react-app my-app --template "@intility/authless"
+```
+
+</TabItem>
+<TabItem value="plain">
+
+```bash
+npx create-react-app my-app --template "@intility/authless-js"
+```
+
+</TabItem>
+</Tabs>
+</TabItem>
+</Tabs>
+

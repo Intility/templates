@@ -1,0 +1,23 @@
+---
+title: Sentry
+---
+
+The project comes included with error reporting to Sentry, and a pipeline job to upload sourcemaps and create releases. To set this up, we'll need to create a project in Sentry, the project DSN and an auth token.
+
+### Create Project
+
+Head over to the [Create a new Project page in Sentry](https://sentry.intility.no/organizations/intility/projects/new/).
+
+Under platform, select React.  
+For the project name, use the repository slug from GitLab. If you use something other than the repository slug, you'll need to modify the `SENTRY_PROJECT` variable in the top of the .gitlab-ci.yml file.  
+Select a fitting team, or create a new one, and hit Create.
+
+You'll be taken to a Configure React page. In the code example under Connecting the SDK to Sentry, copy the `dsn` value, and add it to GitLab CI/CD variables with the name `SENTRY_DSN`.
+
+### Acquire Token
+
+Go to the [Auth Token section of your Account Settings](https://sentry.intility.no/settings/account/api/auth-tokens/).
+
+The only needed scope is `project:admin`.
+
+Copy the token and add it to GitLab CI/CD variables with the name `SENTRY_AUTH_TOKEN`.

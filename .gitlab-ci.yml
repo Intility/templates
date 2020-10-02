@@ -1,5 +1,18 @@
 stages:
+  - docs
   - publish
+
+docs:
+  image: appropriate/curl:latest
+  stage: docs
+  script:
+    - curl -X POST -k $DOCS_TRIGGER_URL
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      changes:
+        - docusaurus/**/*
+        - .gitlab-ci.yml
+
 
 .publish:
   image: node:12
