@@ -1,0 +1,22 @@
+{
+  "name": "cra-templates",
+  "version": "1.0.0",
+  "private": true,
+  "description": "This repository contains Intility Templates for Create React App. In the future, templates for next.js or other frameworks might be included.",
+  "main": "index.js",
+  "scripts": {
+    "build": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.intility.no:DeveloperServices/cra-templates.git"
+  },
+  "author": "herman.jensen@intility.no",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-typescript": "^7.10.4",
+    "prettier": "^2.1.2"
+  }
+}
