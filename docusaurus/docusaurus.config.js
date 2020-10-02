@@ -9,7 +9,6 @@ module.exports = {
   projectName: 'cra-templates', // Usually your repo name.
   themeConfig: {
     defaultMode: 'dark',
-    respectPrefersColorScheme: true,
     navbar: {
       title: 'Create Intility App',
       logo: {
