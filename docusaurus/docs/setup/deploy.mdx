@@ -2,13 +2,26 @@
 title: Deploy
 ---
 
+:::info
+The deploy section might move to using kaniko and helm in the close future.
+The following steps will still apply.
+:::
+
 ## Create project
 
 ### UI
 
-Go to (our OpenShift instance)[https://openshift.intility.no:8443/].
+Go to [our OpenShift instance](https://openshift.intility.no:8443/) and log in.
+
+Create a project, the name should be the same as the GitLab repository slug.  If you use something other than the repository slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.  
+Add a fitting display name and description if you feel like it.
 
 ### CLI
+
+The name should be the same as the GitLab repository slug.  If you use something other than the repository slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.
+```bash
+oc new-project <projectname>
+```
 
 ## Create Service Account
 
@@ -16,13 +29,19 @@ In this step we will use the [OpenShift CLI](https://docs.openshift.com/containe
 Copy login command from OpenShift Console and paste it in a terminal.  
 After logging in, the CLI will show you available projects. Follow the instructions to change to the project you just created.
 
-When you have selected the right project, we need to create a Service Account.  
-`oc create sa gitlab-builder`  
+When you have selected the right project, we need to create a Service Account.
+```bash
+oc create sa gitlab-builder
+```
 Note the `gitlab-builder-token-*` in the `Mountable secrets` section.
 
 Then we have to set the user to admin.  
-`oc policy add-role-to-user admin -z gitlab-runner`
+```bash
+oc policy add-role-to-user admin -z gitlab-runner
+```
 
-Lastly, we have to extract the token from the secret presented in the first step.  
-`oc describe secret <secret-name>`  
+Lastly, we have to extract the token from the secret presented in the first step.
+```bash
+oc describe secret <secret-name>
+```
 Copy the contents from the `token` section and add it to GitLab CI/CD variables with the name `OPENSHIFT_TOKEN`.
