@@ -18,7 +18,6 @@ module.exports = {
       label: 'Code',
       items: [
         'code/overview',
-        'code/gitlab-ci',
         'code/bifrost',
         'code/routing',
         'code/recommended-packages',
@@ -30,6 +29,7 @@ module.exports = {
       items: [
         'setup/gitlab',
         'setup/authentication',
+        'setup/gitlab-ci',
         'setup/sonarqube',
         'setup/sentry',
         'setup/deploy',
