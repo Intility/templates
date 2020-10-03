@@ -20,51 +20,43 @@ stages:
   - sentry
   - deploy
 
-.npm_deps:
-  before_script:
-    - npm ci --cache .npm --prefer-offline
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - .npm/
-
 # --- build ---
 #
 #
 
 build:
-  extends: .npm_deps
   image: node:12
   stage: build
   variables:
     REACT_APP_SENTRY_DSN: $SENTRY_DSN
     REACT_APP_SENTRY_ENVIRONMENT: $CI_COMMIT_REF_SLUG
     REACT_APP_SENTRY_RELEASE: $CI_COMMIT_SHORT_SHA
+  before_script:
+    - npm ci
   script:
     - npm run build
   artifacts:
     paths:
       - build
     expire_in: 2 weeks
-  only:
-    - branches
-  except:
-    - master
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: never
 
 build:production:
   extends: build
   variables:
     REACT_APP_SENTRY_ENVIRONMENT: production
     REACT_APP_REDIRECT_URI: https://$CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
-  only:
-    - master
-  except: []
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
 
 # --- test ---
 test:
-  extends: .npm_deps
   image: node:12
   stage: test
+  before_script:
+    - npm ci
   script:
     - npm run test
 
@@ -91,14 +83,14 @@ sentry:
     SENTRY_ENV: production
   script:
     - sentry-cli releases new $CI_COMMIT_SHORT_SHA
-    # uncomment this line if the repository is not integrated with sentry
+    # comment this line if the repository is not integrated with sentry
     - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
     - sentry-cli releases files $CI_COMMIT_SHORT_SHA upload-sourcemaps --url-prefix '~' build/static/js --validate --rewrite
     - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
     - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e $SENTRY_ENV
   retry: 2
-  only:
-    - master
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
 
 # --- deployment ---
 deploy:production:
@@ -120,5 +112,5 @@ deploy:production:
     - "oc get services $APP 2> /dev/null || oc new-app . --name=$APP --strategy=docker"
     - "oc start-build $APP --from-dir=. --wait=true --follow"
     - "oc get routes $APP 2> /dev/null || oc create route edge --service $APP --hostname=$APP_HOST"
-  only:
-    - master
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
