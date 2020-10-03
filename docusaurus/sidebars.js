@@ -20,6 +20,7 @@ module.exports = {
       items: [
         'configuration/gitlab',
         'configuration/authentication',
+        'configuration/environment-variables',
         'configuration/gitlab-ci',
         'configuration/sonarqube',
         'configuration/sentry',
