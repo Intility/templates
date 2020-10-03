@@ -22,11 +22,6 @@
     "scripts": {
       "analyze": "source-map-explorer 'build/static/js/*.js'"
     },
-    "husky": {
-      "hooks": {
-        "pre-commit": "lint-staged"
-      }
-    },
     "lint-staged": {
       "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
         "prettier --write",
