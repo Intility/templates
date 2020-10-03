@@ -21,9 +21,39 @@ You have now successfully set up authentication, and are able to run `npm start`
 
 ### CLI
 
-Login with the Azure CLI and run the following command (rember to modify the displayName)  
-`az rest -u https://graph.microsoft.com/v1.0/applications -m post -b '{\"displayName\":\"MyApp\",\"spa\":{\"redirectUris\":[\"http://localhost:3000\"]}}'`  
-Note: The body is escaped for PowerShell, please check escaping for your terminal of choice.
+Login with the Azure CLI and run the following command (rember to modify the displayName)
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  groupId="shell"
+  defaultValue="bash"
+  values={[
+  {
+    label: "bash",
+    value: "bash"
+  }, {
+    label: "PowerShell",
+    value: "ps"
+  }
+  ]}
+>
+<TabItem value="bash">
+
+```bash
+az rest -u https://graph.microsoft.com/v1.0/applications -m post -b '{"displayName":"MyApp","spa":{"redirectUris":["http://localhost:3000"]}}'
+```
+
+</TabItem>
+<TabItem value="ps">
+
+```ps
+az rest -u https://graph.microsoft.com/v1.0/applications -m post -b '{\"displayName\":\"MyApp\",\"spa\":{\"redirectUris\":[\"http://localhost:3000\"]}}'
+```
+
+</TabItem>
+</Tabs>
 
 Copy the `appId` GUID, and paste it into the `msal.auth.clientId` field in your `index.tsx` file.
 
