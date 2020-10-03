@@ -9,7 +9,6 @@ module.exports = {
       label: 'Getting Started',
       items: [
         'getting-started/installation',
-        'getting-started/create-react-app',
         'getting-started/project-overview',
         'getting-started/included-dependencies',
         'getting-started/recommended-packages',
