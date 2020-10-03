@@ -2,6 +2,20 @@
 title: Installation
 ---
 
+
+
+## Prerequisites
+
+- Some experience with React
+- [node.js](https://nodejs.org/)
+- [Visual Studio Code](https://code.visualstudio.com/) with the following plugins
+  - [Node Extension Pack](https://marketplace.visualstudio.com/items?itemName=swellaby.node-pack)
+  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+## Create App
+
+Select the version you want. By default, TypeScript and an authentication sample is included.
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -65,3 +79,24 @@ npx create-react-app my-app --template "@intility/authless-js"
 </TabItem>
 </Tabs>
 
+Run it in your terminal, and then open the Visual Studio Code Workspace with the following command.
+
+```bash
+code my-app/app.code-workspace
+```
+
+You can now start coding by running the start script.
+
+```bash
+npm start
+```
+
+## Available Scripts
+
+There are 5 scripts included by default, click on each one for more information.
+
+- [`npm start`](https://create-react-app.dev/docs/available-scripts#npm-start)
+- [`npm test`](https://create-react-app.dev/docs/available-scripts#npm-test)
+- [`npm run build`](https://create-react-app.dev/docs/available-scripts#npm-run-build)
+- [`npm run eject`](https://create-react-app.dev/docs/available-scripts#npm-run-eject)
+- [`npm run analyze`](/getting-started/included-dependencies#source-map-explorer)
