@@ -1,0 +1,15 @@
+---
+title: SonarQube
+---
+
+A SonarQube analyzation job is included in the GitLab pipeline.
+To set this up, we'll need to create a project in SonarQube, and a token.
+
+First, we need to [create a new project in SonarQube](https://sonarqube.intility.no/projects/create).
+
+The project key should be the same as the repository slug in GitLab.
+If you use something other than the repository slug,
+you'll need to modify the `SONAR_PROJECT` variable in the top of the .gitlab-ci.yml file.
+
+Then in the next step, either generate a new token, or select an existing one.  
+Copy the token and add it to GitLab CI/CD variables with the name `SONAR_TOKEN`.

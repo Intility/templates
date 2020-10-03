@@ -7,23 +7,27 @@ The deploy section might move to using kaniko and helm in the close future.
 The following steps will still apply.
 :::
 
+The included deploy job will deploy your project to OpenShift. For this to work, you need to create a project in OpenShift, and acquire a token for Openshift.
+
 ## Create project
 
 ### UI
 
 Go to [our OpenShift instance](https://openshift.intility.no:8443/) and log in.
 
-Create a project, the name should be the same as the GitLab repository slug.  If you use something other than the repository slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.  
+Create a project, the name should be the same as the GitLab repository slug.  
+If you use something other than the repository slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.  
 Add a fitting display name and description if you feel like it.
 
 ### CLI
 
-The name should be the same as the GitLab repository slug.  If you use something other than the repository slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.
+The name should be the same as the GitLab repository slug.  
+If you use something other than the repository slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.
 ```bash
 oc new-project <projectname>
 ```
 
-## Create Service Account
+## Acquire Token
 
 In this step we will use the [OpenShift CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html).  
 Copy login command from OpenShift Console and paste it in a terminal.  

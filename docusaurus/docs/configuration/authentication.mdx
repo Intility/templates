@@ -7,15 +7,18 @@ If you'd like to do this step later, you can remove the `forced` prop provided t
 
 ### UI
 
-Head over to [Azure -> Azure Active Directory -> App registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) with your Intility Account, and create a new registration.
+Head over to [Azure -> Azure Active Directory -> App registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
+with your Intility Account, and create a new registration.
 
 Select a fitting name for your project, this name will be presented to the user during consent.
 
-Under `Supported account types`, choose either `Intility AS only - Single tenant` or `Any Azure AD directory - Multitenant`. This can be changed later, so if you're unsure what to choose, select single tenant.
+Under `Supported account types`, choose either `Intility AS only - Single tenant` or `Any Azure AD directory - Multitenant`.
+This can be changed later, so if you're unsure what to choose, select single tenant.
 
 Under `Redirect URI`, select `Single-page application (SPA)` from the dropdown, and enter `http://localhost:3000`.
 
-Hit the register button, and you will be taken to an overview of your newly created registration. Copy the `Application (Client) ID` GUID, and paste it into the `msal.auth.clientId` field in your `index.tsx` file.
+Hit the register button, and you will be taken to an overview of your newly created registration.
+Copy the `Application (Client) ID` GUID, and paste it into the `msal.auth.clientId` field in your `index.tsx` file.
 
 You have now successfully set up authentication, and are able to run `npm start` locally.
 
