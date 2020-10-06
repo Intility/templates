@@ -8,8 +8,55 @@ The `gitlab-ci.yml` file included with the template comes with the following job
 build
 build:production
 test
-sonar
+sonarqube
 sentry
+sentry:production
 deploy:production
 ```
 
+## `build` & `build:production`
+
+The main `build` job runs [`npm run build`](https://create-react-app.dev/docs/available-scripts/#npm-run-build) on every push to all branches (except master).
+It will pass some default environment variables;
+
+- `REACT_APP_SENTRY_DSN` will be [`SENTRY_ENV`](/configuration/sentry#acquire-token)
+- `REACT_APP_SENTRY_ENVIRONMENT` will be the git branch name
+- `REACT_APP_SENTRY_RELEASE` will be the git commit SHA
+- `REACT_APP_REDIRECT_URI` will be  
+`https://{projectSlug}-{branchName}.openshift-inside.intility.no`
+
+It also creates an artifact of the `build` folder that is created,
+which will be passed onto later jobs.
+
+The `build:production` pipeline does the same as build,
+except it only runs on the master branch.
+We override two variables: `REACT_APP_SENTRY_ENVIRONMENT` and `REACT_APP_REDIRECT_URI`.
+We do that because we want our environment to be `production` instead of `master`,
+and the redirect URI to be `...{projectSlug}...` instead of `...{projectSlug}-master...`.
+
+## `test`
+This job simply runs the [`npm test`](https://create-react-app.dev/docs/available-scripts/#npm-test) script.
+
+## `sonarqube`
+This job uses the [SonarScanner CLI](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/) to upload the source code to SonarQube.
+The pipeline will continue if this job fails, but it should be looked into.
+
+## `sentry` and `sentry:production`
+The `sentry` job uses the [Sentry CLI](https://docs.sentry.io/product/cli/) to create a new release.
+The release name will be the git commit SHA.
+It will connect the release to the current commit, and upload sourcemaps from the build step.
+
+The `sentry:production` job runs on pushes to the `master` branch,
+and will associate the release with the deployment environment `production`.
+
+## `deploy:production`
+This is the main job for deploying to OpenShift. It runs on the `master` branch.  
+It will create an Environment in GitLab, with the URL to the running app.
+
+The script has three steps:
+
+1. Create an app in your OpenShift project with the name `production`, unless it excists
+2. Start a docker image build for that app with the output from the `build` job
+3. Create a route for that application unless it exists
+
+The route defaults to `https://{projectSlug}.openshift-inside.intility.no`.
