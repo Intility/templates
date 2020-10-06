@@ -26,6 +26,6 @@ In the code example under Connecting the SDK to Sentry, copy the `dsn` value, an
 Go to the [Auth Token section of your Account Settings](https://sentry.intility.no/settings/account/api/auth-tokens/).
 
 ![Create Sentry Token](/img/sentry-token.png)
-The only needed scope is `project:admin`.
+The needed scopes are `project:read`, `project:releases` and `org:read`.
 
 Create it, copy the token and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `SENTRY_AUTH_TOKEN`.
