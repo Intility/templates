@@ -15,14 +15,14 @@ The included deploy job will deploy your project to OpenShift. For this to work,
 
 Go to [our OpenShift instance](https://openshift.intility.no:8443/) and log in.
 
-Create a project, the name should be the same as the GitLab repository slug.  
-If you use something other than the repository slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.  
+Create a project, the name should be the same as the GitLab project slug.  
+If you use something other than the project slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.  
 Add a fitting display name and description if you feel like it.
 
 ### CLI
 
-The name should be the same as the GitLab repository slug.  
-If you use something other than the repository slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.
+The name should be the same as the GitLab project slug.  
+If you use something other than the project slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.
 ```bash
 oc new-project <projectname>
 ```
@@ -48,4 +48,4 @@ Lastly, we have to extract the token from the secret presented in the first step
 ```bash
 oc describe secret <secret-name>
 ```
-Copy the contents from the `token` section and add it to GitLab CI/CD variables with the name `OPENSHIFT_TOKEN`.
+Copy the contents from the `token` section and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.

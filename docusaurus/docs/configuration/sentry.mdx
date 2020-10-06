@@ -9,19 +9,23 @@ To set this up, we'll need to create a project in Sentry, the project DSN and an
 
 Head over to the [Create a new Project page in Sentry](https://sentry.intility.no/organizations/intility/projects/new/).
 
-Under platform, select React.  
-For the project name, use the repository slug from GitLab.
-If you use something other than the repository slug
+![Sentry Platform Select](/img/sentry-new-platform.png)  
+Under platform, select React.
+
+![Sentry New Project Name](/img/sentry-new-name.png)  
+For the project name, use the project slug from GitLab.
+If you use something other than the project slug
 you'll need to modify the `SENTRY_PROJECT` variable in the top of the .gitlab-ci.yml file.  
 Select a fitting team, or create a new one, and hit Create.
 
 You'll be taken to a Configure React page.
-In the code example under Connecting the SDK to Sentry, copy the `dsn` value, and add it to GitLab CI/CD variables with the name `SENTRY_DSN`.
+In the code example under Connecting the SDK to Sentry, copy the `dsn` value, and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `SENTRY_DSN`.
 
 ### Acquire Token
 
 Go to the [Auth Token section of your Account Settings](https://sentry.intility.no/settings/account/api/auth-tokens/).
 
+![Create Sentry Token](/img/sentry-token.png)
 The only needed scope is `project:admin`.
 
-Copy the token and add it to GitLab CI/CD variables with the name `SENTRY_AUTH_TOKEN`.
+Create it, copy the token and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `SENTRY_AUTH_TOKEN`.

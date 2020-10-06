@@ -10,8 +10,7 @@ If you'd like to do this step later, you can remove the `forced` prop provided t
 Head over to [Azure -> Azure Active Directory -> App registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
 with your Intility Account, and create a new registration.
 
-![New Registration in Azure](/img/azure-new.png)
-
+![New Registration in Azure](/img/azure-new.png)  
 Select a fitting name for your project, this name will be presented to the user during consent.
 
 Under `Supported account types`, choose either `Intility AS only - Single tenant` or `Any Azure AD directory - Multitenant`.
@@ -21,8 +20,7 @@ Under `Redirect URI`, select `Single-page application (SPA)` from the dropdown, 
 
 Hit the register button, and you will be taken to an overview of your newly created registration.
 
-![Finding Client ID](/img/azure-clientid.png)
-
+![Finding Client ID](/img/azure-clientid.png)  
 Copy the `Application (Client) ID` GUID, and paste it into the `clientId` field in your `index.tsx` file.
 
 ```jsx title="src/index.tsx"
@@ -41,8 +39,7 @@ You have now successfully set up authentication, and are able to run `npm start`
 
 For each deployment of your app, you'll need to register it. You can do that by going to the Authentication page.
 
-![Adding Reply URLs](/img/azure-replyurls.png)
-
+![Adding Reply URLs](/img/azure-replyurls.png)  
 The first we need to add is the URL the deploy step makes in OpenShift:
 
 ```

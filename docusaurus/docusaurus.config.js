@@ -1,7 +1,7 @@
 module.exports = {
   title: 'Create Intility App',
   tagline: 'Templates for Create React App',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://create-intility-app.openshift-inside.intility.no',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
