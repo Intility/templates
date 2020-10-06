@@ -17,13 +17,11 @@ stages:
   - build
   - test
   - analyze
-  - sentry
+  - sentry-release
+  - sentry-deploy
   - deploy
 
 # --- build ---
-#
-#
-
 build:
   image: node:12
   stage: build
@@ -31,6 +29,7 @@ build:
     REACT_APP_SENTRY_DSN: $SENTRY_DSN
     REACT_APP_SENTRY_ENVIRONMENT: $CI_COMMIT_REF_SLUG
     REACT_APP_SENTRY_RELEASE: $CI_COMMIT_SHORT_SHA
+    REACT_APP_REDIRECT_URI: https://$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG.$OPENSHIFT_DOMAIN
   before_script:
     - npm ci
   script:
@@ -64,7 +63,7 @@ test:
 # https://docs.sonarqube.org/latest/analysis/gitlab-cicd/
 # sonar-scanner automatically detects branches, so can run on any branch
 # The image automatically passes SONAR_HOST_URL and SONAR_TOKEN to the cli
-sonar:
+sonarqube:
   image: sonarsource/sonar-scanner-cli
   stage: analyze
   variables:
@@ -77,16 +76,21 @@ sonar:
 
 # --- sentry ---
 sentry:
-  stage: sentry
+  stage: sentry-release
+  image: getsentry/sentry-cli
+  script:
+    - sentry-cli releases new $CI_COMMIT_SHORT_SHA
+    - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
+    - sentry-cli releases files $CI_COMMIT_SHORT_SHA upload-sourcemaps --url-prefix '~/static/js' build/static/js --rewrite
+    - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
+  retry: 2
+
+sentry:production:
+  stage: sentry-deploy
   image: getsentry/sentry-cli
   variables:
     SENTRY_ENV: production
   script:
-    - sentry-cli releases new $CI_COMMIT_SHORT_SHA
-    # comment this line if the repository is not integrated with sentry
-    - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
-    - sentry-cli releases files $CI_COMMIT_SHORT_SHA upload-sourcemaps --url-prefix '~' build/static/js --validate --rewrite
-    - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
     - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e $SENTRY_ENV
   retry: 2
   rules:
