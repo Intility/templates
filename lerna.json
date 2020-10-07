@@ -5,7 +5,7 @@
     "cra-template-authless-js",
     "cra-template-js"
   ],
-  "version": "0.2.1",
+  "version": "0.2.2",
   "npmClientArgs": [
     "--no-lockfile"
   ],
