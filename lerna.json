@@ -1,7 +1,12 @@
 {
-  "packages": ["cra-template", "cra-template-js"],
-  "version": "0.2.2",
-  "npmClientArgs": ["--no-lockfile"],
+  "packages": [
+    "cra-template",
+    "cra-template-js"
+  ],
+  "version": "0.2.3",
+  "npmClientArgs": [
+    "--no-lockfile"
+  ],
   "command": {
     "publish": {
       "verifyAccess": false,
