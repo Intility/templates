@@ -42,6 +42,10 @@ This template includes Bifrost, a router, auth and infrastructure files.
 
 This is the same as cra-template, but without TypeScript. It is auto-generated using babel.
 
+### docusaurus
+
+Docs for these templates, made with [docusaurus](https://v2.docusaurus.io/).
+
 ## Deployment
 
 For each cra-template\* folder, the pipeline will merge the common folder into it, and publish it to NPM.
