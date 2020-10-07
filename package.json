@@ -5,7 +5,16 @@
   "description": "This repository contains Intility Templates for Create React App. In the future, templates for next.js or other frameworks might be included.",
   "main": "index.js",
   "scripts": {
-    "build": ""
+    "build": "run-s copy stripTypeScript prettify",
+    "copy": "run-p copy:*",
+    "copy:plain": "cp -r common/* cra-template/",
+    "copy:plainjs": "cp -r common/* cra-template-js/",
+    "copy:authless": "cp -r common/* cra-template-authless/",
+    "copy:authlessjs": "cp -r common/* cra-template-authless-js/",
+    "stripTypeScript": "run-p stripTypeScript:*",
+    "stripTypeScript:plain": "babel cra-template/template/src --out-dir cra-template-js/template/src --extensions \".ts,.tsx,.js\"",
+    "stripTypeScript:authless": "babel cra-template-authless/template/src --out-dir cra-template-authless-js/template/src --extensions \".ts,.tsx,.js\"",
+    "prettify": "prettier --write cra-template-js cra-template-authless-js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +26,8 @@
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
     "@babel/preset-typescript": "^7.10.4",
+    "lerna": "^3.22.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.1.2"
   }
 }

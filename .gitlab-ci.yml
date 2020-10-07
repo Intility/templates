@@ -13,6 +13,30 @@ docs:
         - docusaurus/**/*
         - .gitlab-ci.yml
 
+build:
+  image: node:12
+  stage: build
+  before_script:
+    - npm ci
+  script:
+    - npm run copy
+    - npm run stripTypeScript
+  artifacts:
+    untracked: true
+    exclude:
+      - node_modules
+    expire_in: 2 weeks
+  needs: []
+
+publish:
+  image: node:12
+  stage: publish
+  before_script:
+    - npm ci
+  script:
+    - npx lerna publish
+  needs:
+    - build
 
 .publish:
   image: node:12

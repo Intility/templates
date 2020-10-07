@@ -1,13 +1,12 @@
 {
-  "name": "@intility/cra-template",
+  "name": "@intility/cra-template-js",
   "version": "0.1.6",
   "keywords": [
     "react",
     "create-react-app",
-    "template",
-    "typescript"
+    "template"
   ],
-  "description": "TypeScript Intility template for Create React App.",
+  "description": "JavaScript Intility template for Create React App.",
   "main": "template.json",
   "repository": {
     "type": "git",

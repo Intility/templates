@@ -31,6 +31,7 @@ module.exports = {
       type: 'category',
       label: 'Advanced',
       items: [
+        'advanced/adding-environments',
         'advanced/adfs',
         'advanced/publish-image',
         'advanced/deploy-azure',

@@ -1,0 +1,16 @@
+{
+  "packages": [
+    "cra-template",
+    "cra-template-authless",
+    "cra-template-authless-js",
+    "cra-template-js"
+  ],
+  "version": "0.1.6",
+  "npmClientArgs": ["--no-lockfile"],
+  "command": {
+    "publish": {
+      "verifyAccess": false,
+      "registry": "https://artifactory.int.intility.no/artifactory/api/npm/npm/"
+    }
+  }
+}

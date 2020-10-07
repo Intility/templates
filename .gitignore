@@ -4,6 +4,9 @@ node_modules
 # Production
 build
 
+cra-template-authless-js/template/src
+cra-template-js/template/src
+
 # Generated files
 .docusaurus
 .cache-loader
