@@ -6,6 +6,8 @@ import MsalBrowserProvider from "@intility/react-msal-browser";
 import * as serviceWorker from "serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 
+// NODE_ENV will be 'development' during the npm start script
+// and 'production' during the npm run build script
 if (process.env.NODE_ENV !== "development") {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -16,6 +18,7 @@ if (process.env.NODE_ENV !== "development") {
 
 const msal = {
   auth: {
+    // https://create-intility-app.openshift-inside.intility.no/configuration/authentication
     clientId: "YOUR_CLIENT_ID",
     // if multi-tenant, use https://login.microsoftonline.com/common
     authority:
