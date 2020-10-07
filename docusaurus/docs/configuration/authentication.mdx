@@ -30,10 +30,10 @@ const msal = {
     ...
   },
   ...
-};
+}
 ```
 
-You have now successfully set up authentication, and are able to run `npm start` locally.
+You have now successfully set up authentication.
 
 ### Adding reply URLs
 
@@ -60,11 +60,11 @@ import TabItem from '@theme/TabItem';
   defaultValue="bash"
   values={[
   {
-    label: "bash",
-    value: "bash"
+    label: 'bash',
+    value: 'bash'
   }, {
-    label: "PowerShell",
-    value: "ps"
+    label: 'PowerShell',
+    value: 'ps'
   }
   ]}
 >
@@ -93,7 +93,62 @@ const msal = {
     ...
   },
   ...
-};
+}
 ```
 
-You have now successfully set up authentication, and are able to run `npm start` locally.
+You have now successfully set up authentication.
+
+## Enabling auth in your app
+
+Depending on what your applications scope is, there are different ways of enabling authentication.
+
+### Forcing auth
+
+This is the simplest way, and can be enabled by adding the `forced` prop to `MsalBrowserProvider`.
+
+```jsx title="src/index.tsx"
+ReactDOM.render(
+  <Router>
+    <MsalBrowserProvider config={msal} forced>
+                                       ^^^^^^
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </MsalBrowserProvider>
+  </Router>,
+  document.getElementById("root")
+)
+```
+
+This will force user authentication, and your app won't render unless the user is authenticated.
+
+### Conditional auth
+
+If you don't want forced auth, you can implement a simple log-in button by using the `useAuth` hook from `@intility/react-msal-browser`.
+
+```jsx
+import { Button } from '@intility/bifrost-react'
+import { useAuth } from '@intility/react-msal-browser'
+
+const LoginButton = () => {
+  const { login } = useAuth()
+  
+  return (
+    <Button onClick={login}>Login</Button>
+  )
+}
+```
+
+And elsewhere in your app you can determin the login status by checking the existance of a user with `useUser`.
+
+```jsx
+import { useUser } from '@intility/react-msal-browser'
+
+const MyComponent = () => {
+  const user = useUser()
+
+  return (
+    <span>{ user !== null ? 'Hello friend.' : 'Who are you?' }</span>
+  )
+}
+```
