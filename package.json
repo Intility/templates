@@ -12,7 +12,7 @@
     "copy:plain": "cp -r common/* cra-template/",
     "copy:plainjs": "cp -r common/* cra-template-js/",
     "prettify": "prettier --write \"cra-template-*js/template/src/**/*.js\"",
-    "bump": "lerna version --yes"
+    "bump": "lerna version --force-publish --yes"
   },
   "repository": {
     "type": "git",
