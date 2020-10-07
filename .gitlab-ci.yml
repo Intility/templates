@@ -9,8 +9,7 @@ build:
   before_script:
     - npm ci
   script:
-    - npm run copy
-    - npm run stripTypeScript
+    - npm run build
   artifacts:
     untracked: true
     exclude:
