@@ -8,12 +8,9 @@
     "build": "run-s stripTypeScript copy prettify",
     "stripTypeScript": "run-p stripTypeScript:*",
     "stripTypeScript:plain": "babel cra-template/template/src --out-dir cra-template-js/template/src --extensions \".ts,.tsx\" --copy-files",
-    "stripTypeScript:authless": "babel cra-template-authless/template/src --out-dir cra-template-authless-js/template/src --extensions \".ts,.tsx\" --copy-files",
     "copy": "run-p copy:*",
     "copy:plain": "cp -r common/* cra-template/",
     "copy:plainjs": "cp -r common/* cra-template-js/",
-    "copy:authless": "cp -r common/* cra-template-authless/",
-    "copy:authlessjs": "cp -r common/* cra-template-authless-js/",
     "prettify": "prettier --write \"cra-template-*js/template/src/**/*.js\"",
     "bump": "lerna version --yes"
   },

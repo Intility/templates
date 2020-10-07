@@ -1,14 +1,7 @@
 {
-  "packages": [
-    "cra-template",
-    "cra-template-authless",
-    "cra-template-authless-js",
-    "cra-template-js"
-  ],
+  "packages": ["cra-template", "cra-template-js"],
   "version": "0.2.2",
-  "npmClientArgs": [
-    "--no-lockfile"
-  ],
+  "npmClientArgs": ["--no-lockfile"],
   "command": {
     "publish": {
       "verifyAccess": false,

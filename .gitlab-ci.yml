@@ -13,8 +13,6 @@ build:
   artifacts:
     paths:
       - cra-template
-      - cra-template-authless
-      - cra-template-authless-js
       - cra-template-js
     expire_in: 2 weeks
   rules:
