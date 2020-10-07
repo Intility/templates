@@ -36,12 +36,13 @@ After logging in, the CLI will show you available projects. Follow the instructi
 When you have selected the right project, we need to create a Service Account.
 ```bash
 oc create sa gitlab-builder
+oc describe sa gitlab-builder
 ```
 Note the `gitlab-builder-token-*` in the `Mountable secrets` section.
 
 Then we have to set the user to admin.  
 ```bash
-oc policy add-role-to-user admin -z gitlab-runner
+oc policy add-role-to-user admin -z gitlab-builder
 ```
 
 Lastly, we have to extract the token from the secret presented in the first step.
