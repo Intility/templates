@@ -27,3 +27,15 @@ The pipeline will fail initially, but don't worry, we'll set it up correctly in 
 
 In your project on GitLab, go to Settings -> CI / CD, and expand the Variables section.
 We don't need to add anything yet, but it's here we'll add tokens and such in the other steps.
+
+## Adding Badges
+
+In your project on GitLab, go to Settings -> General, and expand the Badges section.
+Here you can add badges by giving them a Name, Link and Image URL.
+
+![Add Badge in GitLab](/img/gitlab-badge.png)
+
+We can go ahead and add a badge for our pipeline with the following values:  
+Name: `Pipeline`  
+Link: `https://gitlab.intility.no/%{project_path}`  
+Image URL: `https://gitlab.intility.no/%{project_path}/badges/%{default_branch}/pipeline.svg`
