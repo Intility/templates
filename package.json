@@ -14,7 +14,8 @@
     "stripTypeScript": "run-p stripTypeScript:*",
     "stripTypeScript:plain": "babel cra-template/template/src --out-dir cra-template-js/template/src --extensions \".ts,.tsx,.js\"",
     "stripTypeScript:authless": "babel cra-template-authless/template/src --out-dir cra-template-authless-js/template/src --extensions \".ts,.tsx,.js\"",
-    "prettify": "prettier --write cra-template-js cra-template-authless-js"
+    "prettify": "prettier --write cra-template-js cra-template-authless-js",
+    "bump": "lerna version --yes"
   },
   "repository": {
     "type": "git",
