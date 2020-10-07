@@ -5,8 +5,10 @@
     "cra-template-authless-js",
     "cra-template-js"
   ],
-  "version": "0.1.6",
-  "npmClientArgs": ["--no-lockfile"],
+  "version": "0.2.0",
+  "npmClientArgs": [
+    "--no-lockfile"
+  ],
   "command": {
     "publish": {
       "verifyAccess": false,
