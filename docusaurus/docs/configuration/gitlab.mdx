@@ -8,6 +8,19 @@ Select a fitting name, it should be as globally unique and descriptive for your 
 ![New Project in Gitlab photo](/img/gitlab-new.png)  
 Take note of the Project Slug, as we'll use it later to configure the project in Sentry, SonarQube and OpenShift.
 
+## Pushing your application
+
+Create React App creates a git repository for you locally,
+but you'll have to add the GitLab repository as a remote.
+Copy the last three lines of the "Push an existing Git repository" example.
+They should look something like this:
+
+```bash
+git remote add origin git@gitlab.intility.no:Group/intility-app.git
+git push -u origin --all
+git push -u origin --tags
+```
+
 ## Adding CI/CD Variables
 
 In your project on GitLab, go to Settings -> CI / CD, and expand the Variables section.
