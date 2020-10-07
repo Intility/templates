@@ -1,17 +1,7 @@
 stages:
-  - docs
+  - build
   - publish
-
-docs:
-  image: appropriate/curl:latest
-  stage: docs
-  script:
-    - curl -X POST -k $DOCS_TRIGGER_URL
-  rules:
-    - if: $CI_COMMIT_BRANCH
-      changes:
-        - docusaurus/**/*
-        - .gitlab-ci.yml
+  - docs
 
 build:
   image: node:12
@@ -26,31 +16,29 @@ build:
     exclude:
       - node_modules
     expire_in: 2 weeks
-  needs: []
+  rules:
+    - if: $CI_COMMIT_TAG
 
 publish:
   image: node:12
   stage: publish
   before_script:
     - npm ci
-  script:
-    - npx lerna publish
-  needs:
-    - build
-
-.publish:
-  image: node:12
-  stage: publish
-  before_script:
-    - cd ${TEMPLATE}
-    - cp -r ../common/* ./
     - echo //${ARTIFACTORY_NPM_REGISTRY}:_authToken=${ARTIFACTORY_NPM_TOKEN} > .npmrc
   script:
-    - npm publish
-  only:
-    - tags
+    - npx lerna publish from-package --yes
+  needs:
+    - build
+  rules:
+    - if: $CI_COMMIT_TAG
 
-cra-template:
-  extends: .publish
-  variables:
-    TEMPLATE: cra-template
+docs:
+  image: appropriate/curl:latest
+  stage: docs
+  script:
+    - curl -X POST -k $DOCS_TRIGGER_URL
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      changes:
+        - docusaurus/**/*
+        - .gitlab-ci.yml
