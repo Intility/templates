@@ -8,6 +8,6 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM intility/nginx-unprivileged-react
+FROM intility/nginx-unprivileged-react:1.18.2
 
 COPY --from=build /src/build /usr/share/nginx/html
