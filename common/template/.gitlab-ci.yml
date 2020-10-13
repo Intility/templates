@@ -80,7 +80,7 @@ sentry:
   image: getsentry/sentry-cli
   script:
     - sentry-cli releases new $CI_COMMIT_SHORT_SHA
-    - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
+    - sentry-cli releases set-commits --local $CI_COMMIT_SHORT_SHA
     - sentry-cli releases files $CI_COMMIT_SHORT_SHA upload-sourcemaps --url-prefix '~/static/js' build/static/js --rewrite
     - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
   retry: 2
