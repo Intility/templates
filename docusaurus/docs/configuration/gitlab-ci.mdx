@@ -41,12 +41,12 @@ This job simply runs the [`npm test`](https://create-react-app.dev/docs/availabl
 This job uses the [SonarScanner CLI](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/) to upload the source code to SonarQube.
 The pipeline will continue if this job fails, but it should be looked into.
 
-## `sentry` and `sentry:production`
+## `sentry`
 The `sentry` job uses the [Sentry CLI](https://docs.sentry.io/product/cli/) to create a new release.
 The release name will be the git commit SHA.
 It will connect the release to the current commit, and upload sourcemaps from the build step.
 
-The `sentry:production` job runs on pushes to the `master` branch,
+The job runs on pushes to the `master` branch,
 and will associate the release with the deployment environment `production`.
 
 ## `deploy:production`
