@@ -7,7 +7,7 @@
   "scripts": {
     "build": "run-s stripTypeScript copy prettify",
     "stripTypeScript": "run-p stripTypeScript:*",
-    "stripTypeScript:plain": "babel cra-template/template/src --out-dir cra-template-js/template/src --extensions \".ts,.tsx\" --copy-files",
+    "stripTypeScript:plain": "babel cra-template/template/src --out-dir cra-template-js/template/src --extensions \".ts,.tsx\" --copy-files --no-copy-ignored",
     "copy": "run-p copy:*",
     "copy:plain": "cp -r common/* cra-template/",
     "copy:plainjs": "cp -r common/* cra-template-js/",
