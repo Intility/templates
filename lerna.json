@@ -3,7 +3,7 @@
     "cra-template",
     "cra-template-js"
   ],
-  "version": "0.5.0",
+  "version": "0.5.1",
   "npmClientArgs": [
     "--no-lockfile"
   ],
