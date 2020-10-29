@@ -22,7 +22,10 @@ const App = () => {
   return (
     <Nav
       appName="App Name"
-      logoOnClick={() => navigate("/")}
+      logoOnClick={(e) => {
+        e.preventDefault();
+        navigate("/");
+      }}
       top={
         <>
           <NavLink to="/profile">
