@@ -37,7 +37,7 @@ const msal = {
 
 ReactDOM.render(
   <BrowserRouter>
-    <MsalBrowserProvider config={msal} forced>
+    <MsalBrowserProvider config={msal}>
       <React.StrictMode>
         <App />
       </React.StrictMode>
