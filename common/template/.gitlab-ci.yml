@@ -83,8 +83,7 @@ sentry:
     - sentry-cli releases new $CI_COMMIT_SHORT_SHA
     - sentry-cli releases files $CI_COMMIT_SHORT_SHA upload-sourcemaps --url-prefix '~/static/js' build/static/js --rewrite
     - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
-    - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e $SENTRY_ENV
-  retry: 2
+  retry: 1
 
 sentry:deploy:production:
   stage: sentry-deploy
@@ -96,7 +95,7 @@ sentry:deploy:production:
     # Setting commits might cause problems when using multiple branches, only do this on master branch
     - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
     - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e $SENTRY_ENV
-  retry: 2
+  retry: 1
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
 
@@ -120,5 +119,6 @@ deploy:production:
     - "oc get services $APP 2> /dev/null || oc new-app . --name=$APP --strategy=docker"
     - "oc start-build $APP --from-dir=. --wait=true --follow"
     - "oc get routes $APP 2> /dev/null || oc create route edge --service $APP --hostname=$APP_HOST"
+  retry: 1
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
