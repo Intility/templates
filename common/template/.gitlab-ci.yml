@@ -17,7 +17,8 @@ stages:
   - build
   - test
   - analyze
-  - sentry
+  - sentry-release
+  - sentry-deploy
   - deploy
 
 # --- build ---
@@ -76,17 +77,24 @@ sonarqube:
 
 # --- sentry ---
 sentry:
-  stage: sentry
+  stage: sentry-release
   image: getsentry/sentry-cli
-  variables:
-    SENTRY_ENV: production
-  variables:
-    GIT_DEPTH: 0
   script:
     - sentry-cli releases new $CI_COMMIT_SHORT_SHA
-    - sentry-cli releases set-commits --local $CI_COMMIT_SHORT_SHA
     - sentry-cli releases files $CI_COMMIT_SHORT_SHA upload-sourcemaps --url-prefix '~/static/js' build/static/js --rewrite
     - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
+    - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e $SENTRY_ENV
+  retry: 2
+
+sentry:deploy:production:
+  stage: sentry-deploy
+  image: getsentry/sentry-cli
+  variables:
+    GIT_DEPTH: 0
+    SENTRY_ENV: production
+  script:
+    # Setting commits might cause problems when using multiple branches, only do this on master branch
+    - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
     - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e $SENTRY_ENV
   retry: 2
   rules:
