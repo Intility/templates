@@ -1,7 +1,7 @@
 module.exports = {
   title: 'Create Intility App',
   tagline: 'Templates for Create React App',
-  url: 'https://create-intility-app.openshift-inside.intility.no',
+  url: 'https://create.intility.app/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
