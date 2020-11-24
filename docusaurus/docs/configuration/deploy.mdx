@@ -15,20 +15,29 @@ The included deploy job will deploy your project to OpenShift. For this to work,
 
 Go to [our OpenShift instance](https://openshift.intility.no:8443/) and log in.
 
-Create a project, the name should be the same as the GitLab project slug.  
-If you use something other than the project slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.  
+Create a project, the name should be `aa-<GITLAB_SLUG>-production`, e.g. `aa-my-app-production`.  
+If you use something other than this, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.  
 Add a fitting display name and description if you feel like it.
 
 ### CLI
 
-The name should be the same as the GitLab project slug.  
-If you use something other than the project slug, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.
+The name should be `aa-<GITLAB_SLUG>-production`, e.g. `aa-my-app-production`.  
+If you use something other than this, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.
 
 ```bash
 oc new-project <projectname>
 ```
 
 ## Acquire Token
+
+:::caution
+As a result of the nemesis migration, new projects currently have to be approved.
+
+Request approval, and a builder token in [Operativ Samhandling -> OpenShift](https://teams.microsoft.com/l/channel/19%3af9d7793bfb1547d6a3fc45266a9c9910%40thread.skype/OpenShift?groupId=78c06d91-45ea-4b22-8462-884cba69657b&tenantId=9b5ff18e-53c0-45a2-8bc2-9c0c8f60b2c6).
+Once approved, and a token is created, copy the token and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
+
+This is a temporary measure. The following instructions does not apply at the moment.
+:::
 
 In this step we will use the [OpenShift CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html).  
 Copy login command from OpenShift Console and paste it in a terminal.  
