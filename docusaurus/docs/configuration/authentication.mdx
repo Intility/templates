@@ -126,28 +126,172 @@ This will force user authentication, and your app won't render unless the user i
 If you don't want forced auth, you can implement a simple log-in button by using the `useAuth` hook from `@intility/react-msal-browser`.
 
 ```jsx
-import { Button } from '@intility/bifrost-react'
-import { useAuth } from '@intility/react-msal-browser'
+import { Button } from "@intility/bifrost-react";
+import { useAuth } from "@intility/react-msal-browser";
 
 const LoginButton = () => {
-  const { login } = useAuth()
+  const { login } = useAuth();
   
   return (
     <Button onClick={login}>Login</Button>
   )
-}
+};
 ```
 
 And elsewhere in your app you can determin the login status by checking the existance of a user with `useUser`.
 
 ```jsx
-import { useUser } from '@intility/react-msal-browser'
+import { useUser } from "@intility/react-msal-browser";
 
 const MyComponent = () => {
-  const user = useUser()
+  const user = useUser();
 
-  return (
-    <span>{ user !== null ? 'Hello friend.' : 'Who are you?' }</span>
-  )
+  return <span>{user !== null ? "Hello friend." : "Who are you?"}</span>;
+};
+```
+
+## Consuming an authenticated API
+
+Consuming an authenticated API is relativly simple.
+First, you'll need to modify the endpoints section of your MSAL config.
+The key needs to be the base URL of the API, and the value should be an array of scopes needed to authenticate to the API.
+
+```jsx title="src/index.tsx"
+const msal = {
+  endpoints: {
+    "http://localhost:5000": ["API_SCOPE"],
+    ...
+  },
+  ...
 }
 ```
+
+The API base URL can also be dynamically applied from an [Environment Variables](/configuration/environment-variables).
+
+```jsx title="src/index.tsx"
+const msal = {
+  endpoints: {
+    [process.env.REACT_APP_API_URL]: ["API_SCOPE"],
+    ...
+  },
+  ...
+}
+```
+
+You can now consume an API with `authorizedFetch`, which uses the `endpoints` config to detect which token to use in a request.
+
+```jsx
+import { useState, useEffect } from "react";
+import { authorizedFetch } from "@intility/react-msal-browser";
+
+// This is a simplified example of data fetching in react
+// Please don't use in production
+
+const DataComponent = () => {
+  const [data, setData] = useState();
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    authorizedFetch("my-api/resource")
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => setError(error));
+  }, []);
+
+  return (
+    <>
+      {!data && !error && <p>Loading data...</p>}
+      {data && <div>Here is the data: {data}</div>}
+      {error && <p className="error">Oh No!!! {error.toString()}</p>}
+    </>
+  );
+};
+```
+
+### SWR
+
+Integrating `authenticatedFetch` with SWR is very simple. All you need to do is specify a fetcher for SWR.
+
+```jsx
+import useSWR from "swr";
+import { authorizedFetch } from "@intility/react-msal-browser";
+
+const authFetcher = (url: string) =>
+  authorizedFetch(url).then((result) => result.json());
+
+const SwrComponent = () => {
+  const { data, error } = useSWR("my-api/resource", { fetcher: authFetcher });
+
+  return (
+    <>
+      {!data && !error && <p>Loading data...</p>}
+      {data && <div>Here is the data: {data}</div>}
+      {error && <p className="error">Oh No!!! {error.toString()}</p>}
+    </>
+  );
+};
+```
+
+We could take this one step further, and assign the fetcher globally using `SWRConfig`.
+
+```jsx title="src/index.tsx"
+import { SWRConfig } from "swr";
+import { authorizedFetch } from "@intility/react-msal-browser";
+
+// Note that we apply a base url to every request
+const swr = {
+  fetcher: (path: string) =>
+    authorizedFetch(process.env.REACT_APP_API_URL + path)
+    .then(response => response.json())
+};
+
+ReactDOM.render(
+  <Router>
+    <MsalBrowserProvider config={msal} forced>
+      <SWRConfig value={swr}>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+      </SWRConfig>
+    </MsalBrowserProvider>
+  </Router>,
+  document.getElementById("root")
+);
+```
+
+We can now call `useSWR` somewhere in our app, and it will by default use the authorized fetcher.
+
+```jsx
+import useSWR from "swr";
+import { authorizedFetch } from "@intility/react-msal-browser";
+
+const SwrComponent = () => {
+  // Note that only the resource is requested here
+  // that's because the API base URL is prepended in our fetcher
+  const { data, error } = useSWR("resource");
+
+  return (
+    <>
+      {!data && !error && <p>Loading data...</p>}
+      {data && <div>Here is the data: {data}</div>}
+      {error && <p className="error">Oh No!!! {error.toString()}</p>}
+    </>
+  );
+};
+```
+
+One great thing about SWR is request deduping and caching.  
+In the following example, there will be three instances of our `SwrComponent`, but only one request will be made.
+That would not be the case if we were to use the `DataComponent` from earlier, where we manually fetched the data.
+
+```jsx
+const SomeExample = () => (
+  <>
+    <SwrComponent />
+    <SwrComponent />
+    <SwrComponent />
+  </>
+);
+```
+
+To read more about SWR, check out the [SWR Docs](https://swr.vercel.app/).
