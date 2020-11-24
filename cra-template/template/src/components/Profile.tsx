@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink, Routes, Route } from "react-router-dom";
 import { TabBar } from "@intility/bifrost-react";
 

@@ -1,4 +1,4 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
@@ -38,9 +38,9 @@ const msal = {
 ReactDOM.render(
   <BrowserRouter>
     <MsalBrowserProvider config={msal}>
-      <React.StrictMode>
+      <StrictMode>
         <App />
-      </React.StrictMode>
+      </StrictMode>
     </MsalBrowserProvider>
   </BrowserRouter>,
   document.getElementById("root")
