@@ -6,7 +6,7 @@ variables:
   SENTRY_PROJECT: $CI_PROJECT_NAME
   OPENSHIFT_SERVER: api.openshift.intility.com:6443
   OPENSHIFT_DOMAIN: apps.int.intility.no
-  OPENSHIFT_PROJECT: $CI_PROJECT_NAME
+  OPENSHIFT_PROJECT: aa-$CI_PROJECT_NAME-production
   # Configure these variables in Secure Variables:
   # SONAR_TOKEN: my.sonarqube.token
   # SENTRY_DSN: my.sentry.dsn
