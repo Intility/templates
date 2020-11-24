@@ -4,8 +4,8 @@ variables:
   SENTRY_URL: https://sentry.intility.no/
   SENTRY_ORG: intility
   SENTRY_PROJECT: $CI_PROJECT_NAME
-  OPENSHIFT_SERVER: openshift.intility.no:8443
-  OPENSHIFT_DOMAIN: openshift-inside.intility.no
+  OPENSHIFT_SERVER: api.openshift.intility.com:6443
+  OPENSHIFT_DOMAIN: apps.int.intility.no
   OPENSHIFT_PROJECT: $CI_PROJECT_NAME
   # Configure these variables in Secure Variables:
   # SONAR_TOKEN: my.sonarqube.token
@@ -119,6 +119,8 @@ deploy:production:
     - "oc get services $APP 2> /dev/null || oc new-app . --name=$APP --strategy=docker"
     - "oc start-build $APP --from-dir=. --wait=true --follow"
     - "oc get routes $APP 2> /dev/null || oc create route edge --service $APP --hostname=$APP_HOST"
+    # Needed for .apps.int.intility.no routes
+    - "oc label route $APP ingress-tenant=aa"
   retry: 1
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
