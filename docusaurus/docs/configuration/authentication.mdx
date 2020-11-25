@@ -168,7 +168,31 @@ const msal = {
 
 The API base URL can also be dynamically applied from an [Environment Variables](/configuration/environment-variables).
 
-```jsx title="src/index.tsx"
+
+<Tabs
+  groupId="typed"
+  defaultValue="typed"
+  values={[
+    { label: 'TypeScript', value: 'typed' },
+    { label: 'JavaScript', value: 'plain' },
+  ]}
+>
+<TabItem value="typed">
+
+```tsx title="src/index.tsx"
+const msal = {
+  endpoints: {
+    [process.env.REACT_APP_API_URL as string]: ["API_SCOPE"],
+    ...
+  },
+  ...
+}
+```
+
+</TabItem>
+<TabItem value="plain">
+
+```jsx title="src/index.js"
 const msal = {
   endpoints: {
     [process.env.REACT_APP_API_URL]: ["API_SCOPE"],
@@ -177,6 +201,9 @@ const msal = {
   ...
 }
 ```
+
+</TabItem>
+</Tabs>
 
 You can now consume an API with `authorizedFetch`, which uses the `endpoints` config to detect which token to use in a request.
 
@@ -212,7 +239,17 @@ const DataComponent = () => {
 
 Integrating `authenticatedFetch` with SWR is very simple. All you need to do is specify a fetcher for SWR.
 
-```jsx
+<Tabs
+  groupId="typed"
+  defaultValue="typed"
+  values={[
+    { label: 'TypeScript', value: 'typed' },
+    { label: 'JavaScript', value: 'plain' },
+  ]}
+>
+<TabItem value="typed">
+
+```tsx
 import useSWR from "swr";
 import { authorizedFetch } from "@intility/react-msal-browser";
 
@@ -232,7 +269,72 @@ const SwrComponent = () => {
 };
 ```
 
+</TabItem>
+<TabItem value="plain">
+
+```jsx
+import useSWR from "swr";
+import { authorizedFetch } from "@intility/react-msal-browser";
+
+const authFetcher = (url) =>
+  authorizedFetch(url).then((result) => result.json());
+
+const SwrComponent = () => {
+  const { data, error } = useSWR("my-api/resource", { fetcher: authFetcher });
+
+  return (
+    <>
+      {!data && !error && <p>Loading data...</p>}
+      {data && <div>Here is the data: {data}</div>}
+      {error && <p className="error">Oh No!!! {error.toString()}</p>}
+    </>
+  );
+};
+```
+
+</TabItem>
+</Tabs>
+
 We could take this one step further, and assign the fetcher globally using `SWRConfig`.
+
+<Tabs
+  groupId="typed"
+  defaultValue="typed"
+  values={[
+    { label: 'TypeScript', value: 'typed' },
+    { label: 'JavaScript', value: 'plain' },
+  ]}
+>
+<TabItem value="typed">
+
+```tsx title="src/index.tsx"
+import { SWRConfig } from "swr";
+import { authorizedFetch } from "@intility/react-msal-browser";
+
+// Note that we apply a base url to every request
+const swr = {
+  fetcher: (path: string) =>
+    authorizedFetch((process.env.REACT_APP_API_URL as string) + path)
+    .then(response => response.json())
+};
+
+ReactDOM.render(
+  <Router>
+    <MsalBrowserProvider config={msal} forced>
+      <SWRConfig value={swr}>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+      </SWRConfig>
+    </MsalBrowserProvider>
+  </Router>,
+  document.getElementById("root")
+);
+```
+
+</TabItem>
+<TabItem value="plain">
+
 
 ```jsx title="src/index.tsx"
 import { SWRConfig } from "swr";
@@ -240,7 +342,7 @@ import { authorizedFetch } from "@intility/react-msal-browser";
 
 // Note that we apply a base url to every request
 const swr = {
-  fetcher: (path: string) =>
+  fetcher: (path) =>
     authorizedFetch(process.env.REACT_APP_API_URL + path)
     .then(response => response.json())
 };
@@ -258,6 +360,11 @@ ReactDOM.render(
   document.getElementById("root")
 );
 ```
+
+</TabItem>
+</Tabs>
+
+
 
 We can now call `useSWR` somewhere in our app, and it will by default use the authorized fetcher.
 
