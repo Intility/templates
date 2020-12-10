@@ -23,7 +23,7 @@ if (process.env.NODE_ENV !== "development") {
 
 const msal = {
   auth: {
-    // https://create-intility-app.openshift-inside.intility.no/configuration/authentication
+    // https://create.intility.app/configuration/authentication
     clientId: "YOUR_CLIENT_ID",
     // if multi-tenant, use https://login.microsoftonline.com/common
     authority:

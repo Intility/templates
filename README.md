@@ -2,7 +2,7 @@
 
 This repository contains Intility Templates for Create React App. In the future, templates for next.js or other frameworks might be included.
 
-Visit the [docs](https://create-intility-app.openshift-inside.intility.no/) for more information.
+Visit the [docs](https://create.intility.app/) for more information.
 
 ## Purpose
 
