@@ -15,7 +15,8 @@
     "directory": "cra-template"
   },
   "publishConfig": {
-    "registry": "https://artifactory.int.intility.no/artifactory/api/npm/npm/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "license": "MIT",
   "engines": {
