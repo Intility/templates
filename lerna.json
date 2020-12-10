@@ -1,5 +1,10 @@
 {
-  "packages": ["cra-template", "cra-template-js"],
-  "version": "0.6.1",
-  "npmClientArgs": ["--no-lockfile"]
+  "packages": [
+    "cra-template",
+    "cra-template-js"
+  ],
+  "version": "0.7.0",
+  "npmClientArgs": [
+    "--no-lockfile"
+  ]
 }
