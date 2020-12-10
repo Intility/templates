@@ -23,7 +23,7 @@ publish:
   stage: publish
   before_script:
     - npm ci
-    - echo //${ARTIFACTORY_NPM_REGISTRY}:_authToken=${ARTIFACTORY_NPM_TOKEN} > .npmrc
+    - echo //${NPM_REGISTRY}:_authToken=${NPM_TOKEN} > .npmrc
     - git update-index --assume-unchanged .npmrc
   script:
     - npx lerna publish from-package --yes
