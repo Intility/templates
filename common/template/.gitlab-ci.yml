@@ -109,9 +109,6 @@ deploy:production:
   environment:
     name: production
     url: https://$CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
-  tags:
-    - docker
-    - linux
   before_script:
     - oc login "$OPENSHIFT_SERVER" --token="$OPENSHIFT_TOKEN" --insecure-skip-tls-verify
     - oc project "$OPENSHIFT_PROJECT" 2> /dev/null
