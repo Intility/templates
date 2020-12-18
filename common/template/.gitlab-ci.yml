@@ -117,7 +117,7 @@ deploy:production:
     - "oc start-build $APP --from-dir=. --wait=true --follow"
     - "oc get routes $APP 2> /dev/null || oc create route edge --service $APP --hostname=$APP_HOST"
     # Needed for .apps.int.intility.no routes
-    - "oc label route $APP ingress-tenant=aa"
+    - "oc label route $APP ingress-tenant=aa --overwrite=true"
   retry: 1
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
