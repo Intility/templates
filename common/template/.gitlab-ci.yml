@@ -39,7 +39,7 @@ build:
       - build
     expire_in: 2 weeks
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
       when: never
     - when: always
 
@@ -49,7 +49,7 @@ build:production:
     REACT_APP_SENTRY_ENVIRONMENT: production
     REACT_APP_REDIRECT_URI: https://$CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
 
 # --- test ---
 test:
@@ -97,7 +97,7 @@ sentry:deploy:production:
     - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e $SENTRY_ENV
   retry: 1
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
 
 # --- deployment ---
 deploy:production:
@@ -120,4 +120,4 @@ deploy:production:
     - "oc label route $APP ingress-tenant=aa --overwrite=true"
   retry: 1
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
