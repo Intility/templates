@@ -33,8 +33,6 @@ publish:
 docs:
   image: appropriate/curl:latest
   stage: docs
-  tags:
-    - wip
   script:
     - curl -X POST -k $DOCS_TRIGGER_URL
   rules:
