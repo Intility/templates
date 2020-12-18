@@ -10,9 +10,20 @@ build:production
 test
 sonarqube
 sentry
-sentry:production
+sentry:deploy:production
 deploy:production
 ```
+
+:::info
+This page describes jobs of the current version of the templates.
+If you use an old version, they might differ.
+[Click here](https://gitlab.intility.com/DeveloperServices/cra-templates/-/blob/master/common/template/.gitlab-ci.yml) to view the current `.gitlab-ci.yml`,
+if you haven't made any changes to yours, you can safely copy it into your project.
+:::
+
+:::info
+All production jobs is set to run on pushes to `master` or `main` branch.
+:::
 
 ## `build` & `build:production`
 
@@ -46,6 +57,7 @@ The `sentry` job uses the [Sentry CLI](https://docs.sentry.io/product/cli/) to c
 The release name will be the git commit SHA.
 It will connect the release to the current commit, and upload sourcemaps from the build step.
 
+## `sentry:deploy:production`
 The job runs on pushes to the `master` branch,
 and will associate the release with the deployment environment `production`.
 
@@ -53,10 +65,11 @@ and will associate the release with the deployment environment `production`.
 This is the main job for deploying to OpenShift. It runs on the `master` branch.  
 It will create an Environment in GitLab, with the URL to the running app.
 
-The script has three steps:
+The script has four steps:
 
-1. Create an app in your OpenShift project with the name `production`, unless it excists
+1. Create an app in your OpenShift project with the name `production`, unless it exists
 2. Start a docker image build for that app with the output from the `build` job
 3. Create a route for that application unless it exists
+4. Label the route with `ingress-tenant=aa` ([more info](https://rot.intility.com/IQ/Article/Details/92cd4165-a53a-4fab-902a-d6ce51e94da5))
 
-The route defaults to `https://{projectSlug}.openshift-inside.intility.no`.
+The route defaults to `https://{projectSlug}.apps.int.intility.no`.
