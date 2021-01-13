@@ -6,12 +6,12 @@ The `gitlab-ci.yml` file included with the template comes with the following job
 
 ```
 build
-build:production
+build:dev
 test
 sonarqube
 sentry
-sentry:deploy:production
-deploy:production
+sentry:deploy:dev
+deploy:dev
 ```
 
 :::info
@@ -22,10 +22,10 @@ if you haven't made any changes to yours, you can safely copy it into your proje
 :::
 
 :::info
-All production jobs is set to run on pushes to `master` or `main` branch.
+All `*:dev` jobs is set to run on pushes to `master` or `main` branch.
 :::
 
-## `build` & `build:production`
+## `build` & `build:dev`
 
 The main `build` job runs [`npm run build`](https://create-react-app.dev/docs/available-scripts/#npm-run-build) on every push to all branches (except master).
 It will pass some default environment variables;
@@ -39,10 +39,10 @@ It will pass some default environment variables;
 It also creates an artifact of the `build` folder that is created,
 which will be passed onto later jobs.
 
-The `build:production` pipeline does the same as build,
+The `build:dev` pipeline does the same as build,
 except it only runs on the master branch.
 We override two variables: `REACT_APP_SENTRY_ENVIRONMENT` and `REACT_APP_REDIRECT_URI`.
-We do that because we want our environment to be `production` instead of `master`,
+We do that because we want our environment to be `dev` instead of `master`,
 and the redirect URI to be `...{projectSlug}...` instead of `...{projectSlug}-master...`.
 
 ## `test`
@@ -57,17 +57,17 @@ The `sentry` job uses the [Sentry CLI](https://docs.sentry.io/product/cli/) to c
 The release name will be the git commit SHA.
 It will connect the release to the current commit, and upload sourcemaps from the build step.
 
-## `sentry:deploy:production`
+## `sentry:deploy:dev`
 The job runs on pushes to the `master` branch,
-and will associate the release with the deployment environment `production`.
+and will associate the release with the deployment environment `dev`.
 
-## `deploy:production`
+## `deploy:dev`
 This is the main job for deploying to OpenShift. It runs on the `master` branch.  
 It will create an Environment in GitLab, with the URL to the running app.
 
 The script has four steps:
 
-1. Create an app in your OpenShift project with the name `production`, unless it exists
+1. Create an app in your OpenShift project with the name `dev`, unless it exists
 2. Start a docker image build for that app with the output from the `build` job
 3. Create a route for that application unless it exists
 4. Label the route with `ingress-tenant=aa` ([more info](https://rot.intility.com/IQ/Article/Details/92cd4165-a53a-4fab-902a-d6ce51e94da5))

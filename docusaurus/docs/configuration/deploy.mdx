@@ -15,13 +15,13 @@ The included deploy job will deploy your project to OpenShift. For this to work,
 
 Go to [our OpenShift instance](https://openshift.intility.no:8443/) and log in.
 
-Create a project, the name should be `aa-<GITLAB_SLUG>-production`, e.g. `aa-my-app-production`.  
+Create a project, the name should be `aa-<GITLAB_SLUG>-dev`, e.g. `aa-my-app-dev`.  
 If you use something other than this, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.  
 Add a fitting display name and description if you feel like it.
 
 ### CLI
 
-The name should be `aa-<GITLAB_SLUG>-production`, e.g. `aa-my-app-production`.  
+The name should be `aa-<GITLAB_SLUG>-dev`, e.g. `aa-my-app-dev`.  
 If you use something other than this, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.
 
 ```bash
