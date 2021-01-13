@@ -30,7 +30,29 @@ oc new-project <projectname>
 
 ## Acquire Token
 
-In this step we will use the [OpenShift CLI](https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html).  
+### UI
+
+In your newly created project, switch from Developer to Administrator view in the sidebar.
+
+Then go to User Management -> Service Accounts, and click Create Service Account. Change the name field to `gitlab-builder`.
+
+![Create Service Account](/img/openshift-sa-new.png)
+
+After creating the Service Account, go to User Mangement -> Role Bindings, and click Create Binding. Fill the form with the following values:
+
+Role Binding Name: `gitlab-builder-edit`  
+Role Name: `edit`  
+Subject: Service Account  
+Subject Name: `gitlab-builder`  
+
+![Create Binding](/img/openshift-rb-new.png)
+
+After creating the role binding, go back to Service Accounts and go to the `gitlab-builder` Service Account.  
+At the bottom of page, you'll find a link to a secret named `gitlab-builder-token-*`, click it.  
+Copy the `token` field at the bottom of the page, and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
+
+### CLI
+
 Copy login command from OpenShift Console and paste it in a terminal.  
 After logging in, the CLI will show you available projects. Follow the instructions to change to the project you just created.
 
