@@ -6,7 +6,7 @@ variables:
   SENTRY_PROJECT: $CI_PROJECT_NAME
   OPENSHIFT_SERVER: api.openshift.intility.com:6443
   OPENSHIFT_DOMAIN: apps.int.intility.no
-  OPENSHIFT_PROJECT: aa-$CI_PROJECT_NAME-production
+  OPENSHIFT_PROJECT: aa-$CI_PROJECT_NAME-dev
   # Configure these variables in Secure Variables:
   # SONAR_TOKEN: my.sonarqube.token
   # SENTRY_DSN: my.sentry.dsn
@@ -43,11 +43,11 @@ build:
       when: never
     - when: always
 
-build:production:
+build:dev:
   extends: build
   variables:
-    REACT_APP_SENTRY_ENVIRONMENT: production
-    REACT_APP_REDIRECT_URI: https://$CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
+    REACT_APP_SENTRY_ENVIRONMENT: dev
+    REACT_APP_REDIRECT_URI: https://$CI_PROJECT_NAME-dev.$OPENSHIFT_DOMAIN
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
 
@@ -85,12 +85,12 @@ sentry:
     - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
   retry: 1
 
-sentry:deploy:production:
+sentry:deploy:dev:
   stage: sentry-deploy
   image: getsentry/sentry-cli
   variables:
     GIT_DEPTH: 0
-    SENTRY_ENV: production
+    SENTRY_ENV: dev
   script:
     # Setting commits might cause problems when using multiple branches, only do this on master branch
     - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
@@ -100,15 +100,15 @@ sentry:deploy:production:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
 
 # --- deployment ---
-deploy:production:
+deploy:dev:
   stage: deploy
   image: openshift/origin-cli
   variables:
-    APP: production
+    APP: dev
     APP_HOST: $CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
   environment:
-    name: production
-    url: https://$CI_PROJECT_NAME.$OPENSHIFT_DOMAIN
+    name: dev
+    url: https://$CI_PROJECT_NAME-dev.$OPENSHIFT_DOMAIN
   before_script:
     - oc login "$OPENSHIFT_SERVER" --token="$OPENSHIFT_TOKEN" --insecure-skip-tls-verify
     - oc project "$OPENSHIFT_PROJECT" 2> /dev/null
