@@ -29,3 +29,6 @@ cra-template*/template/README.md
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Test outputs
+test-output

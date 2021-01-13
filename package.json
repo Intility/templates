@@ -6,6 +6,9 @@
   "main": "index.js",
   "scripts": {
     "build": "run-s stripTypeScript copy prettify",
+    "test": "run-s build init:plain",
+    "init:plain": "npx create-react-app test-output --template file:./cra-template",
+    "init:plainjs": "npx create-react-app test-output --template file:./cra-template-js",
     "stripTypeScript": "run-p stripTypeScript:*",
     "stripTypeScript:plain": "babel cra-template/template/src --out-dir cra-template-js/template/src --extensions \".ts,.tsx\" --copy-files --no-copy-ignored",
     "copy": "run-p copy:*",
