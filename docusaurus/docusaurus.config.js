@@ -28,7 +28,7 @@ module.exports = {
           position: 'right',
         },
         {
-          href: 'https://gitlab.intility.no/DeveloperServices/cra-templates',
+          href: 'https://gitlab.intility.com/DeveloperServices/cra-templates',
           label: 'GitLab',
           position: 'right',
         },
@@ -42,7 +42,7 @@ module.exports = {
           items: [
             {
               label: 'Bifrost',
-              href: 'https://bifrost.intility.no/',
+              href: 'https://bifrost.intility.com/',
             },
             {
               label: 'React',
@@ -67,7 +67,7 @@ module.exports = {
             },
             {
               label: 'developers.intility.no',
-              href: 'https://developers.intility.no/',
+              href: 'https://developers.intility.com/',
             },
           ],
         },
@@ -76,7 +76,7 @@ module.exports = {
           items: [
             {
               label: 'GitLab',
-              href: 'https://gitlab.intility.no/',
+              href: 'https://gitlab.intility.com/',
             },
             {
               label: 'SonarQube',
@@ -88,7 +88,7 @@ module.exports = {
             },
             {
               label: 'OpenShift',
-              href: 'https://openshift.intility.no:8443/',
+              href: 'https://console.apps.openshift.intility.com/',
             },
             {
               label: 'Azure Portal',
@@ -109,7 +109,7 @@ module.exports = {
           routeBasePath: '/',
           // Please change this to your repo.
           editUrl:
-            'https://gitlab.intility.no/DeveloperServices/cra-templates/-/tree/master/docusaurus/',
+            'https://gitlab.intility.com/DeveloperServices/cra-templates/-/tree/master/docusaurus/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
