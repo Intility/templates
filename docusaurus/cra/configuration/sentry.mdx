@@ -1,5 +1,6 @@
 ---
 title: Sentry
+sidebar_position: 6
 ---
 
 The project comes included with error reporting to Sentry, and a pipeline job to upload sourcemaps and create releases.
@@ -19,7 +20,7 @@ you'll need to modify the `SENTRY_PROJECT` variable in the top of the .gitlab-ci
 Select a fitting team, or create a new one, and hit Create.
 
 You'll be taken to a Configure React page.
-In the code example under Connecting the SDK to Sentry, copy the `dsn` value, and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `SENTRY_DSN`.
+In the code example under Connecting the SDK to Sentry, copy the `dsn` value, and [add it to GitLab CI/CD variables](/cra/configuration/gitlab#adding-cicd-variables) with the key `SENTRY_DSN`.
 
 ### Acquire Token
 
@@ -28,4 +29,4 @@ Go to the [Auth Token section of your Account Settings](https://sentry.intility.
 ![Create Sentry Token](/img/sentry-token.png)
 The needed scopes are `project:read`, `project:releases` and `org:read`.
 
-Create it, copy the token and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `SENTRY_AUTH_TOKEN`.
+Create it, copy the token and [add it to GitLab CI/CD variables](/cra/configuration/gitlab#adding-cicd-variables) with the key `SENTRY_AUTH_TOKEN`.

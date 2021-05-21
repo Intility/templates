@@ -1,5 +1,6 @@
 ---
 title: Deploy
+sidebar_position: 7
 ---
 
 :::info
@@ -49,7 +50,7 @@ Subject Name: `gitlab-builder`
 
 After creating the role binding, go back to Service Accounts and go to the `gitlab-builder` Service Account.  
 At the bottom of page, you'll find a link to a secret named `gitlab-builder-token-*`, click it.  
-Copy the `token` field at the bottom of the page, and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
+Copy the `token` field at the bottom of the page, and [add it to GitLab CI/CD variables](/cra/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
 
 ### CLI
 
@@ -77,4 +78,4 @@ Lastly, we have to extract the token from the secret presented in the first step
 oc describe secret <secret-name>
 ```
 
-Copy the contents from the `token` section and [add it to GitLab CI/CD variables](/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
+Copy the contents from the `token` section and [add it to GitLab CI/CD variables](/cra/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.

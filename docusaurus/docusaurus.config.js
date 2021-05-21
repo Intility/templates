@@ -18,18 +18,18 @@ module.exports = {
       },
       items: [
         {
-          href: 'https://reactjs.org/',
-          label: 'React docs',
-          position: 'right',
+          href: '/cra',
+          label: 'Create React App',
+          position: 'left',
         },
         {
-          href: 'https://create-react-app.dev/',
-          label: 'Create React App docs',
-          position: 'right',
+          href: '/dotnet',
+          label: '.NET',
+          position: 'left',
         },
         {
-          href: 'https://gitlab.intility.com/DeveloperServices/cra-templates',
-          label: 'GitLab',
+          href: 'https://github.com/Intility/templates',
+          label: 'GitHub',
           position: 'right',
         },
       ],
@@ -105,11 +105,12 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          routeBasePath: '/',
+          sidebarPath: require.resolve('./sidebarsCra.js'),
+          id: 'cra',
+          path: 'cra',
+          routeBasePath: 'cra',
           // Please change this to your repo.
-          editUrl:
-            'https://gitlab.intility.com/DeveloperServices/cra-templates/-/tree/master/docusaurus/',
+          editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -117,5 +118,18 @@ module.exports = {
       },
     ],
   ],
-  plugins: [require.resolve('docusaurus-lunr-search')],
+  plugins: [
+    require.resolve('docusaurus-lunr-search'),
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'dotnet',
+        path: 'dotnet',
+        routeBasePath: 'dotnet',
+        sidebarPath: require.resolve('./sidebarsDotnet.js'),
+        editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+        // ... other options
+      },
+    ],
+  ],
 };

@@ -1,5 +1,6 @@
 ---
 title: gitlab-ci.yml Overview
+sidebar_position: 4
 ---
 
 The `gitlab-ci.yml` file included with the template comes with the following jobs
@@ -30,7 +31,7 @@ All `*:dev` jobs is set to run on pushes to `master` or `main` branch.
 The main `build` job runs [`npm run build`](https://create-react-app.dev/docs/available-scripts/#npm-run-build) on every push to all branches (except master).
 It will pass some default environment variables;
 
-- `REACT_APP_SENTRY_DSN` will be [`SENTRY_ENV`](/configuration/sentry#acquire-token)
+- `REACT_APP_SENTRY_DSN` will be [`SENTRY_ENV`](/cra/configuration/sentry#acquire-token)
 - `REACT_APP_SENTRY_ENVIRONMENT` will be the git branch name
 - `REACT_APP_SENTRY_RELEASE` will be the git commit SHA
 - `REACT_APP_REDIRECT_URI` will be  
