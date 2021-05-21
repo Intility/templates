@@ -1,6 +1,6 @@
 module.exports = {
   title: 'Create Intility App',
-  tagline: 'Templates for Create React App',
+  tagline: 'Easy to use templates for Intility developers',
   url: 'https://create.intility.app/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -24,9 +24,15 @@ module.exports = {
         },
         {
           href: '/dotnet',
-          label: '.NET',
+          label: 'dotnet',
           position: 'left',
         },
+        // PYTHON
+        // {
+        //   href: '/python',
+        //   label: 'python',
+        //   position: 'left',
+        // },
         {
           href: 'https://github.com/Intility/templates',
           label: 'GitHub',
@@ -131,5 +137,17 @@ module.exports = {
         // ... other options
       },
     ],
+    // PYTHON
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'python',
+    //     path: 'python',
+    //     routeBasePath: 'python',
+    //     sidebarPath: require.resolve('./sidebarsPython.js'),
+    //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+    //     // ... other options
+    //   },
+    // ],
   ],
 };
