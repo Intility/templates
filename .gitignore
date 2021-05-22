@@ -3,8 +3,11 @@ node_modules
 
 # Production
 build
+bin
+obj
 
 cra-template-*js/template/src
+cra-template*/template/chart
 cra-template*/template/public
 cra-template*/template/.env.development
 cra-template*/template/.eslintrc

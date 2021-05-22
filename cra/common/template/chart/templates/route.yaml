@@ -1,0 +1,26 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "chart.fullname" . }}
+{{- if eq .Values.route.base "apps.intility.com" }}
+  labels:
+    ingress-tenant: shared-services
+{{- else if eq .Values.route.base "apps.cust.intility.com" }}
+  labels:
+    ingress-tenant: customer
+{{- else if eq .Values.route.base "apps.aa.intility.com" }}
+  labels:
+    ingress-tenant: aa
+{{- else if eq .Values.route.base "apps.int.intility.no" }}
+  labels:
+    ingress-tenant: aa
+{{- end }}
+spec:
+  host: "{{ .Values.route.host }}.{{ .Values.route.base }}"
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: {{ include "chart.fullname" . }}
+    weight: 100
+  wildcardPolicy: None
