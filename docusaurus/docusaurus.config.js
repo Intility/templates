@@ -14,7 +14,7 @@ module.exports = {
       title: 'Create Intility App',
       logo: {
         alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo192.png',
       },
       items: [
         {
