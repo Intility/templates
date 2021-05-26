@@ -28,6 +28,12 @@ For other alternatives, see the [guide on developers.intility.no](https://develo
 
 Select the version you want. By default, TypeScript and an authentication sample is included.
 
+:::info default git branch
+create-react-app automatically creates a git repo. If you want the default branch to be something other than `master`, you need to set the `init.defaultBranch` config in git:  
+`git config --global init.defaultBranch main`  
+You need git version 2.28.0 or higher to use this option.
+:::
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
