@@ -2,21 +2,21 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: {{ include "chart.fullname" . }}
-{{- if eq .Values.route.base "apps.intility.com" }}
+  {{- if hasSuffix "apps.intility.com" .Values.route }}
   labels:
     ingress-tenant: shared-services
-{{- else if eq .Values.route.base "apps.cust.intility.com" }}
+  {{- else if hasSuffix "apps.cust.intility.com" .Values.route }}
   labels:
     ingress-tenant: customer
-{{- else if eq .Values.route.base "apps.aa.intility.com" }}
+  {{- else if hasSuffix "apps.aa.intility.com" .Values.route }}
   labels:
     ingress-tenant: aa
-{{- else if eq .Values.route.base "apps.int.intility.no" }}
+  {{- else if hasSuffix "apps.int.intility.no" .Values.route }}
   labels:
     ingress-tenant: aa
-{{- end }}
+  {{- end }}
 spec:
-  host: "{{ .Values.route.host }}.{{ .Values.route.base }}"
+  host: {{ .Values.route }}
   tls:
     termination: edge
   to:
