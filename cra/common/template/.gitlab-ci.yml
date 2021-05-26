@@ -5,8 +5,6 @@ variables:
   SENTRY_ORG: intility
   SENTRY_PROJECT: $CI_PROJECT_NAME
   OPENSHIFT_SERVER: api.openshift.intility.com:6443
-  OPENSHIFT_DOMAIN: apps.int.intility.no
-  OPENSHIFT_PROJECT: aa-$CI_PROJECT_NAME-dev
   # Configure these variables in Secure Variables:
   # SONAR_TOKEN: my.sonarqube.token
   # SENTRY_DSN: my.sentry.dsn
@@ -17,19 +15,22 @@ stages:
   - build
   - test
   - analyze
+  - image
   - sentry-release
   - sentry-deploy
   - deploy
 
+default:
+  interruptible: true
+
 # --- build ---
 build:
-  image: node:12
+  image: node:lts
   stage: build
   variables:
     REACT_APP_SENTRY_DSN: $SENTRY_DSN
     REACT_APP_SENTRY_ENVIRONMENT: $CI_COMMIT_REF_SLUG
-    REACT_APP_SENTRY_RELEASE: $CI_COMMIT_SHORT_SHA
-    REACT_APP_REDIRECT_URI: https://$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG.$OPENSHIFT_DOMAIN
+    REACT_APP_SENTRY_RELEASE: $CI_PIPELINE_IID
   before_script:
     - npm ci
   script:
@@ -45,20 +46,23 @@ build:
 
 build:dev:
   extends: build
+  environment:
+    name: dev
+    action: prepare
   variables:
     REACT_APP_SENTRY_ENVIRONMENT: dev
-    REACT_APP_REDIRECT_URI: https://$CI_PROJECT_NAME-dev.$OPENSHIFT_DOMAIN
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
 
 # --- test ---
 test:
-  image: node:12
+  image: node:lts
   stage: test
   before_script:
     - npm ci
   script:
     - npm run test
+  needs: []
 
 # --- sonar ---
 # https://docs.sonarqube.org/latest/analysis/gitlab-cicd/
@@ -74,16 +78,45 @@ sonarqube:
     -Dsonar.qualitygate.wait=true
     -Dsonar.projectKey=$SONAR_PROJECT
     -Dsonar.projectBaseDir=src/
+  needs: []
+
+# --- docker image ---
+image:dev:
+  stage: image
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  variables:
+    IMAGE_TAG: dev
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context $CI_PROJECT_DIR
+      --dockerfile Dockerfile
+      --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
+      --destination $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
+  needs: [ "build:dev" ]
 
 # --- sentry ---
 sentry:
   stage: sentry-release
   image: getsentry/sentry-cli
+  variables:
+    VERSION: $CI_PIPELINE_IID
   script:
-    - sentry-cli releases new $CI_COMMIT_SHORT_SHA
-    - sentry-cli releases files $CI_COMMIT_SHORT_SHA upload-sourcemaps --url-prefix '~/static/js' build/static/js --rewrite
-    - sentry-cli releases finalize $CI_COMMIT_SHORT_SHA
+    - sentry-cli releases new $VERSION
+    - sentry-cli releases files $VERSION upload-sourcemaps --url-prefix '~/static/js' build/static/js --rewrite
+    - sentry-cli releases finalize $VERSION
+    - sentry-cli releases set-commits --auto $VERSION || echo 'Found no commits to assign to release.'
   retry: 1
+  # we need a build artifact, doesn't matter which
+  needs:
+    - job: build
+      optional: true
+    - job: build:dev
+      optional: true
 
 sentry:deploy:dev:
   stage: sentry-deploy
@@ -91,33 +124,39 @@ sentry:deploy:dev:
   variables:
     GIT_DEPTH: 0
     SENTRY_ENV: dev
+    VERSION: $CI_PIPELINE_IID
   script:
-    # Setting commits might cause problems when using multiple branches, only do this on master branch
-    - sentry-cli releases set-commits --auto $CI_COMMIT_SHORT_SHA
-    - sentry-cli releases deploys $CI_COMMIT_SHORT_SHA new -e $SENTRY_ENV
+    - sentry-cli releases deploys $VERSION new -e $SENTRY_ENV
   retry: 1
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
+  needs: [ "sentry" ]
 
 # --- deployment ---
 deploy:dev:
   stage: deploy
-  image: openshift/origin-cli
+  image:
+    name: intility/helm-oc:latest
+    entrypoint: [""]
   variables:
-    APP: dev
-    APP_HOST: $CI_PROJECT_NAME-dev.$OPENSHIFT_DOMAIN
+    HELM_EXPERIMENTAL_OCI: 1
+    IMAGE_TAG: $CI_PIPELINE_IID
+    ROUTE: $CI_PROJECT_NAME-dev.apps.int.intility.no
   environment:
     name: dev
-    url: https://$CI_PROJECT_NAME-dev.$OPENSHIFT_DOMAIN
-  before_script:
-    - oc login "$OPENSHIFT_SERVER" --token="$OPENSHIFT_TOKEN" --insecure-skip-tls-verify
-    - oc project "$OPENSHIFT_PROJECT" 2> /dev/null
+    url: https://$ROUTE
   script:
-    - "oc get services $APP 2> /dev/null || oc new-app . --name=$APP --strategy=docker"
-    - "oc start-build $APP --from-dir=. --wait=true --follow"
-    - "oc get routes $APP 2> /dev/null || oc create route edge --service $APP --hostname=$APP_HOST"
-    # Needed for .apps.int.intility.no routes
-    - "oc label route $APP ingress-tenant=aa --overwrite=true"
-  retry: 1
+    - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+    - helm upgrade
+      --install $CI_ENVIRONMENT_SLUG ./chart
+      --set nameOverride=$CI_PROJECT_NAME
+      --set image.repository=$CI_REGISTRY_IMAGE
+      --set image.tag=$IMAGE_TAG
+      --set registry.url=$CI_REGISTRY
+      --set registry.user=$CI_DEPLOY_USER
+      --set registry.password=$CI_DEPLOY_PASSWORD
+      --set route=$ROUTE
+      --set replicaCount=2
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
+  needs: [ "test", "image:dev" ]
