@@ -13,55 +13,18 @@
   "order": 200,
   "icon": "vs-2017.3/WebAPI.png",
   "learnMoreLink": "https://go.microsoft.com/fwlink/?LinkID=784882",
-  "uiFilters": [ "oneaspnet" ],
+  "uiFilters": ["oneaspnet"],
   "supportsDocker": true,
   "isApi": true,
   "usesOidc": true,
   "legacyTemplateIdentity": "Microsoft.NetCore.CSharp.WebAPI",
   "supportedAuthentications": [
     {
-      "auth": "None",
-      "authenticationType": "NoAuth",
-      "allowUnsecured": true
-    },
-    {
-      "auth": "Individual",
-      "authenticationType": "IndividualAuth",
-      "b2cAuthenticationOptions": "CloudExisting"
-    },
-    {
       "auth": "SingleOrg",
       "authenticationType": "OrgAuth",
       "orgAuthenticationOptions": "SSO"
-    },
-    {
-      "auth": "Windows",
-      "authenticationType": "WindowsAuth"
     }
   ],
-  "ports": [
-    {
-      "name": "HttpPort",
-      "useHttps": false
-    },
-    {
-      "name": "HttpsPort",
-      "useHttps": true
-    }
-  ],
-  "symbolInfo": [
-    {
-      "id": "DisableOpenAPI",
-      "name": {
-        "text": "Enable _OpenAPI support"
-      },
-      "invertBoolean": true,
-      "isVisible": true,
-      "defaultValue": true
-    }
-  ],
-  "excludeLaunchSettings": false,
-  "azureReplyUrlPortName": "HttpsPort",
-  "minFullFrameworkVersion": "4.6.1",
-  "disableHttpsSymbol": "NoHttps"
+  "symbolInfo": [],
+  "minFullFrameworkVersion": "4.6.1"
 }
