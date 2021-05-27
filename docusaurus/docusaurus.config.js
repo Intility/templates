@@ -6,7 +6,7 @@ module.exports = {
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'intility', // Usually your GitHub org/user name.
-  projectName: 'cra-templates', // Usually your repo name.
+  projectName: 'templates', // Usually your repo name.
   themeConfig: {
     defaultMode: 'dark',
     sidebarCollapsible: false,
