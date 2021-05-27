@@ -1,0 +1,23 @@
+name: Publish dotnet Templates
+
+on:
+  push:
+    tags:
+      - 'dotnet-v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+      - name: Pack
+        run: |
+          cd dotnet
+          dotnet pack -c Release
+      - name: Publish
+        run: dotnet nuget push */bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
