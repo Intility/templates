@@ -1,4 +1,5 @@
 {
+  "tagVersionPrefix": "cra-v",
   "packages": [
     "cra-template",
     "cra-template-js"
