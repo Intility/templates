@@ -10,8 +10,8 @@
   "main": "template.json",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.intility.no/DeveloperServices/cra-templates.git",
-    "directory": "cra-template"
+    "url": "https://github.com/Intility/templates.git",
+    "directory": "cra/cra-template-js"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -22,7 +22,7 @@
     "node": ">=10"
   },
   "bugs": {
-    "url": "https://gitlab.intility.no/DeveloperServices/cra-templates/-/issues"
+    "url": "https://github.com/Intility/templates/issues"
   },
   "files": [
     "template",
