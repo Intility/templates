@@ -1,0 +1,1 @@
+(self.webpackChunkdocusaurus=self.webpackChunkdocusaurus||[]).push([[14],{1201:function(e){"use strict";e.exports=JSON.parse('{"pluginId":"dotnet","version":"current","label":"Next","isLast":true,"docsSidebars":{"cra":[{"type":"link","label":"Introduction","href":"/dotnet/"}]},"permalinkToSidebar":{"/dotnet/":"cra"}}')}}]);
