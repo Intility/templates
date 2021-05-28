@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'docusaurus/**'
-      - '.github/workflows/docs.yml'
+      - '.github/workflows/publish-docs.yml'
 
 jobs:
   gh-release:

@@ -23,3 +23,6 @@ jobs:
         run: npx lerna publish from-package --yes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+# used this in .gitlab-ci, might be needed?
+# - git update-index --assume-unchanged .npmrc
