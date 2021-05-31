@@ -1,51 +1,38 @@
-# create-react-app Templates
+# Intility Developer Templates
 
-This repository contains Intility Templates for Create React App. In the future, templates for next.js or other frameworks might be included.
+This repository contains Intility Templates for Create React App and .NET,
+which aims to give Intility developers battle-tested sane defaults for their projects.
+More frameworks might be included in the future.
 
-Visit the [docs](https://create.intility.app/) for more information.
+## Getting started
 
-## Purpose
+To get started with a project, simply run one of the following commands.
 
-When you normally run create-react-app, you get a great simple starting point for developing React locally. However, the next steps are not instantly clear. Where do I get the Intility favicon? Which router should I use? Do I have to make the styles myself? How and where can I deploy it?
+CRA TypeScript:  
+`npx create-react-app my-app --template @intility`
 
-These very opinionated templates aims to give developers battle-tested sane defaults for Intility projects using React.
+CRA JavaScript:  
+`npx create-react-app my-app --template @intility/js`
 
-## Intended consumers
+dotnet:
 
-React developers of Intility.
+```
+dotnet new --install Intility.Templates
+dotnet new intilityapi -o MyApi
+```
 
-## Main technologies
-
-React & create-react-app.
-
-## Available at
-
-These templates are available from the Intility NPM registry, and should be used through create-react-app.
-
-## Getting Started
-
-See each template's README, and be sure to have configured the Intility NPM registry on your machine.
+There is a lot more to it, so please visit the [docs](https://create.intility.app/) for the next steps.
 
 ## Repository structure
 
-All templates are published under @intility scope.
+### cra
 
-### common
+Contains all templates for Create React App.
 
-This folder contains shared files for all templates; Dockerfiles, environment files, etc.
+### dotnet
 
-### cra-template
-
-This template includes Bifrost, a router, auth and infrastructure files.
-
-### cra-template-js
-
-This is the same as cra-template, but without TypeScript. It is auto-generated using babel.
+Contains all templates for .NET.
 
 ### docusaurus
 
 Docs for these templates, made with [docusaurus](https://v2.docusaurus.io/).
-
-## Deployment
-
-For each cra-template\* folder, the pipeline will merge the common folder into it, and publish it to NPM.
