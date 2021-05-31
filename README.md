@@ -8,11 +8,17 @@ More frameworks might be included in the future.
 
 To get started with a project, simply run one of the following commands.
 
-CRA TypeScript:  
-`npx create-react-app my-app --template @intility`
+CRA TypeScript:
 
-CRA JavaScript:  
-`npx create-react-app my-app --template @intility/js`
+```
+npx create-react-app my-app --template @intility
+```
+
+CRA JavaScript:
+
+```
+npx create-react-app my-app --template @intility/js
+```
 
 dotnet:
 
