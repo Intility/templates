@@ -32,7 +32,7 @@ namespace Company.WebApplication1
 
             services.AddCors(options =>
                 options.AddDefaultPolicy(builder =>
-                    builder.WithOrigins("https://localhost:3000", "https://portal.apps.int.intility.no", "https://portal-failed-to-load.apps.int.intility.no")
+                    builder.WithOrigins("https://localhost:3000")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                     )
