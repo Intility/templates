@@ -2,18 +2,9 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: {{ include "chart.fullname" . }}
-  {{- if hasSuffix "apps.intility.com" .Values.route }}
+  {{- with .Values.ingressTenant }}
   labels:
-    ingress-tenant: shared-services
-  {{- else if hasSuffix "apps.cust.intility.com" .Values.route }}
-  labels:
-    ingress-tenant: customer
-  {{- else if hasSuffix "apps.aa.intility.com" .Values.route }}
-  labels:
-    ingress-tenant: aa
-  {{- else if hasSuffix "apps.int.intility.no" .Values.route }}
-  labels:
-    ingress-tenant: aa
+    ingress-tenant: {{ .Values.ingressTenant }}
   {{- end }}
 spec:
   host: {{ .Values.route }}

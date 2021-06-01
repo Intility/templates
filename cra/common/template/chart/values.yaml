@@ -30,6 +30,15 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+route: ""
+
+ingressTenant: aa
+
+registry:
+  url: https://gitlab-registry.intility.com
+  user: ""
+  password: ""
+
 config: {}
 
 secrets: {}
