@@ -112,7 +112,7 @@ namespace Company.WebApplication1
 
             if (!string.IsNullOrWhiteSpace(Configuration["Sentry:Dsn"]))
             {
-                logConfig.WriteTo.Sentry(o => o.Dsn = new Dsn(Configuration["Sentry:Dsn"]));
+                logConfig.WriteTo.Sentry(o => o.Dsn = Configuration["Sentry:Dsn"]);
             }
 
             Log.Logger = logConfig.CreateLogger();
