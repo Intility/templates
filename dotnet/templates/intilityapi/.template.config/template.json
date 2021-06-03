@@ -3,7 +3,7 @@
   "author": "Intility",
   "classifications": ["Web", "WebAPI"],
   "name": "Intility ASP.NET Core Web Api",
-  "description": "A project template for creating an ASP.NET Core application with an example Controller for a RESTful HTTP service. This template can also be used for ASP.NET Core MVC Views and Controllers.",
+  "description": "A project template for creating Intility APIs.",
   "groupIdentity": "Intility.Templates",
   "identity": "Intility.Templates.Api.CSharp",
   "shortName": "intilityapi",
