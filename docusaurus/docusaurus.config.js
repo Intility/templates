@@ -24,7 +24,7 @@ module.exports = {
         },
         {
           href: '/dotnet',
-          label: 'dotnet',
+          label: '.NET',
           position: 'left',
         },
         // PYTHON
