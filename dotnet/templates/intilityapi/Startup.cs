@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Identity.Web;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Company.WebApplication1
 {
@@ -106,7 +101,7 @@ namespace Company.WebApplication1
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
+                app.UseSwaggerUI(options =>
                 {
                     foreach (var description in versionProvider.ApiVersionDescriptions)
                     {
@@ -115,8 +110,8 @@ namespace Company.WebApplication1
                             $"Company.WebApplication1 {description.ApiVersion.ToString()}"
                         );
                     }
-                    c.OAuthAppName(Configuration["Swagger:AppName"]);
-                    c.OAuthClientId(Configuration["Swagger:ClientId"]);
+                    options.OAuthAppName(Configuration["Swagger:AppName"]);
+                    options.OAuthClientId(Configuration["Swagger:ClientId"]);
                     options.RoutePrefix = string.Empty;
                 });
             }
