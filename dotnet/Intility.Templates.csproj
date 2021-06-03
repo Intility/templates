@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;templates\**\.vscode\**" />
-    <None Include="LICENSE" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+    <None Include="LICENSE" Pack="true" PackagePath=""/>
     <Compile Remove="**\*" />
   </ItemGroup>
 
