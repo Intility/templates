@@ -43,6 +43,20 @@ const FeatureList = [
   //   Svg: '???',
   //   description: <>Start developing APIs using our template for express.js.</>,
   // },
+  // METROWORKER
+  // {
+  //   title: 'Metro Worker',
+  //   href: '/metroworker',
+  //   Svg: '???',
+  //   description: <>Start reacting to Metro events using .NET.</>,
+  // },
+  // BLAZOR
+  // {
+  //   title: 'Blazor',
+  //   href: '/blazor',
+  //   Svg: '???',
+  //   description: <>Start developing Blazor applications.</>,
+  // },
 ];
 
 function Feature({ id, Svg = 'div', title, href, description }) {

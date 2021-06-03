@@ -39,6 +39,18 @@ module.exports = {
         //   label: 'express',
         //   position: 'left',
         // },
+        // METROWORKER
+        // {
+        //   href: '/metroworker',
+        //   label: 'metroworker',
+        //   position: 'left',
+        // },
+        // BLAZOR
+        // {
+        //   href: '/blazor',
+        //   label: 'blazor',
+        //   position: 'left',
+        // },
         {
           href: 'https://github.com/Intility/templates',
           label: 'GitHub',
@@ -163,6 +175,30 @@ module.exports = {
     //     path: 'express',
     //     routeBasePath: 'express',
     //     sidebarPath: require.resolve('./sidebarsExpress.js'),
+    //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+    //     // ... other options
+    //   },
+    // ],
+    // METROWORKER
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'metroworker',
+    //     path: 'metroworker',
+    //     routeBasePath: 'metroworker',
+    //     sidebarPath: require.resolve('./sidebarsMetroworker.js'),
+    //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+    //     // ... other options
+    //   },
+    // ],
+    // BLAZOR
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'blazor',
+    //     path: 'blazor',
+    //     routeBasePath: 'blazor',
+    //     sidebarPath: require.resolve('./sidebarsBlazor.js'),
     //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
     //     // ... other options
     //   },
