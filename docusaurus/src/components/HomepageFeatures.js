@@ -16,7 +16,7 @@ const FeatureList = [
     ),
   },
   {
-    title: 'dotnet',
+    title: '.NET',
     href: '/dotnet',
     Svg: '/img/dotnet-logo.svg',
     description: (
@@ -35,6 +35,13 @@ const FeatureList = [
   //       "Python er best" - jonas 2021
   //     </>
   //   ),
+  // },
+  // EXPRESS
+  // {
+  //   title: 'express.js',
+  //   href: '/express',
+  //   Svg: '???',
+  //   description: <>Start developing APIs using our template for express.js.</>,
   // },
 ];
 
