@@ -110,8 +110,8 @@ namespace Company.WebApplication1
                             $"Company.WebApplication1 {description.ApiVersion.ToString()}"
                         );
                     }
-                    options.OAuthAppName(Configuration["Swagger:AppName"]);
-                    options.OAuthClientId(Configuration["Swagger:ClientId"]);
+                    options.OAuthAppName("Company.WebApplication1");
+                    options.OAuthClientId(Configuration["AzureAd:ClientId"]);
                     options.RoutePrefix = string.Empty;
                 });
             }
