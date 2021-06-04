@@ -24,6 +24,20 @@ git push -u origin --tags
 
 The pipeline will fail initially, but don't worry, we'll set it up correctly in the next steps.
 
+## Add GitLab Deploy Token
+
+The pipeline publishes a docker image to GitLab Container Registry, and uses Helm to create resources in OpenShift.
+As a result, OpenShift needs access to pull images from GCR.
+
+In your GitLab repository, go to Settings -> Repository -> Deploy tokens.
+Create a new token named `gitlab-deploy-token`, and give it the `read_registry` scope.
+
+![GitLab Deploy Token](/img/gitlab-deploy-token.png)
+
+That's all you have to do in the repository.
+The token is exposed as a variable in the pipeline, and helm applies it as a pull secret in OpenShift.
+Read more about GitLab deploy tokens [here](https://docs.gitlab.com/ee/user/project/deploy_tokens/#gitlab-deploy-token).
+
 ## Adding CI/CD Variables
 
 In your project on GitLab, go to Settings -> CI / CD, and expand the Variables section.
