@@ -1,4 +1,12 @@
+FROM node:lts as build
+WORKDIR /src
+
+COPY package*.json .
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
 FROM intility/nginx-unprivileged-react
 
-# copy build files
-COPY build/ /usr/share/nginx/html
+COPY --from=build /src/build /usr/share/nginx/html
