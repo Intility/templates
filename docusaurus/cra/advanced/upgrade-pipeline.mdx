@@ -1,0 +1,40 @@
+---
+title: Upgrade to V1 pipeline
+sidebar_position: 5
+---
+
+If you created a project with an earlier version of this template, you can follow this guide to simply upgrade it.
+This guide assumes you haven't made any changes to the earlier pipeline.
+
+## Features
+
+- Helm chart
+- Docker image pushed to GCR
+- Parallelized jobs (pipeline usually takes ~2m)
+
+## OpenShift
+
+When switching to the new pipeline, it will automatically create new resources.
+At a minimum, you should delete the existing route, as the old one will crash with the new one.
+However, it's recommended to start blank, by either clearing out or re-creating the existing project, or by creating a new project.
+
+## Create Deploy Token
+
+The new pipeline publishes a docker image to GitLab Container Registry, and uses Helm to create resources in OpenShift.
+As a result, OpenShift needs access to pull images from GCR.
+
+In your GitLab repository, go to Settings -> Repository -> Deploy tokens.
+Create a new token named `gitlab-deploy-token`, and give it the `read_registry` scope.
+
+![GitLab Deploy Token](/img/gitlab-deploy-token.png)
+
+That's all you have to do in the repository.
+The token is exposed as a variable in the pipeline, and helm applies it as a pull secret in OpenShift.
+Read more about GitLab deploy tokens [here](https://docs.gitlab.com/ee/user/project/deploy_tokens/#gitlab-deploy-token).
+
+## Copy files
+
+Download the contents of [this repository](https://gitlab.intility.com/herman/cra-pipeline-upgrade) ([direct zip download](https://gitlab.intility.com/herman/cra-pipeline-upgrade/-/archive/main/cra-pipeline-upgrade-main.zip)).
+Copy all files except `README.md` to your project, and push the changes.
+
+The new pipeline should now take effect. Should any problems occur, ask a question in `#programming` on Slack.
