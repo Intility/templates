@@ -28,8 +28,9 @@ namespace Company.WebApplication1
 
             try
             {
-                Log.Logger.Information("Starting application host...");
+                Log.Logger.Information("Starting application...");
                 CreateHostBuilder(args).Build().Run();
+                Log.Logger.Information("Application terminated successfully");
                 return 0;
             }
             catch (Exception ex)
