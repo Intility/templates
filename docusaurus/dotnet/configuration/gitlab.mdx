@@ -2,3 +2,57 @@
 title: GitLab Repository
 sidebar_position: 1
 ---
+
+Go to [New Project in GitLab](https://gitlab.intility.com/projects/new).
+
+Select a fitting name, it should be as globally unique and descriptive for your project as possible.  
+![New Project in Gitlab photo](/img/gitlab-new.png)  
+Take note of the Project Slug, as we'll use it later to configure the project in Sentry, SonarQube and OpenShift.
+
+## Pushing your application
+
+Create React App creates a git repository for you locally,
+but you'll have to add the GitLab repository as a remote.
+Follow the "Push an existing folder" example.
+They should look something like this:
+
+```bash
+git init
+git remote add origin git@gitlab.intility.no:Group/intility-api.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+```
+
+The pipeline will fail initially, but don't worry, we'll set it up correctly in the next steps.
+
+## Add GitLab Deploy Token
+
+The pipeline publishes a docker image to GitLab Container Registry, and uses Helm to create resources in OpenShift.
+As a result, OpenShift needs access to pull images from GCR.
+
+In your GitLab repository, go to Settings -> Repository -> Deploy tokens.
+Create a new token named `gitlab-deploy-token`, and give it the `read_registry` scope.
+
+![GitLab Deploy Token](/img/gitlab-deploy-token.png)
+
+That's all you have to do in the repository.
+The token is exposed as a variable in the pipeline, and helm applies it as a pull secret in OpenShift.
+Read more about GitLab deploy tokens [here](https://docs.gitlab.com/ee/user/project/deploy_tokens/#gitlab-deploy-token).
+
+## Adding CI/CD Variables
+
+In your project on GitLab, go to Settings -> CI / CD, and expand the Variables section.
+We don't need to add anything yet, but it's here we'll add tokens and such in the other steps.
+
+## Adding Badges
+
+In your project on GitLab, go to Settings -> General, and expand the Badges section.
+Here you can add badges by giving them a Name, Link and Image URL.
+
+![Add Badge in GitLab](/img/gitlab-badge.png)
+
+We can go ahead and add a badge for our pipeline with the following values:  
+Name: `Pipeline`  
+Link: `https://gitlab.intility.com/%{project_path}`  
+Image URL: `https://gitlab.intility.com/%{project_path}/badges/%{default_branch}/pipeline.svg`
