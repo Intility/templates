@@ -1,0 +1,28 @@
+---
+title: SonarQube
+sidebar_position: 4
+---
+
+A SonarQube analyzation job is included in the GitLab pipeline.
+To set this up, we'll need to create a project in SonarQube, and a token.
+
+First, we need to [create a new project in SonarQube](https://sonarqube.intility.no/projects/create).
+
+![New Project in SonarQube](/img/sonarqube-new.png)  
+The project key should be the same as the project slug from GitLab.
+If you use something other than the project slug,
+you'll need to modify the `SONAR_PROJECT` variable in the top of the .gitlab-ci.yml file.
+
+Then in the next step, either generate a new token, or select an existing one.  
+![Generate Token](/img/sonarqube-token.png)  
+Copy the token and [add it to GitLab CI/CD variables](/dotnet/configuration/gitlab#adding-cicd-variables) with the key `SONAR_TOKEN`.
+
+## Badge
+
+On your project dashboard, you can click `Get project badges` in the bottom right corner.
+
+![Badge from SonarQube](/img/sonarqube-badge.png)
+
+Select `Quality Gate Status`, and `Image URL only`. You can then use the Image URL and project dashboard URL to [create a badge in GitLab](/dotnet/configuration/gitlab#adding-badges).
+
+![SonarQube badge in GitLab](/img/gitlab-badge-sonarqube.png)

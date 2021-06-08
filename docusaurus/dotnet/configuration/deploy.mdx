@@ -1,4 +1,80 @@
 ---
 title: Deploy
-sidebar_position: 5
+sidebar_position: 6
 ---
+
+:::note GitLab Deploy Token
+Remember to set up the [GitLab Deploy Token](/dotnet/configuration/gitlab#add-gitlab-deploy-token)!
+:::
+
+The included deploy job will deploy your project to OpenShift. For this to work, you need to create a project in OpenShift, and acquire a token for Openshift.
+
+## Create project
+
+### UI
+
+Go to [our OpenShift instance](https://console.apps.openshift.intility.com/) and log in as Intility Developer.
+
+Create a project, the name should be `aa-<GITLAB_SLUG>-dev`, e.g. `aa-my-app-dev`.  
+If you use something other than this, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.  
+Add a fitting display name and description if you feel like it.
+
+### CLI
+
+The name should be `aa-<GITLAB_SLUG>-dev`, e.g. `aa-my-app-dev`.  
+If you use something other than this, you'll need to modify the `OPENSHIFT_PROJECT` variable in the top of the .gitlab-ci.yml file.
+
+```bash
+oc new-project <projectname>
+```
+
+## Acquire Token
+
+### UI
+
+In your newly created project, switch from Developer to Administrator view in the sidebar.
+
+Then go to User Management -> Service Accounts, and click Create Service Account. Change the name field to `gitlab-builder`.
+
+![Create Service Account](/img/openshift-sa-new.png)
+
+After creating the Service Account, go to User Mangement -> Role Bindings, and click Create Binding. Fill the form with the following values:
+
+Role Binding Name: `gitlab-builder-edit`  
+Role Name: `edit`  
+Subject: Service Account  
+Subject Name: `gitlab-builder`  
+
+![Create Binding](/img/openshift-rb-new.png)
+
+After creating the role binding, go back to Service Accounts and go to the `gitlab-builder` Service Account.  
+At the bottom of page, you'll find a link to a secret named `gitlab-builder-token-*`, click it.  
+Copy the `token` field at the bottom of the page, and [add it to GitLab CI/CD variables](/dotnet/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
+
+### CLI
+
+Copy login command from OpenShift Console and paste it in a terminal.  
+After logging in, the CLI will show you available projects. Follow the instructions to change to the project you just created.
+
+When you have selected the right project, we need to create a Service Account.
+
+```bash
+oc create sa gitlab-builder
+oc describe sa gitlab-builder
+```
+
+Note the `gitlab-builder-token-*` in the `Mountable secrets` section.
+
+Then we have to set the user to admin.
+
+```bash
+oc policy add-role-to-user edit -z gitlab-builder
+```
+
+Lastly, we have to extract the token from the secret presented in the first step.
+
+```bash
+oc describe secret <secret-name>
+```
+
+Copy the contents from the `token` section and [add it to GitLab CI/CD variables](/dotnet/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
