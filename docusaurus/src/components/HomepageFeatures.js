@@ -16,12 +16,10 @@ const FeatureList = [
     ),
   },
   {
-    title: '.NET',
+    title: '.NET API',
     href: '/dotnet',
     Svg: '/img/dotnet-logo.svg',
-    description: (
-      <>Start developing APIs using our template for the dotnet CLI.</>
-    ),
+    description: <>Start developing APIs using our templates for .NET.</>,
   },
   // PYTHON
   // {

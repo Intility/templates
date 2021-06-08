@@ -19,12 +19,12 @@ module.exports = {
       items: [
         {
           href: '/cra',
-          label: 'Create React App',
+          label: 'React',
           position: 'left',
         },
         {
           href: '/dotnet',
-          label: '.NET',
+          label: '.NET API',
           position: 'left',
         },
         // PYTHON
