@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json.schemastore.org/vs-2017.3.host",
+  "learnMoreLink": "https://create.intility.app/",
+  "supportsDocker": true,
+  "isApi": true,
+  "usesOidc": false,
+  "supportedAuthentications": [
+    {
+      "auth": "SingleOrg",
+      "authenticationType": "OrgAuth",
+      "orgAuthenticationOptions": "SSO"
+    }
+  ],
+  "symbolInfo": []
+}

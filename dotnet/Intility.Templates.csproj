@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>0.2.0</PackageVersion>
+    <PackageVersion>0.3.0</PackageVersion>
     <PackageId>Intility.Templates</PackageId>
     <Title>Intility Templates</Title>
     <Authors>Intility</Authors>
@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;templates\**\.vscode\**" />
+    <Content Include="templates\iwebapiproject\**\*" Exclude="templates\iwebapiproject\.gitlab-ci.yml;templates\iwebapiproject\README.md;templates\iwebapiproject\.template.config\**" Pack="true" PackagePath="content\templates\iwebapi\Company.WebApplication1" />
     <None Include="LICENSE" Pack="true" PackagePath=""/>
     <Compile Remove="**\*" />
   </ItemGroup>
