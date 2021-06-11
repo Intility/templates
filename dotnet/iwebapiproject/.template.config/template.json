@@ -4,7 +4,6 @@
   "classifications": ["Intility", "Web", "WebAPI"],
   "name": "Intility Api (Project)",
   "description": "A project template for creating Intility APIs.",
-  "groupIdentity": "Intility.Templates",
   "identity": "Intility.Templates.ApiProject.CSharp",
   "shortName": "iwebapiproject",
   "tags": {

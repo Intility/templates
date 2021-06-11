@@ -4,7 +4,6 @@
   "classifications": ["Intility", "Web", "WebAPI"],
   "name": "Intility Api (Solution)",
   "description": "A solution template for creating Intility APIs.",
-  "groupIdentity": "Intility.Templates",
   "identity": "Intility.Templates.ApiSolution.CSharp",
   "shortName": "iwebapi",
   "tags": {
