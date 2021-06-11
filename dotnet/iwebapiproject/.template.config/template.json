@@ -1,33 +1,43 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Intility",
-  "classifications": ["Web", "WebAPI"],
-  "name": "Intility Api (Solution)",
-  "description": "A solution template for creating Intility APIs.",
+  "classifications": ["Intility", "Web", "WebAPI"],
+  "name": "Intility Api (Project)",
+  "description": "A project template for creating Intility APIs.",
   "groupIdentity": "Intility.Templates",
-  "identity": "Intility.Templates.Api.CSharp.Solution",
-  "shortName": "iwebapi",
+  "identity": "Intility.Templates.ApiProject.CSharp",
+  "shortName": "iwebapiproject",
   "tags": {
     "language": "C#",
-    "type": "solution"
+    "type": "project"
   },
   "sourceName": "Company.WebApplication1",
   "preferNameDirectory": true,
-  "guids": [
-    "0E62310C-D76A-4681-9926-B1BFFDC379FC",
-    "53bc9b9d-9d6a-45d4-8429-2a2761773502"
-  ],
+  "guids": ["53bc9b9d-9d6a-45d4-8429-2a2761773502"],
   "sources": [
     {
       "modifiers": [
         {
           "condition": "(windir == 'C:\\Windows')",
-          "exclude": ["Company.WebApplication1/Properties/launchSettings.json"]
+          "exclude": ["Properties/launchSettings.json"]
         }
       ]
     }
   ],
   "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net5.0",
+          "description": "Target net5.0"
+        }
+      ],
+      "replaces": "net5.0",
+      "defaultValue": "net5.0"
+    },
     "auth": {
       "type": "parameter",
       "datatype": "choice",
@@ -98,11 +108,6 @@
       ],
       "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
       "continueOnError": true
-    }
-  ],
-  "primaryOutputs": [
-    {
-      "path": "Company.WebApplication1.sln"
     }
   ]
 }

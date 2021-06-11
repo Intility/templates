@@ -20,10 +20,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;templates\**\.vscode\**" />
-    <Content Include="templates\iwebapiproject\**\*" Exclude="templates\iwebapiproject\.gitlab-ci.yml;templates\iwebapiproject\README.md;templates\iwebapiproject\.template.config\**" Pack="true" PackagePath="content\templates\iwebapi\Company.WebApplication1" />
-    <None Include="LICENSE" Pack="true" PackagePath=""/>
+    <Content Include="*\**\*" Exclude="**\bin\**;**\obj\**;**\.vscode\**" />
+    <Content Include="iwebapiproject\**\*" Exclude="iwebapiproject\.gitlab-ci.yml;iwebapiproject\README.md;iwebapiproject\.template.config\**" Pack="true" PackagePath="content\iwebapi\Company.WebApplication1" />
     <Compile Remove="**\*" />
+    <None Include="LICENSE" Pack="true" PackagePath=""/>
   </ItemGroup>
 
 </Project>
