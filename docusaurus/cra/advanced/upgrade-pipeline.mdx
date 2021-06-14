@@ -32,6 +32,20 @@ That's all you have to do in the repository.
 The token is exposed as a variable in the pipeline, and helm applies it as a pull secret in OpenShift.
 Read more about GitLab deploy tokens [here](https://docs.gitlab.com/ee/user/project/deploy_tokens/#gitlab-deploy-token).
 
+## Edit `index.ts`
+
+The new pipeline doesn't use a `REACT_APP_REDIRECT_URI` environment variable in the pipeline,
+so we need to change `auth.redirectUri` in our MSAL Config.
+
+```js title=index.ts
+const msal = {
+  auth: {
+    // This is the new value of redirectUri
+    redirectUri: window.location.origin
+  }
+};
+```
+
 ## Copy files
 
 Download the contents of [this repository](https://gitlab.intility.com/herman/cra-pipeline-upgrade) ([direct zip download](https://gitlab.intility.com/herman/cra-pipeline-upgrade/-/archive/main/cra-pipeline-upgrade-main.zip)).
