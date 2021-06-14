@@ -23,6 +23,12 @@
         {
           "condition": "(windir == 'C:\\Windows')",
           "exclude": ["Company.WebApplication1/Properties/launchSettings.json"]
+        },
+        {
+          "condition": "(HostIdentifier != 'dotnetcli')",
+          "rename": {
+            "Company.WebApplication1.sln": "Company.WebApplication1.generated.sln"
+          }
         }
       ]
     }
@@ -40,6 +46,10 @@
       ],
       "replaces": "net5.0",
       "defaultValue": "net5.0"
+    },
+    "HostIdentifier": {
+      "type": "bind",
+      "binding": "HostIdentifier"
     },
     "auth": {
       "type": "parameter",
@@ -115,7 +125,7 @@
   ],
   "primaryOutputs": [
     {
-      "path": "Solution.sln"
+      "path": "Company.WebApplication1.sln"
     }
   ]
 }
