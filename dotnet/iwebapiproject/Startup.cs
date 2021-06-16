@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
@@ -72,6 +73,7 @@ namespace Company.WebApplication1
                 app.UseSwaggerUI();
             }
 
+            app.UseSerilogRequestLogging();
             app.UseRouting();
 
             app.UseAuthentication();
