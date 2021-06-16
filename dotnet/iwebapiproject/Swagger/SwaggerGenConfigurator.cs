@@ -42,7 +42,7 @@ namespace Company.WebApplication1.Swagger
                             TokenUrl = new Uri("https://login.microsoftonline.com/organizations/oauth2/v2.0/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                { $"api://{_config["AzureAd:ClientId"]}/user_impersonation", "Access Company.WebApplication1" }
+                                { $"api://{_config["AzureAd:ClientId"]}/api-scope", "Access Company.WebApplication1" }
                             }
                         }
                     },
@@ -56,7 +56,7 @@ namespace Company.WebApplication1.Swagger
                         {
                             Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "oauth2"}
                         },
-                        new[] { $"api://{_config["AzureAd:ClientId"]}/user_impersonation" }
+                        new[] { $"api://{_config["AzureAd:ClientId"]}/api-scope" }
                     }
                 });
         }
