@@ -2,3 +2,101 @@
 title: AAD Authorization
 sidebar_position: 2
 ---
+
+The example code is set up to use authorization. For this to work, an App Registration has to be set up in Azure AD.
+
+### API
+
+Head over to [Azure -> Azure Active Directory -> App registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
+with your Intility Account, and create a new registration.
+
+![New Registration in Azure](/img/azure-new-dotnet.png)  
+Select a fitting name for your project, this name will be presented to the user during consent.
+
+Under `Supported account types`, choose either `Intility AS only - Single tenant` or `Any Azure AD directory - Multitenant`.
+This can be changed later, so if you're unsure what to choose, select single tenant.
+
+Under `Redirect URI`, select `Web` from the dropdown, and enter `http://localhost:5000`.
+
+Hit the register button, and you will be taken to an overview of your newly created registration.
+
+![Finding Client ID](/img/azure-clientid-dotnet.png)  
+Copy the `Application (Client) ID` GUID, and paste it into the `AzureAd:ClientId` field in your `appsettings.json` file.
+
+```jsx title="appsettings.json"
+{
+  "AzureAd": {
+    "ClientId": "YOUR_CLIENT_ID",
+    ...
+  },
+  ...
+}
+```
+
+### Add an application scope
+
+Go to Expose an API in your app registration, and add a scope.
+You will be prompted to set an Application ID URI.
+Use the suggested one, and hit Save and continue.
+
+![Add a scope](/img/azure-add-scope.png)
+
+Add a scope named `user_impersonation`, that can be consented by `Admins and users`.
+
+You can use the following descriptions:
+```
+Access API as user
+Allows the app to access the API as the user.
+
+Access API as you
+Allows the app to acces the API as you.
+```
+
+## Swagger
+
+In addition to creating an App Registration for the API itself, we need to make one for the Swagger client too.
+Again head over to [Azure -> Azure Active Directory -> App registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps).
+
+![New Registration in Azure](/img/azure-new-swagger.png)  
+
+Use the same name appended with `Swagger`.
+
+Under `Redirect URI`, select `Single-page application (SPA)` and enter `http://localhost:5000/oauth2-redirect.html`.
+
+Hit the register button, and you will be taken to an overview of your newly created registration.
+
+![Finding Client ID](/img/azure-clientid-swagger.png)  
+Copy the `Application (Client) ID` GUID, and paste it into the `AzureAd:ClientId` field in your `appsettings.json` file.
+
+```jsx title="appsettings.json"
+{
+  "Swagger": {
+    "ClientId": "YOUR_SWAGGER_CLIENT_ID",
+    ...
+  },
+  ...
+}
+```
+
+### Adding reply URLs
+
+For each deployment of your app, you'll need to register it. You can do that by going to the Authentication page.
+
+![Adding Reply URLs](/img/azure-replyurls-swagger.png)  
+The first reply URLs we need to add are the localhost https URL, and the OpenShift deploy URL:
+
+```
+https://localhost:5001/oauth2-redirect.html
+https://{your-project-slug}-dev.apps.int.intility.no/oauth2-redirect.html
+```
+
+You can also add more later if you create more environments.
+
+### Access API
+
+To allow Swagger to talk to the API, you need to add API permissions to the Swagger app registration.
+Go to API permissions, and hit Add a permission.
+Under My APIs, find your API, select the scope(s) and press Add permissions.
+
+![Add API permission](/img/azure-api-permissions.png)
+
