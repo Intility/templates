@@ -2,3 +2,68 @@
 title: .gitlab-ci.yml Overview
 sidebar_position: 3
 ---
+
+The template comes packed with a pipeline, that builds, tests, analyzes and deploys your API.
+
+## Jobs
+
+### `build`
+
+Builds the project, and creates a build artifact for later stages to use.
+
+### `test`
+
+Runs the tests in the project.
+Runs parallel with `build`.
+
+### `analyze`
+
+Analyzes the project with sonar-scanner.
+Runs parallel with `build`.
+
+### `image:dev`
+
+Uses the artifact from the `build` step, and creates and publish a docker image with the `Dockerfile.CI` file using kaniko.
+Runs once the `build` job has finished, and only in the `master` or `main` branch.
+
+### `deploy:dev`
+
+Deploys the application to OpenShift using the Helm chart.
+Runs once the `image:dev` and `test` jobs have succeeded, and only in the `master` or `main` branch.
+
+## Debugging the pipeline
+
+### Paths
+Ensure the paths used are right.
+In the `build` step, we need to ensure that we are working from the right folder.
+
+```yml title='.gitlab-ci.yml'
+build:
+  script:
+    - dotnet restore
+    - cd YOUR_PROJECT_FOLDER # cd to the project folder
+    - dotnet publish -o build
+  artifacts:
+    paths:
+      - YOUR_PROJECT_FOLDER/build # the build in the project folder
+```
+
+In `image:dev`, we need the `context` parameter to be set to the project folder.
+
+```yml title='.gitlab-ci.yml'
+image:dev:
+  script:
+    - echo ...
+    - /kaniko/executor
+      --context $CI_PROJECT_DIR/YOUR_PROJECT_FOLDER # sets the context to your project folder
+```
+
+In `deploy:dev`, ensure the path to the chart is right.
+
+```yml title='.gitlab-ci.yml'
+deploy:dev:
+  script:
+    - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+    - helm upgrade
+      --install $CI_ENVIRONMENT_SLUG ./YOUR_PROJECT_FOLDER/chart # path to chart
+```

@@ -26,8 +26,9 @@ namespace Company.WebApplication1.Swagger
                     $"Company.WebApplication1 {description.ApiVersion.ToString()}"
                 );
             }
-            options.OAuthAppName("Company.WebApplication1");
-            options.OAuthClientId(_config["AzureAd:ClientId"]);
+            options.OAuthAppName(_config["Swagger:AppName"]);
+            options.OAuthClientId(_config["Swagger:ClientId"]);
+            options.OAuthUsePkce();
             options.RoutePrefix = string.Empty;
         }
     }

@@ -60,26 +60,38 @@
       "type": "parameter",
       "datatype": "string",
       "replaces": "11111111-1111-1111-11111111111111111",
-      "description": "The Client ID for this project (use with SingleOrg or IndividualB2C auth)."
+      "description": "The Client ID for this project."
     },
     "Domain": {
       "type": "parameter",
       "datatype": "string",
       "replaces": "intility.onmicrosoft.com",
-      "description": "The domain for the directory tenant (use with SingleOrg or IndividualB2C auth)."
+      "description": "The domain for the directory tenant."
     },
     "DefaultScope": {
       "type": "parameter",
       "datatype": "string",
       "replaces": "api-scope",
-      "defaultValue": "access_as_user",
-      "description": "The API scope the client needs to request to provision an access token. (use with IndividualB2C, SingleOrg)."
+      "defaultValue": "user_impersonation",
+      "description": "The API scope the client needs to request to provision an access token."
     },
     "TenantId": {
       "type": "parameter",
       "datatype": "string",
       "replaces": "9b5ff18e-53c0-45a2-8bc2-9c0c8f60b2c6",
-      "description": "The TenantId ID of the directory to connect to (use with SingleOrg auth)."
+      "description": "The TenantId ID of the directory to connect to."
+    },
+    "SwaggerClientId": {
+      "type": "parameter",
+      "datatype": "string",
+      "replaces": "22222222-2222-2222-22222222222222222",
+      "description": "The Client ID for Swagger."
+    },
+    "SwaggerAppName": {
+      "type": "parameter",
+      "datatype": "string",
+      "replaces": "Company.WebApplication1 Swagger",
+      "description": "The Client ID for Swagger."
     },
     "UserSecretsId": {
       "type": "parameter",

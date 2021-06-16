@@ -28,11 +28,12 @@ build:
   image: mcr.microsoft.com/dotnet/sdk:5.0
   script:
     - dotnet restore
+    - cd Company.WebApplication1
     - dotnet publish -o build
   artifacts:
     expire_in: 2 weeks
     paths:
-      - build
+      - Company.WebApplication1/build
 
 test:
   stage: test
@@ -70,7 +71,7 @@ image:dev:
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor
-      --context $CI_PROJECT_DIR
+      --context $CI_PROJECT_DIR/Company.WebApplication1
       --dockerfile Dockerfile.CI
       --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
       --destination $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
@@ -94,7 +95,7 @@ deploy:dev:
   script:
     - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
     - helm upgrade
-      --install $CI_ENVIRONMENT_SLUG ./chart
+      --install $CI_ENVIRONMENT_SLUG ./Company.WebApplication1/chart
       --set nameOverride=$CI_PROJECT_NAME
       --set image.repository=$CI_REGISTRY_IMAGE
       --set image.tag=$IMAGE_TAG
