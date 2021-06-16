@@ -6,18 +6,19 @@ build
 bin
 obj
 
-cra-template-*js/template/src
-cra-template*/template/chart
-cra-template*/template/public
-cra-template*/template/.env.development
-cra-template*/template/.eslintrc
-cra-template*/template/.gitlab-ci.yml
-cra-template*/template/.npmrc
-cra-template*/template/app.code-workspace
-cra-template*/template/Dockerfile
-cra-template*/template/gitignore
-cra-template*/template/README.md
-cra-template*/template/LICENSE
+*/cra-template-*js/template/src
+*/cra-template*/template/chart
+*/cra-template*/template/public
+*/cra-template*/template/.env.development
+*/cra-template*/template/.eslintrc
+*/cra-template*/template/.gitlab-ci.yml
+*/cra-template*/template/.npmrc
+*/cra-template*/template/app.code-workspace
+*/cra-template*/template/Dockerfile
+*/cra-template*/template/Dockerfile.CI
+*/cra-template*/template/gitignore
+*/cra-template*/template/README.md
+*/cra-template*/template/LICENSE
 
 # Generated files
 .docusaurus
