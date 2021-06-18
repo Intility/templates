@@ -2,3 +2,87 @@
 title: Configuration
 sidebar_position: 3
 ---
+
+import MsDocsCard from '../../src/components/MsDocsCard.js';
+
+Every feature exposes configuration through the standard dotnet core configuration infrastructure. This lets you, as the developer, 
+to decide how to provide those configurations. Usually through the `appsettings.json` or `appsettings.Development.json` on your local 
+machine or through environment variables or secrets in CI or production environments.
+
+Read more about available configuration providers in the official dotnet documentation.
+
+<MsDocsCard title="Configuration in ASP.NET Core" subtitle="~62 minutes to read" url="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0" width="305px" />
+
+
+## Azure AD Authentication
+
+--- 
+⚠️ **TODO**:
+
+* App Registrations
+* The relationship between SPA App, Resource App 
+* How to configure them properly
+--- 
+
+```json
+{
+  "AzureAd": {
+    // azure identity platform instance (should not be changed)
+    "Instance": "https://login.microsoftonline.com/",
+    // primary domain of your tenant
+    "Domain": "intility.onmicrosoft.com",
+    // tenant / directory id
+    "TenantId": "9b5ff18e-53c0-45a2-8bc2-9c0c8f60b2c6",
+    // client id of your azure appReg
+    "ClientId": "11111111-1111-1111-11111111111111111"
+  }
+}
+
+```
+
+## Swagger
+
+---
+⚠️ **TODO**:
+
+* Swagger authentication
+* Swagger versioning relationship with API versioning
+---
+
+```json
+{
+  "Swagger": {
+    // Name of the service in Swagger definition and UI
+    "AppName": "Company.WebApplication1 Swagger",
+
+    // The client id to authenticate with. This should be an
+    // app registration with delegated permission to the API registration
+    "ClientId": "22222222-2222-2222-22222222222222222"
+  }
+}
+```
+
+## Logging
+
+Logging is provided by the external package `Intility.Logging.AspNetCore` in conjunction with logger sink extensions. The goal with the external package is to enable 
+continuous development of logging support centrally, as the infrastructure changes over time, alleviating you of this burden.
+
+> NOTE: For more information about logging configurations visit the [Logging](./Logging) section
+
+```json
+{
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "System": "Warning",
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information"
+      }
+    },
+    "Properties": {
+      "Application": "MyService"
+    }
+  }
+}
+```
