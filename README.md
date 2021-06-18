@@ -1,10 +1,29 @@
-# Intility Developer Templates
+<h1 align="center">
+  <img src="./docusaurus/static/img/logo192.png" width="124px"/><br/>
+  Intility Developer Templates
+</h1>
 
+<p align="center">
 This repository contains Intility Templates for Create React App and .NET,
 which aims to give Intility developers battle-tested sane defaults for their projects.
 More frameworks might be included in the future.
+</p>
 
-## Getting started
+<p align="center">
+<a href="https://github.com/Intility/templates/actions">
+    <img alt="publish cra" src="https://github.com/Intility/templates/actions/workflows/publish-cra.yml/badge.svg" style="max-width:100%;">
+</a>
+
+<a href="https://github.com/Intility/templates/actions">
+    <img alt="publish docs" src="https://github.com/Intility/templates/actions/workflows/publish-docs.yml/badge.svg" style="max-width:100%;">
+</a>
+
+<a href="https://github.com/Intility/templates/actions">
+    <img alt="publish docs" src="https://github.com/Intility/templates/actions/workflows/publish-dotnet.yml/badge.svg" style="max-width:100%;">
+</a>
+</p>
+
+## 🚀Getting started
 
 To get started with a project, simply run one of the following commands.
 
