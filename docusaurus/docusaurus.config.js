@@ -10,6 +10,9 @@ module.exports = {
   themeConfig: {
     defaultMode: 'dark',
     sidebarCollapsible: false,
+    prism: {
+      additionalLanguages: ['csharp'],
+    },
     navbar: {
       title: 'Create Intility App',
       logo: {
