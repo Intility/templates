@@ -4,7 +4,7 @@ sidebar_position: 6
 ---
 
 :::note GitLab Deploy Token
-Remember to set up the [GitLab Deploy Token](/dotnet/configuration/gitlab#add-gitlab-deploy-token)!
+Remember to set up the [GitLab Deploy Token](/dotnet/setup/gitlab#add-gitlab-deploy-token)!
 :::
 
 The included deploy job will deploy your project to OpenShift. For this to work, you need to create a project in OpenShift, and acquire a token for Openshift.
@@ -49,7 +49,7 @@ Subject Name: `gitlab-builder`
 
 After creating the role binding, go back to Service Accounts and go to the `gitlab-builder` Service Account.  
 At the bottom of page, you'll find a link to a secret named `gitlab-builder-token-*`, click it.  
-Copy the `token` field at the bottom of the page, and [add it to GitLab CI/CD variables](/dotnet/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
+Copy the `token` field at the bottom of the page, and [add it to GitLab CI/CD variables](/dotnet/setup/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
 
 ### CLI
 
@@ -77,4 +77,4 @@ Lastly, we have to extract the token from the secret presented in the first step
 oc describe secret <secret-name>
 ```
 
-Copy the contents from the `token` section and [add it to GitLab CI/CD variables](/dotnet/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
+Copy the contents from the `token` section and [add it to GitLab CI/CD variables](/dotnet/setup/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
