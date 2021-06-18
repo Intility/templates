@@ -9,6 +9,7 @@
   ],
   "description": "TypeScript Intility template for Create React App.",
   "main": "template.json",
+  "homepage": "https://create.intility.app/cra",
   "repository": {
     "type": "git",
     "url": "https://github.com/Intility/templates.git",
