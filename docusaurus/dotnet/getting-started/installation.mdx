@@ -31,12 +31,25 @@ one comes with a solution file and one does not. This is currently the best way 
 starting from scratch or already have a solution going.
 
 :::note
-These projects will most likely merge into one if or when the dotnet template tooling supports post-scripts that allows us to move files post installtion.
+These projects will most likely merge into one if or when the dotnet template tooling supports post-scripts that allows us to move files post installation.
 :::
 
 ## Bootstrap new project using the template
 
 You can either use the `dotnet new` command or Visual Studio -> New Project wizard to create a new project based on the templates.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  groupId="host"
+  defaultValue="cli"
+  values={[
+    { label: "dotnet CLI", value: "cli" },
+    { label: "Visual Studio", value: "vs" }
+  ]}
+>
+<TabItem value="cli">
 
 ```shell
 # create project
@@ -45,4 +58,51 @@ dotnet new iwebapi -o MyService
 # run project
 cd MyService
 dotnet run --project MyService/MyService.csproj
+```
+
+</TabItem>
+<TabItem value="vs">
+
+:::note
+You need to be on Visual Studio 16.10.0 or higher for the solution template to work properly.
+:::
+
+Find the project template named `Intility Api (Solution)`.
+
+![Visual Studio new](/img/visual-studio-new.png)
+
+Name your project, and ensure `Place solution and project in the same directory` is checked.
+
+![Visual Studio new solution](/img/visual-studio-new-solution.png)
+
+</TabItem>
+</Tabs>
+
+## Updating the template
+
+:::warning
+Earlier versions of the CLI had troubles updating packages due to long-lived caches.
+You need to be on version 5.0.301 or higher for updating to work properly.
+:::
+
+:::note
+This will not update already bootstrapped projects.
+:::
+
+Check for updates by running
+
+```shell
+dotnet new --update-check
+```
+
+If there are any updates available, update with
+
+```shell
+dotnet new --update-apply
+```
+
+or
+
+```shell
+dotnet new --install Intility.Templates
 ```
