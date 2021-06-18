@@ -11,7 +11,12 @@ machine or through environment variables or secrets in CI or production environm
 
 Read more about available configuration providers in the official dotnet documentation.
 
-<MsDocsCard title="Configuration in ASP.NET Core" subtitle="~62 minutes to read" url="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0" width="305px" />
+<MsDocsCard
+  title="Configuration in ASP.NET Core"
+  subtitle="~62 minutes to read"
+  url="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-5.0"
+  width="305px"
+/>
 
 
 ## Azure AD Authentication
@@ -67,7 +72,9 @@ Read more about available configuration providers in the official dotnet documen
 Logging is provided by the external package `Intility.Logging.AspNetCore` in conjunction with logger sink extensions. The goal with the external package is to enable 
 continuous development of logging support centrally, as the infrastructure changes over time, alleviating you of this burden.
 
-> NOTE: For more information about logging configurations visit the [Logging](./Logging) section
+:::note
+For more information about logging configurations visit the [Logging](./Logging) section.
+:::
 
 ```json
 {

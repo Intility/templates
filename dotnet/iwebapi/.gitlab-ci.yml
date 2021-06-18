@@ -77,7 +77,7 @@ image:dev:
       --destination $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
-  needs: [ "build:dev" ]
+  needs: [ "build" ]
 
 # --- deployment ---
 deploy:dev:
