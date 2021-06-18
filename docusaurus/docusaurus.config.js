@@ -152,6 +152,22 @@ module.exports = {
         routeBasePath: 'dotnet',
         sidebarPath: require.resolve('./sidebarsDotnet.js'),
         editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+        sidebarItemsGenerator: async function ({
+          defaultSidebarItemsGenerator,
+          ...args
+        }) {
+          const sidebarItems = await defaultSidebarItemsGenerator(args);
+          for (let category of sidebarItems) {
+            if (category.items) {
+              category.items = category.items.filter(
+                (i) => !i.label || !i.label.startsWith('_'),
+              );
+            }
+          }
+          return sidebarItems.filter(
+            (c) => !c.label || !c.label.startsWith('_'),
+          );
+        },
         // ... other options
       },
     ],
