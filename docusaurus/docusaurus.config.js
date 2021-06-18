@@ -152,6 +152,14 @@ module.exports = {
         routeBasePath: 'dotnet',
         sidebarPath: require.resolve('./sidebarsDotnet.js'),
         editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+
+        /**
+         * Filters any pages on 2nd level if the label starts with underscore (_).
+         * This sidebar plugin is currently not in use and should be refactored into
+         * a proper front matter plugin with property to indicate if article is hidden.
+         * @param {*} param0
+         * @returns
+         */
         sidebarItemsGenerator: async function ({
           defaultSidebarItemsGenerator,
           ...args
