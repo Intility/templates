@@ -19,7 +19,7 @@ spec:
         {{- include "chart.selectorLabels" . | nindent 8 }}
     spec:
       imagePullSecrets:
-        - name: gitlab-pull-secret
+        - name: {{ include "chart.fullname" . }}-pull-secret
       serviceAccountName: default
       containers:
         - name: {{ .Chart.Name }}
