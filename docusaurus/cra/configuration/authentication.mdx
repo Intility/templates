@@ -236,7 +236,17 @@ const DataComponent = () => {
 };
 ```
 
-### SWR
+### SWR / React Query
+
+<Tabs
+  groupId="fetchinglib"
+  defaultValue="swr"
+  values={[
+    { label: "SWR", value: "swr" },
+    { label: "React Query", value: "react-query" }
+  ]}
+>
+<TabItem value="swr">
 
 Integrating `authenticatedFetch` with SWR is very simple. All you need to do is specify a fetcher for SWR.
 
@@ -403,3 +413,105 @@ const SomeExample = () => (
 ```
 
 To read more about SWR, check out the [SWR Docs](https://swr.vercel.app/).
+
+</TabItem>
+<TabItem value="react-query">
+
+Integrating `authenticatedFetch` with React Query is very simple. All you need to do is specify a query function for React Query.
+
+```tsx
+import { useQuery } from 'react-query';
+import { authorizedFetch } from "@intility/react-msal-browser";
+
+const authFetcher = (url: string) =>
+  authorizedFetch(url).then((result) => result.json());
+
+const QueryComponent = () => {
+  const { data, error, isLoading, isError } = useQuery("my-api/resource", async () => {
+    let response = await authorizedFetch("my-api/resource");
+    return await response.json();
+  });
+
+  return (
+    <>
+      {isLoading && <p>Loading data...</p>}
+      {data && <div>Here is the data: {data}</div>}
+      {isError && <p className="error">Oh No!!! {error.message}</p>}
+    </>
+  );
+};
+```
+
+We could take this one step further, and assign a global default query function using `QueryClient` and `QueryClientProvider`.
+
+```tsx title="src/index.tsx"
+import { QueryClient, QueryClientProvider } from "react-query";
+import { authorizedFetch } from "@intility/react-msal-browser";
+
+// Note that we apply a base url to every request
+const defaultQueryFn = async ({ queryKey }) => {
+  let response = await authorizedFetch((process.env.REACT_APP_API_URL as string) + queryKey[0]);
+  return await response.json();
+};
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      queryFn: defaultQueryFn,
+    },
+  },
+});
+
+ReactDOM.render(
+  <Router>
+    <MsalBrowserProvider config={msal} forced>
+      <QueryClientProvider value={queryClient}>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+      </QueryClientProvider>
+    </MsalBrowserProvider>
+  </Router>,
+  document.getElementById("root")
+);
+```
+
+We can now call `useQuery` somewhere in our app, and it will by default use the authorized fetcher.
+
+```tsx
+import { useQuery } from "react-query";
+import { authorizedFetch } from "@intility/react-msal-browser";
+
+const QueryComponent = () => {
+  // Note that only the resource is requested here
+  // that's because the API base URL is prepended in our fetcher
+  const { data, error, isLoading, isError } = useQuery("resource");
+
+  return (
+    <>
+      {isLoading && <p>Loading data...</p>}
+      {data && <div>Here is the data: {data}</div>}
+      {isError && <p className="error">Oh No!!! {error.message}</p>}
+    </>
+  );
+};
+```
+
+One great thing about React Query is request deduping and caching.  
+In the following example, there will be three instances of our `QueryComponent`, but only one request will be made.
+That would not be the case if we were to use the `DataComponent` from earlier, where we manually fetched the data.
+
+```tsx
+const SomeExample = () => (
+  <>
+    <QueryComponent />
+    <QueryComponent />
+    <QueryComponent />
+  </>
+);
+```
+
+To read more about React Query, check out the [React Query Docs](https://react-query.tanstack.com/).
+
+</TabItem>
+</Tabs>
