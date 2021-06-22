@@ -89,8 +89,8 @@ deploy:dev:
     IMAGE_TAG: $CI_PIPELINE_IID
     ROUTE: $CI_PROJECT_NAME-dev.apps.int.intility.no
   environment:
-    name: dev
-    url: https://$ROUTE
+    name: Development
+    url: https://$CI_PROJECT_NAME-dev.apps.int.intility.no
   script:
     - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
     - helm upgrade
@@ -104,7 +104,7 @@ deploy:dev:
       --set route=$ROUTE
       --set replicaCount=2
       --set secrets.Sentry__Dsn=$SENTRY_DSN
+      --set config.ASPNETCORE_ENVIRONMENT=$CI_ENVIRONMENT_NAME
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
   needs: [ "test", "image:dev" ]
-
