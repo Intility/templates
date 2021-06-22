@@ -23,7 +23,7 @@ namespace Company.WebApplication1.Swagger
             {
                 options.SwaggerEndpoint(
                     $"/swagger/{description.GroupName}/swagger.json",
-                    $"Company.WebApplication1 {description.ApiVersion.ToString()}"
+                    $"Company.WebApplication1 {description.ApiVersion}"
                 );
             }
             options.OAuthAppName(_config["Swagger:AppName"]);

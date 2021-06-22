@@ -22,43 +22,43 @@ namespace Company.WebApplication1.Swagger
 
         public void Configure(SwaggerGenOptions c)
         {
-                foreach (var description in _apiVersionProvider.ApiVersionDescriptions) 
+            foreach (var description in _apiVersionProvider.ApiVersionDescriptions) 
+            {
+                c.SwaggerDoc(description.GroupName, new OpenApiInfo
                 {
-                    c.SwaggerDoc(description.GroupName, new OpenApiInfo
-                    {
-                            Title = "Company.WebApplication1",
-                            Version = description.ApiVersion.ToString()
-                    });
-                }
+                    Title = "Company.WebApplication1",
+                    Version = description.ApiVersion.ToString()
+                });
+            }
 
-                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
                 {
-                    Type = SecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows
+                    AuthorizationCode = new OpenApiOAuthFlow
                     {
-                        Implicit = new OpenApiOAuthFlow
+                        AuthorizationUrl = new Uri("https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize"),
+                        TokenUrl = new Uri("https://login.microsoftonline.com/organizations/oauth2/v2.0/token"),
+                        Scopes = new Dictionary<string, string>
                         {
-                            AuthorizationUrl = new Uri("https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize"),
-                            TokenUrl = new Uri("https://login.microsoftonline.com/organizations/oauth2/v2.0/token"),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                { $"api://{_config["AzureAd:ClientId"]}/api-scope", "Access Company.WebApplication1" }
-                            }
+                            { $"api://{_config["AzureAd:ClientId"]}/api-scope", "Access Company.WebApplication1" }
                         }
-                    },
-                    Description = "OAuth 2 Authentication using Azure AD",
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "oauth2"}
-                        },
-                        new[] { $"api://{_config["AzureAd:ClientId"]}/api-scope" }
                     }
-                });
+                },
+                Description = "OAuth 2 Authentication using Azure AD",
+            });
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                    },
+                    new[] { $"api://{_config["AzureAd:ClientId"]}/api-scope" }
+                }
+            });
         }
     }
 }
