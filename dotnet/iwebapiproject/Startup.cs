@@ -38,6 +38,8 @@ namespace Company.WebApplication1
                     )
             );
 
+            services.AddHealthChecks();
+
             services.AddControllers();
             
             services.AddApiVersioning(options =>
@@ -82,6 +84,7 @@ namespace Company.WebApplication1
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers().RequireAuthorization();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
