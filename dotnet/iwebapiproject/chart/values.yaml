@@ -39,15 +39,6 @@ registry:
   user: ""
   password: ""
 
-config:
-  AzureAd__Instance: ""
-  AzureAd__Domain: ""
-  AzureAd__TenantId: ""
-  AzureAd__ClientId: ""
-  ElasticSearch__Endpoints: ""
-  ElasticSearch__IndexFormat: ""
+config: {}
 
-secrets:
-  Sentry__Dsn: ""
-  ElasticSearch__Username: ""
-  ElasticSearch__Password: ""
+secrets: {}
