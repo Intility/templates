@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using Azure.Identity;
 
 namespace Company.WebApplication1
 {
