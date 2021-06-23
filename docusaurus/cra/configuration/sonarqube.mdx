@@ -10,8 +10,11 @@ First, we need to [create a new project in SonarQube](https://sonarqube.intility
 
 ![New Project in SonarQube](/img/sonarqube-new.png)  
 The project key should be the same as the project slug from GitLab.
-If you use something other than the project slug,
+
+:::note
+If you use something other than the GitLab project slug,
 you'll need to modify the `SONAR_PROJECT` variable in the top of the .gitlab-ci.yml file.
+:::
 
 Then in the next step, either generate a new token, or select an existing one.  
 ![Generate Token](/img/sonarqube-token.png)  

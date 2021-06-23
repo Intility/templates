@@ -15,9 +15,12 @@ Under platform, select React.
 
 ![Sentry New Project Name](/img/sentry-new-name.png)  
 For the project name, use the project slug from GitLab.
-If you use something other than the project slug
-you'll need to modify the `SENTRY_PROJECT` variable in the top of the .gitlab-ci.yml file.  
 Select a fitting team, or create a new one, and hit Create.
+
+:::note
+If you use something other than the GitLab project slug
+you'll need to modify the `SENTRY_PROJECT` variable in the top of the .gitlab-ci.yml file.  
+:::
 
 You'll be taken to a Configure React page.
 In the code example under Connecting the SDK to Sentry, copy the `dsn` value, and [add it to GitLab CI/CD variables](/cra/configuration/gitlab#adding-cicd-variables) with the key `SENTRY_DSN`.
