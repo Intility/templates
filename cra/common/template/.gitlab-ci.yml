@@ -95,13 +95,14 @@ image:dev:
     entrypoint: [""]
   variables:
     IMAGE_TAG: dev
+    IMAGE_VERSION: $CI_PIPELINE_IID
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor
       --context $CI_PROJECT_DIR
       --dockerfile Dockerfile.CI
       --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
-      --destination $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+      --destination $CI_REGISTRY_IMAGE:$IMAGE_VERSION
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
   needs: [ "build:dev" ]
@@ -110,6 +111,7 @@ image:prod:
   extends: image:dev
   variables:
     IMAGE_TAG: latest
+    IMAGE_VERSION: $CI_COMMIT_TAG
   rules:
     - if: '$CI_COMMIT_TAG'
   needs: [ "build:prod" ]
