@@ -176,6 +176,7 @@ deploy:dev:
 .deploy:prod:
   extends: deploy:dev
   variables:
+    IMAGE_TAG: $CI_COMMIT_TAG
     ROUTE: $CI_PROJECT_NAME.apps.int.intility.no
   environment:
     name: prod
