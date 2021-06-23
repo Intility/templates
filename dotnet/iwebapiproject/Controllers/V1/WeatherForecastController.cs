@@ -27,6 +27,13 @@ namespace Company.WebApplication1.Controllers.V1
             _logger = logger;
         }
 
+        /// <summary>
+        /// Retrieve weather forecast.
+        /// </summary>
+        /// <returns>The weather forecast</returns>
+        /// <response code="200">Returns the weather forecast</response>
+        /// <response code="401">If user is not authorized</response>
+        /// <response code="403">If user don't have the scope api-scope</response>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {

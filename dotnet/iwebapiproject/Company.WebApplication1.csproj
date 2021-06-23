@@ -4,6 +4,10 @@
     <UserSecretsId>aspnet-Company.WebApplication1-53bc9b9d-9d6a-45d4-8429-2a2761773502</UserSecretsId>
     <RootNamespace Condition="'$(name)' != '$(name{-VALUE-FORMS-}safe_namespace)'">Company.WebApplication1</RootNamespace>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+
+    <!-- https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio#xml-comments -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6"/>
