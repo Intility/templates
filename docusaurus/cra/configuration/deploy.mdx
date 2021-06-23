@@ -11,14 +11,26 @@ The included deploy job will deploy your project to OpenShift. For this to work,
 
 ## Create project
 
-### UI
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  groupId="openshift"
+  defaultValue="ui"
+  values={[
+    { label: 'UI', value: 'ui' },
+    { label: 'CLI', value: 'cli' },
+  ]}
+>
+<TabItem value="ui">
 
 Go to [our OpenShift instance](https://console.apps.openshift.intility.com/) and log in as Intility Developer.
 
 Create a project, the name should be `aa-<GITLAB_SLUG>-dev`, e.g. `aa-my-app-dev`.  
 Add a fitting display name and description if you feel like it.
 
-### CLI
+</TabItem>
+<TabItem value="cli">
 
 The name should be `aa-<GITLAB_SLUG>-dev`, e.g. `aa-my-app-dev`.
 
@@ -26,9 +38,20 @@ The name should be `aa-<GITLAB_SLUG>-dev`, e.g. `aa-my-app-dev`.
 oc new-project <projectname>
 ```
 
+</TabItem>
+</Tabs>
+
 ## Acquire Token
 
-### UI
+<Tabs
+  groupId="openshift"
+  defaultValue="ui"
+  values={[
+    { label: 'UI', value: 'ui' },
+    { label: 'CLI', value: 'cli' },
+  ]}
+>
+<TabItem value="ui">
 
 In your newly created project, switch from Developer to Administrator view in the sidebar.
 
@@ -49,7 +72,8 @@ After creating the role binding, go back to Service Accounts and go to the `gitl
 At the bottom of page, you'll find a link to a secret named `gitlab-builder-token-*`, click it.  
 Copy the `token` field at the bottom of the page, and [add it to GitLab CI/CD variables](/cra/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
 
-### CLI
+</TabItem>
+<TabItem value="cli">
 
 Copy login command from OpenShift Console and paste it in a terminal.  
 After logging in, the CLI will show you available projects. Follow the instructions to change to the project you just created.
@@ -76,3 +100,6 @@ oc describe secret <secret-name>
 ```
 
 Copy the contents from the `token` section and [add it to GitLab CI/CD variables](/cra/configuration/gitlab#adding-cicd-variables) with the key `OPENSHIFT_TOKEN`.
+
+</TabItem>
+</Tabs>
