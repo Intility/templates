@@ -19,7 +19,7 @@ More frameworks might be included in the future.
 </a>
 
 <a href="https://github.com/Intility/templates/actions">
-    <img alt="publish docs" src="https://github.com/Intility/templates/actions/workflows/publish-dotnet.yml/badge.svg" style="max-width:100%;">
+    <img alt="publish dotnet" src="https://github.com/Intility/templates/actions/workflows/publish-dotnet.yml/badge.svg" style="max-width:100%;">
 </a>
 </p>
 
@@ -50,14 +50,14 @@ There is a lot more to it, so please visit the [docs](https://create.intility.ap
 
 ## Repository structure
 
-### cra
+### [cra](./cra/)
 
 Contains all templates for Create React App.
 
-### dotnet
+### [dotnet](./dotnet/)
 
 Contains all templates for .NET.
 
-### docusaurus
+### [docusaurus](./docusaurus)
 
 Docs for these templates, made with [docusaurus](https://v2.docusaurus.io/).
