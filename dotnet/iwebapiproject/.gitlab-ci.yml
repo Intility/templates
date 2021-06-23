@@ -33,7 +33,7 @@ build:
   artifacts:
     expire_in: 2 weeks
     paths:
-      - build
+      - Company.WebApplication1/build
 
 test:
   stage: test
@@ -68,16 +68,30 @@ image:dev:
     entrypoint: [""]
   variables:
     IMAGE_TAG: dev
+    IMAGE_VERSION: $CI_PIPELINE_IID
+  environment:
+    name: Development
+    action: prepare
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor
       --context $CI_PROJECT_DIR/Company.WebApplication1
       --dockerfile Dockerfile.CI
       --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
-      --destination $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+      --destination $CI_REGISTRY_IMAGE:$IMAGE_VERSION
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
   needs: [ "build" ]
+
+image:prod:
+  extends: image:dev
+  variables:
+    IMAGE_TAG: latest
+    IMAGE_VERSION: $CI_COMMIT_TAG
+  environment:
+    name: Production
+  rules:
+    - if: '$CI_COMMIT_TAG'
 
 # --- deployment ---
 deploy:dev:
@@ -109,3 +123,16 @@ deploy:dev:
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
   needs: [ "test", "image:dev" ]
+
+.deploy:prod:
+  extends: deploy:dev
+  variables:
+    IMAGE_TAG: $CI_COMMIT_TAG
+    ROUTE: $CI_PROJECT_NAME.apps.int.intility.no
+  environment:
+    name: Production
+    url: https://$CI_PROJECT_NAME.apps.int.intility.no
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: manual
+  needs: [ "test", "image:prod" ]
