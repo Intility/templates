@@ -5,7 +5,7 @@
       "@testing-library/react": "^11.2.2",
       "@testing-library/user-event": "^12.2.2",
       "@intility/bifrost-react": "^2.3.1",
-      "@intility/helm-version": "^1.0.0",
+      "@intility/helm-version": "^1.1.0",
       "@intility/react-msal-browser": "^3.6.2",
       "@sentry/react": "^5.27.6",
       "@sentry/tracing": "^5.27.6",
