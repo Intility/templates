@@ -3,6 +3,91 @@ title: Adding Environments
 sidebar_position: 1
 ---
 
-:::info
-This page isn't finished yet. If you are comfortable with this subject, feel free to contibute.
+The included pipeline contains jobs for `dev` and `prod` environments.
+Here we'll talk about enabling, using and adding more environments.
+
+## Enabling the `deploy:prod` job
+
+The provided `deploy:prod` job is disabled by default.
+This is to force you to make an active choice on wether you want to use the job or [ArgoCD](/dotnet/advanced/deploy-argocd).
+
+To enable the job, simply remove the `.` from the last job.
+
+```diff title=".gitlab-ci.yml"
+- .deploy:prod:
++ deploy:prod:
+```
+
+### Trigger production jobs
+
+First, we have to update the `appVersion` field in our Helm charts `Chart.yaml`.
+
+```yaml title="chart/Chart.yaml"
+appVersion: "x.x.x"
+```
+
+Then, we have to create a git tag and push it
+
+```shell
+git tag x.x.x
+git push --tags
+```
+
+After all the other jobs has completed, we can manually trigger the `deploy:prod` job.
+This is manual by design, and shouldn't be set to automatic.
+
+### Separate OpenShift project
+
+You can, and should create a separate OpenShift project to host the production environment.
+
+To do this, simply follow the [same steps as earlier](/dotnet/configuration/deploy).
+This time, name it `aa-<project-slug>-prod`.
+When adding the `OPENSHIFT_TOKEN` to CI/CD variables, select `Production` as the Environment scope.
+This variable will then be used instead of the default one in the `deploy:prod` job.
+
+![prod scoped variable](/img/gitlab-scoped-production.png)
+
+:::note
+If you can't see the `Production` environment when creating a variable, you need to trigger the production jobs first.
+The `image:prod` job will then provision the `Production` environment, and you can insert the `OPENSHIFT_TOKEN` before triggering the deploy job.
 :::
+
+## Adding even more Environments
+
+
+Usually, a development and a production environment is enough.
+In big applications however, you might see the need for more environments.
+
+In this example, we will set up a QA environment.
+To do this, we will simply copy the `prod` jobs, and create our own for `qa` instead.
+
+```yaml title=".gitlab-ci.yml"
+image:qa:
+  extends: image:dev
+  variables:
+    IMAGE_TAG: qa
+  environment:
+    name: QA
+  rules:
+    - if: '$CI_COMMIT_TAG'
+
+.deploy:qa:
+  extends: deploy:dev
+  variables:
+    ROUTE: $CI_PROJECT_NAME-qa.apps.int.intility.no
+  environment:
+    name: QA
+    url: https://$CI_PROJECT_NAME-qa.apps.int.intility.no
+  rules:
+    - if: '$CI_COMMIT_TAG'
+  needs: [ "test", "image:qa" ]
+```
+
+:::note
+We don't override the image version to avoid version collisions with the production jobs.
+:::
+
+This example will, like the production jobs, be triggered by git tags.
+But it will automatically deploy it to the QA environment,
+which will be created in the default OpenShift project,
+unless you've created a custom QA project.
