@@ -8,25 +8,37 @@ The `gitlab-ci.yml` file included with the template comes with the following job
 ```
 build
 build:dev
+build:prod
+
 test
+
 sonarqube
-sentry
-sentry:deploy:dev
+
+image:dev
+image:prod
+
+sentry:dev
+sentry:prod
+
 deploy:dev
+.deploy:prod
 ```
 
 :::info
 This page describes jobs of the current version of the templates.
 If you use an old version, they might differ.
-[Click here](https://gitlab.intility.com/DeveloperServices/cra-templates/-/blob/master/common/template/.gitlab-ci.yml) to view the current `.gitlab-ci.yml`,
-if you haven't made any changes to yours, you can safely copy it into your project.
+Check out the [pipeline upgrade guide](/cra/advanced/upgrade-pipeline) to update to the V1 pipeline.
 :::
 
 :::info
 All `*:dev` jobs is set to run on pushes to `master` or `main` branch.
 :::
 
-## `build` & `build:dev`
+:::info
+All `*:prod` jobs are set to run when tags are pushed to the repository.
+:::
+
+## `build`
 
 The main `build` job runs [`npm run build`](https://create-react-app.dev/docs/available-scripts/#npm-run-build) on every push to all branches (except master).
 It will pass some default environment variables;
@@ -40,11 +52,10 @@ It will pass some default environment variables;
 It also creates an artifact of the `build` folder that is created,
 which will be passed onto later jobs.
 
-The `build:dev` pipeline does the same as build,
-except it only runs on the master branch.
-We override two variables: `REACT_APP_SENTRY_ENVIRONMENT` and `REACT_APP_REDIRECT_URI`.
-We do that because we want our environment to be `dev` instead of `master`,
-and the redirect URI to be `...{projectSlug}...` instead of `...{projectSlug}-master...`.
+The `build:*` pipeline does the same as build,
+except it adds a GitLab environment.
+The base job uses the GitLab environment name to configure the Sentry environment.
+
 
 ## `test`
 This job simply runs the [`npm test`](https://create-react-app.dev/docs/available-scripts/#npm-test) script.
@@ -53,24 +64,24 @@ This job simply runs the [`npm test`](https://create-react-app.dev/docs/availabl
 This job uses the [SonarScanner CLI](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/) to upload the source code to SonarQube.
 The pipeline will continue if this job fails, but it should be looked into.
 
+## `image`
+The image jobs builds a docker image with the `Dockerfile.CI` dockerfile,
+and with the build output from the `build` jobs.
+
+For the `image:dev` job, it pushes two tags, one with `dev`, and one with the pipeline id.
+For the `image:prod` job, the tags pushed are `latest` and the tag name.
+
 ## `sentry`
 The `sentry` job uses the [Sentry CLI](https://docs.sentry.io/product/cli/) to create a new release.
 The release name will be the git commit SHA.
 It will connect the release to the current commit, and upload sourcemaps from the build step.
+Lastly it will associate the release with the right env.
 
-## `sentry:deploy:dev`
-The job runs on pushes to the `master` branch,
-and will associate the release with the deployment environment `dev`.
+## `deploy`
+This is the main job for deploying to OpenShift.  
+It will create an environment in GitLab, with the URL to the running app.
 
-## `deploy:dev`
-This is the main job for deploying to OpenShift. It runs on the `master` branch.  
-It will create an Environment in GitLab, with the URL to the running app.
+It uses Helm to install the app to an OpenShift project.
 
-The script has four steps:
-
-1. Create an app in your OpenShift project with the name `dev`, unless it exists
-2. Start a docker image build for that app with the output from the `build` job
-3. Create a route for that application unless it exists
-4. Label the route with `ingress-tenant=aa` ([more info](https://rot.intility.com/IQ/Article/Details/92cd4165-a53a-4fab-902a-d6ce51e94da5))
-
-The route defaults to `https://{projectSlug}.apps.int.intility.no`.
+For `deploy:dev`, the route defaults to `https://{projectSlug}-dev.apps.int.intility.no`.  
+For `deploy:prod`, the route defaults to `https://{projectSlug}.apps.int.intility.no`.
