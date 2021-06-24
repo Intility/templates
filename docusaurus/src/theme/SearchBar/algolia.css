@@ -30,6 +30,10 @@
   background: #ebebfb;
 }
 
+.navbar__search {
+  padding-left: 8px;
+}
+
 /* For bigger screens, when displaying results in two columns */
 @media (min-width: 768px) {
   /* Bottom border of each suggestion */
