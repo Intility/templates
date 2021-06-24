@@ -20,7 +20,9 @@ jobs:
           npm ci
           npm run build
       - name: Publish
-        run: npx lerna publish from-package --yes
+        run: |
+          cd cra
+          npx lerna publish from-package --yes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
