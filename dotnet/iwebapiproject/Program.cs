@@ -21,8 +21,8 @@ namespace Company.WebApplication1
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(builder =>
                 {
-                    var endpoint = Environment.GetEnvironmentVariable("ASPNETCORE_CONFIGURATION");
-                    if (!string.IsNullOrEmpty(endpoint))
+                    var configuration = builder.Build();
+                    if (!string.IsNullOrEmpty(configuration["AppConfig"]))
                     {
                         builder.AddAzureAppConfiguration(builder =>
                         {
