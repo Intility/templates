@@ -7,6 +7,14 @@ The template comes packed with a pipeline, that builds, tests, analyzes and depl
 
 ## Jobs
 
+:::info
+The `image:dev` and `image:prod` jobs is set to run on pushes to `master` or `main` branch.
+:::
+
+:::info
+The `image:prod` and `deploy:prod` jobs are set to run when tags are pushed to the repository.
+:::
+
 ### `build`
 
 Builds the project, and creates a build artifact for later stages to use.
@@ -21,15 +29,15 @@ Runs parallel with `build`.
 Analyzes the project with sonar-scanner.
 Runs parallel with `build`.
 
-### `image:dev`
+### `image`
 
 Uses the artifact from the `build` step, and creates and publish a docker image with the `Dockerfile.CI` file using kaniko.
-Runs once the `build` job has finished, and only in the `master` or `main` branch.
+Runs once the `build` job has finished.
 
-### `deploy:dev`
+### `deploy`
 
 Deploys the application to OpenShift using the Helm chart.
-Runs once the `image:dev` and `test` jobs have succeeded, and only in the `master` or `main` branch.
+Runs once the `image` and `test` jobs have succeeded.
 
 ## Debugging the pipeline
 
