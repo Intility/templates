@@ -22,7 +22,9 @@ namespace Company.WebApplication1
                 .ConfigureAppConfiguration(builder =>
                 {
                     var configuration = builder.Build();
-                    if (!string.IsNullOrEmpty(configuration["AppConfig"]))
+                    var endpoint = configuration["AppConfig"];
+
+                    if (!string.IsNullOrEmpty(endpoint))
                     {
                         builder.AddAzureAppConfiguration(builder =>
                         {
