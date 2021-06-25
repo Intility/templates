@@ -1,0 +1,105 @@
+---
+title: Azure App Config
+sidebar_position: 3
+---
+
+When working on large projects, it can bothersome to share secret and configuration between all developers.
+Azure App Config solves this by hosting this configuration remote, and everyone with access can pull it.
+The template supports this out of the box, and all it needs is an url to get started.
+
+## Create App Configuration
+
+In Azure, create an `App Configuration`, and go to it.
+
+![App Config Endpoint](/img/azure-app-config-url.png)
+
+Copy the `endpoint` URL, and paste it into the `AppConfig` field in `Properties/launchSettings.json`.
+
+```json title="Properties/launchSettings.json"
+{
+  "profiles": {
+    "YOUR_PROJECT_NAME": {
+      ...
+      "environmentVariables": {
+        "AppConfig": "MY_APP_CONFIG_ENDPOINT"
+      }
+    }
+    ...
+  }
+}
+```
+
+The template is set up to use built-in credentials of your development machine.
+This means that we need to allow your (or more) accounts to access the App Configuration.
+
+Go to `Access Control (IAM)` in the sidebar, then click `Add` and `Add role assignment`.
+Select `App Configuration Data Owner`, and your own account or a group.
+
+![Add role assignment](/img/azure-app-config-role.png)
+
+:::info
+If you do not have access to add role assignments, you should as someone with the role assignment `Owner` to do it for you.
+:::
+
+You can now add Key-values in Configuration manager,
+and they will be applied to your local development environment.
+
+## Create Key Vault
+
+In Azure, create a `Key Vault`.
+When setting up access policies, allow the same group/users you set up in your App Configuration to Get and List the Keys and Secrets.
+
+You can now add Key Vault references in the App Configurations Configuration manager,
+and they will be applied to your local development environment.
+
+## Use in development deployment
+
+Since the config uses your machines credentials to access the App Configuration and Key Vault,
+it won't automatically work with your development deployment.
+
+To set this up, we need to grant your App Registration we set up earlier access to the App Configuration and Key Vault.
+
+First, give it the `App Configuration Data Reader` role in the App Configuration.  
+Then, give it Get and List permissions for Key and Secrets.
+
+You also need a client secret for your App Registration,
+create one in Azure AD -> App Registrations -> Your App Registration -> Certificates & secrets.
+
+Set up the following variables in GitLab CI/CD under the `Development` environment scope
+
+- `AppConfig`: The App Configuration endpoint
+- `AZURE_CLIENT_ID`: The App Registration client id
+- `AZURE_CLIENT_SECRET`: The client secret you just made
+- `AZURE_TENANT_ID`: The tenant id of your App Registration (check in your App Registrations Overview)
+
+Lastly, we need to configure the development deployment to use these variables.
+We do this by passing the variables we just set up to Helm:
+
+```yaml title=".gitlab-ci.yml" {17-20}
+deploy:dev:
+  ...
+  script:
+    - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+    - helm upgrade
+      --install $CI_ENVIRONMENT_SLUG ./Company.WebApplication1/chart
+      --set nameOverride=$CI_PROJECT_NAME
+      --set image.repository=$CI_REGISTRY_IMAGE
+      --set image.tag=$IMAGE_TAG
+      --set registry.url=$CI_REGISTRY
+      --set registry.user=$CI_DEPLOY_USER
+      --set registry.password=$CI_DEPLOY_PASSWORD
+      --set route=$ROUTE
+      --set replicaCount=2
+      --set secrets.Sentry__Dsn=$SENTRY_DSN
+      --set config.ASPNETCORE_ENVIRONMENT=$CI_ENVIRONMENT_NAME
+      --set config.AppConfig=$AppConfig
+      --set config.AZURE_CLIENT_ID=$AZURE_CLIENT_ID
+      --set config.AZURE_CLIENT_SECRET=$AZURE_CLIENT_SECRET
+      --set config.AZURE_TENANT_ID=$AZURE_TENANT_ID
+```
+
+The development environment will now be able to connect and use the configuration from the App Registration and Key vault.
+
+:::note
+Don't worry, even though the `deploy:prod` job extends the `deploy:dev` job, the variables won't be set, since we only scoped them to the `Development` environment.
+:::
