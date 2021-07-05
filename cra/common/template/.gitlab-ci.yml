@@ -16,8 +16,7 @@ stages:
   - test
   - analyze
   - image
-  - sentry-release
-  - sentry-deploy
+  - sentry
   - deploy
 
 default:
@@ -118,7 +117,7 @@ image:prod:
 
 # --- sentry ---
 sentry:dev:
-  stage: sentry-release
+  stage: sentry
   image: getsentry/sentry-cli
   variables:
     GIT_DEPTH: 0
