@@ -78,6 +78,8 @@ namespace Company.WebApplication1
             app.UseSerilogRequestLogging();
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
