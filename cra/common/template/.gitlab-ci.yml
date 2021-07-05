@@ -156,8 +156,9 @@ deploy:dev:
   environment:
     name: dev
     url: https://$CI_PROJECT_NAME-dev.apps.int.intility.no
-  script:
+  before_script:
     - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+  script:
     - helm upgrade
       --install $CI_ENVIRONMENT_SLUG ./chart
       --set nameOverride=$CI_PROJECT_NAME
