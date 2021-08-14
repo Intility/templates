@@ -9,7 +9,6 @@ module.exports = {
   projectName: 'templates', // Usually your repo name.
   themeConfig: {
     defaultMode: 'dark',
-    sidebarCollapsible: false,
     prism: {
       additionalLanguages: ['csharp'],
     },
@@ -138,6 +137,7 @@ module.exports = {
           routeBasePath: 'cra',
           // Please change this to your repo.
           editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+          sidebarCollapsible: false,
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -155,6 +155,7 @@ module.exports = {
         routeBasePath: 'dotnet',
         sidebarPath: require.resolve('./sidebarsDotnet.js'),
         editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+        sidebarCollapsible: false,
 
         /**
          * Filters any pages on 2nd level if the label starts with underscore (_).
@@ -202,6 +203,7 @@ module.exports = {
     //     routeBasePath: 'python',
     //     sidebarPath: require.resolve('./sidebarsPython.js'),
     //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+    //     sidebarCollapsible: false,
     //     // ... other options
     //   },
     // ],
@@ -214,6 +216,7 @@ module.exports = {
     //     routeBasePath: 'metroworker',
     //     sidebarPath: require.resolve('./sidebarsMetroworker.js'),
     //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+    //     sidebarCollapsible: false,
     //     // ... other options
     //   },
     // ],
@@ -226,6 +229,7 @@ module.exports = {
     //     routeBasePath: 'blazor',
     //     sidebarPath: require.resolve('./sidebarsBlazor.js'),
     //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+    //     sidebarCollapsible: false,
     //     // ... other options
     //   },
     // ],

@@ -30,6 +30,17 @@ namespace Company.WebApplication1
         {
             services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
 
+            services.AddAuthorization(options =>
+            {
+                var tenantId = Configuration["AzureAd:TenantId"];
+                if (tenantId != "common" && tenantId != "organizations")
+                {
+                    options.AddPolicy("NoGuests", policy => policy.RequireClaim(
+                        ClaimConstants.TenantId,
+                        tenantId));
+                }
+            });
+
             services.AddCors(options =>
                 options.AddDefaultPolicy(builder =>
                     builder.WithOrigins("https://localhost:3000")
@@ -77,6 +88,8 @@ namespace Company.WebApplication1
 
             app.UseSerilogRequestLogging();
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -33,6 +33,10 @@ Copy the `Application (Client) ID` GUID, and paste it into the `AzureAd:ClientId
 }
 ```
 
+:::info
+If you chose Multitenant, set the `AzureAd:TenantId` field to `common`.
+:::
+
 ### Add an application scope
 
 Go to Expose an API in your app registration, and add a scope.
@@ -100,3 +104,21 @@ Under My APIs, find your API, select the scope(s) and press Add permissions.
 
 ![Add API permission](/img/azure-api-permissions.png)
 
+## Guest users
+
+The template comes with an authorization policy that denies guest users in Azure AD from accessing the API.
+This policy is enabled when the application is not set up as multitenant.
+If you want guest users to access your single tenant API, simply remove the lines applying the policy.
+
+```csharp title=Startup.cs
+services.AddAuthorization(options =>
+{
+    var tenantId = Configuration["AzureAd:TenantId"];
+    if (tenantId != "common" && tenantId != "organizations")
+    {
+        options.AddPolicy("NoGuests", policy => policy.RequireClaim(
+            ClaimConstants.TenantId,
+            tenantId));
+    }
+});
+```
