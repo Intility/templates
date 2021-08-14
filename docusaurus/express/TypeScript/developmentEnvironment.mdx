@@ -1,0 +1,58 @@
+---
+title: TypeScript - Development Environment
+sidebar_label: Development Environment
+slug: /TypeScript/development-environment
+sidebar_position: 2
+---
+
+## Configuring Nodemon
+
+[Nodemon](https://nodemon.io/) is a tool used in your development environment to watch for changes in your project and hot reload the server when files are updated on save.
+
+To configure nodemon you can create a `nodemon.json` file at the project root level.
+
+```json
+{
+    "ignore": [
+        "**/*.test.ts",
+        "**/*.spec.ts",
+        ".git",
+        "node_modules"
+    ],
+    "watch": [
+        "src"
+    ],
+    // Script to be executed on nodemon start.
+    "exec": "node --inspect=5858 -r ts-node/register ./src/index.ts",
+    "ext": "ts"
+}
+```
+
+## Configuring VS Code debugger
+
+Create a new file in `.vscode/` directory at root level called `launch.json`.
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        // Other debug configs
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register"
+            ],
+            "args": [
+                "${workspaceFolder}/src/index.ts"
+            ]
+        }
+    ]
+}
+```
+
+After creating this file you can execute the `start:dev` script you created in the previous step.
+
+You can read more about configuring the VS Code debugger in this official documentation provided by VS Code: [Node.js debugging in VS Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)

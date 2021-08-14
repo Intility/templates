@@ -1,0 +1,63 @@
+---
+title: Azure - Application Insights
+sidebar_label: Application Insights
+slug: /Azure/Application-Insights
+sidebar_position: 1
+---
+
+**NOTE: This assumes that you have an Azure Application Insights resource created for your project**
+
+* [applicationinsights](https://www.npmjs.com/package/applicationinsights) - Microsoft Application Insights module for Node.js.
+
+`npm i applicationinsights`
+
+Find your instrumentation key in Azure Portal here:
+
+![Azure portal Instrumentation key](/img/azure-instrumentation-key.png)
+
+And add this to a new secret in your `.env` file:
+
+```text
+APPINSIGHTS_INSTRUMENTATIONKEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+```
+
+Next create a new file called `appInsights.ts` in your config folder.
+
+```typescript
+import * as appInsights from 'applicationinsights';
+
+const { NODE_ENV, APPINSIGHTS_INSTRUMENTATIONKEY } = process.env;
+
+if (!NODE_ENV) {
+    throw new Error("Missing Environment variable: NODE_ENV")
+}
+
+if (!APPINSIGHTS_INSTRUMENTATIONKEY) {
+    throw new Error("Missing Environment variable: APPINSIGHTS_INSTRUMENTATIONKEY")
+}
+
+// Application Insights will automatically recognize the instrumentation key localized in the environment variables
+appInsights.setup()
+    .setAutoDependencyCorrelation(true)
+    .setAutoCollectRequests(true)
+    .setAutoCollectConsole(true, true);
+
+appInsights.defaultClient.commonProperties = {
+    environment: NODE_ENV,
+};
+
+// No need to submit logs in development environment
+appInsights.defaultClient.config.disableAppInsights = NODE_ENV === 'development';
+
+export default appInsights;
+```
+
+In your `index.ts` file, import the configured appInsights Client and start the service. Place this command right beneath the other import statements.
+
+```typescript
+import appInsights from './middlewares/appInsights';
+
+appInsights.start();
+```
+
+More on how to configure Application insights can be found here: [Monitor your Node.js services and apps with Application Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/app/nodejs)
