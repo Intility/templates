@@ -22,11 +22,11 @@ const FeatureList = [
     description: <>Start developing APIs using our templates for .NET.</>,
   },
   {
-     title: 'express.js',
-     href: '/express',
-     Svg: '/img/node_express.png',
-     description: <>Start developing APIs using our template for express.js.</>,
-   }
+    title: 'TypeScript & Express.js',
+    href: '/express',
+    Svg: '/img/node_express.png',
+    description: <>Start developing using TypeScript and build APIs using our template for express.js.</>,
+  }
   // PYTHON
   // {
   //   title: 'python',
