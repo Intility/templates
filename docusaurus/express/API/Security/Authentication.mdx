@@ -60,6 +60,8 @@ export default passport;
 Now its time to configure Express to use the passport middleware. In your Express config file (`config/app.ts`) add the following code snippet
 
 ```typescript
+// const app = express();
+
 // activating auth on server
 app.use(passport.initialize());
 app.use(passport.session());
