@@ -29,18 +29,18 @@ module.exports = {
           label: '.NET API',
           position: 'left',
         },
+        {
+          href: '/express',
+          label: 'Express',
+          position: 'left',
+        },
         // PYTHON
         // {
         //   href: '/python',
         //   label: 'python',
         //   position: 'left',
         // },
-        // EXPRESS
-        // {
-        //   href: '/express',
-        //   label: 'express',
-        //   position: 'left',
-        // },
+        // 
         // METROWORKER
         // {
         //   href: '/metroworker',
@@ -183,6 +183,18 @@ module.exports = {
         // ... other options
       },
     ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'express',
+        path: 'express',
+        routeBasePath: 'express',
+        sidebarPath: require.resolve('./sidebarsExpress.js'),
+        editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+        sidebarCollapsible: false,
+        // ... other options
+      },
+    ],
     // PYTHON
     // [
     //   '@docusaurus/plugin-content-docs',
@@ -191,19 +203,6 @@ module.exports = {
     //     path: 'python',
     //     routeBasePath: 'python',
     //     sidebarPath: require.resolve('./sidebarsPython.js'),
-    //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
-    //     sidebarCollapsible: false,
-    //     // ... other options
-    //   },
-    // ],
-    // EXPRESS
-    // [
-    //   '@docusaurus/plugin-content-docs',
-    //   {
-    //     id: 'express',
-    //     path: 'express',
-    //     routeBasePath: 'express',
-    //     sidebarPath: require.resolve('./sidebarsExpress.js'),
     //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
     //     sidebarCollapsible: false,
     //     // ... other options

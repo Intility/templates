@@ -1,0 +1,75 @@
+---
+title: Security - Authentication
+sidebar_label: Authentication
+slug: /API/Security/Authentication
+sidebar_position: 1
+---
+
+**NOTE: This assumes that you have an Azure AD application registration created for your project**
+
+In this example i'll configure an single tenant application
+
+For authentication well configure Passport to check and validate the token provided by the client.
+
+Create a new file called `passport.ts` inside the middlewares folder.
+
+```typescript
+import passport from 'passport';
+import { BearerStrategy, ITokenPayload, VerifyCallback } from 'passport-azure-ad';
+
+const { APP_CLIENT_ID, INTILITY_TENANT_ID } = process.env;
+
+/**
+ * Create a new passport BearerStrategy to handle authenticate and decoding of the provided token.
+ * Complete setup documentation can be found here https://github.com/AzureAD/passport-azure-ad#42-bearerstrategy.
+ */ 
+const mainStrategy = new BearerStrategy(
+    {
+        identityMetadata:
+            `https://login.microsoftonline.com/${INTILITY_TENANT_ID}/v2.0/.well-known/openid-configuration`,
+        clientID: `${APP_CLIENT_ID}`,
+        audience: [ `${APP_CLIENT_ID}`, `api://${APP_CLIENT_ID}` ],
+        loggingLevel: 'warn',
+        // Validate the `iss` claim in id_token against user provided issuer
+        validateIssuer: true,
+        // List of allowed issuers
+        issuer: [ `https://sts.windows.net/${INTILITY_TENANT_ID}/` ]
+    },
+    (token: ITokenPayload, done: VerifyCallback) => {
+        if (!token.oid) {
+            done(new Error('User OID is not found in token'));
+        } else {
+            done(null, token);
+        }
+    },
+);
+
+// Tell passport to use the configured strategy
+passport.use('mainStrategy', mainStrategy);
+
+/**
+ * Use Passport to authenticate the token provided. 
+ * It is important that the label defined in passport.use function match the label provided here
+ */
+export const authenticate = passport.authenticate([ 'mainStrategy' ], { session: false });
+
+// export configures passport instance
+export default passport;
+```
+
+Now its time to configure Express to use the passport middleware. In your Express config file (`config/app.ts`) add the following code snippet
+
+```typescript
+// const app = express();
+
+// activating auth on server
+app.use(passport.initialize());
+app.use(passport.session());
+```
+
+Next and at last, secure your endpoints or express router by adding the middleware. e.g.
+
+```typescript
+router.get("/", authenticate, controller.getByOid);
+router.post("/", authenticate, controller.createNewUser);
+```
