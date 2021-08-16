@@ -122,3 +122,24 @@ services.AddAuthorization(options =>
     }
 });
 ```
+
+### User Assignment in Enterprise Application
+
+The policy successfully denies guest users access to the API.
+However, it's not very user friendly, since the user won't know their denied until they call the API.
+Using user assignment in Enterprise Applications, we can deny users during authentication.
+
+Go to [Azure AD -> Enterprise Applications](https://portal.azure.com/#blade/Microsoft_AAD_IAM/StartboardApplicationsMenuBlade/AllApps/menuId/) and find your application (you can search by Client ID).  
+Under Properties, enable `User assignment required?` and save.
+
+![Enable User assignment required](/img/azure-user-assignment.png)
+
+Then, go to Users and groups, and add user/group. Find users or a fitting group and assign it to the role Default Access.
+
+:::note
+Groups you select should have all users as direct members of the group. Nested groups does not work with Enterprise Applications.
+:::
+
+This should be done for all app registrations (API, Swagger and frontend).
+
+For more information, check out [our internal docs.](https://gitlab.intility.com/groups/documentation/-/wikis/Security/API-sikkerhet-med-Azure-AD)
