@@ -191,6 +191,7 @@ module.exports = {
         routeBasePath: 'express',
         sidebarPath: require.resolve('./sidebarsExpress.js'),
         editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+        sidebarCollapsible: false,
         // ... other options
       },
     ],
