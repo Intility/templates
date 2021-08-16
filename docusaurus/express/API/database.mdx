@@ -1,0 +1,35 @@
+---
+title: API - Database 
+sidebar_label: Database
+slug: /API/Database
+sidebar_position: 2
+---
+
+## Mongoose and MongoDB
+
+Mongoose is an ORM (Object–relational mapping) for MongoDB that helps you with the more advanced interaction with MongoDB. 
+
+Some of the features mongoose helps you with are:
+
+- Population of foreign keys
+- Simpler querying
+- Static modelling
+- Data validation
+- ... much more!
+
+Included in this project is an `docker-compose.yml` file to run an local MongoDB database as an Docker Image, as well as an connection string in `index.ts` configured to connect to this database.
+
+This file is located here: `assets/docker-compose.yml`
+
+**NOTE: This is meant for local development purposes only! Please move the connection string to .env and use an external MongoDB database or an Azure CosmosDB with MongoDB API**
+
+## Other Databases
+
+For other SQL-like databases it is recommended to utilize an ORM (Object–relational mapping) framework. The most popular ones are:
+
+* [TypeORM](https://typeorm.io/#/) - Main Documentation
+* [Sequelize](https://sequelize.org/master/) - Main Documentation
+
+## Azure Cosmos DB (SQL API)
+
+* [@azure/cosmos](https://www.npmjs.com/package/@azure/cosmos) - Azure Cosmos DB
