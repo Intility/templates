@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./docusaurus/static/img/logo192.png" width="124px"/><br/>
+  <img src="https://avatars.githubusercontent.com/u/35199565" width="124px"/><br/>
   Intility Developer Templates
 </h1>
 
