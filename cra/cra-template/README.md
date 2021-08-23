@@ -1,4 +1,7 @@
-# @intility/cra-template
+<h1 align="center">
+  <img src="https://avatars.githubusercontent.com/u/35199565" width="124px"/><br/>
+  @intility/cra-template
+</h1>
 
 This is the Intility TypeScript template for [Create React App](https://github.com/facebook/create-react-app).
 
