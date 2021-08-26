@@ -23,6 +23,8 @@ More frameworks might be included in the future.
 </a>
 </p>
 
+## [Docs](https://create.intility.app/)
+
 ## 🚀Getting started
 
 To get started with a project, simply run one of the following commands.
