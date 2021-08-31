@@ -33,7 +33,7 @@ namespace Company.WebApplication1.Swagger
                 });
             }
 
-            c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            c.AddSecurityDefinition("Azure AD", new OpenApiSecurityScheme
             {
                 Type = SecuritySchemeType.OAuth2,
                 Flows = new OpenApiOAuthFlows
@@ -48,7 +48,7 @@ namespace Company.WebApplication1.Swagger
                         }
                     }
                 },
-                Description = "OAuth 2 Authentication using Azure AD",
+                Description = "`Leave client_secret blank`",
             });
 
             c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -56,7 +56,7 @@ namespace Company.WebApplication1.Swagger
                 {
                     new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Azure AD" }
                     },
                     new[] { $"api://{_config["AzureAd:ClientId"]}/api-scope" }
                 }
