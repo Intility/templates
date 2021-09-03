@@ -56,6 +56,7 @@ namespace Company.WebApplication1
             services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
             });
 
             services.AddVersionedApiExplorer(options =>
