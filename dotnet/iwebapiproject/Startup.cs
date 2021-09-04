@@ -43,7 +43,7 @@ namespace Company.WebApplication1
 
             services.AddCors(options =>
                 options.AddDefaultPolicy(builder =>
-                    builder.WithOrigins("https://localhost:3000")
+                    builder.WithOrigins("http://localhost:3000")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                     )
