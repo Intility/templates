@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: {{ cookiecutter.project_name }}_redis
+    image: redis:6.2.5-alpine
+    command: --requirepass ${REDIS_PASSWORD}
+    ports:
+      - '127.0.0.1:6379:6379'
+    restart: always
+
+  redis_test:
+    container_name: {{ cookiecutter.project_name }}_redis_test
+    image: redis:6.2.5-alpine
+    command: --requirepass ${REDIS_PASSWORD}
+    ports:
+      - '127.0.0.1:6380:6379'
+    restart: always
+
+{% if cookiecutter.sqlmodel == 'True' %}
+  postgres:
+    container_name: {{ cookiecutter.project_name }}_postgres
+    # DATABASE_URL: postgresql+asyncpg://{username}:{pw}@127.0.0.1:{ext-port}/{db-name}
+    # psql: docker compose run postgres psql --host=postgres --username=user db
+    privileged: true  # TODO: Only needed for podman, so you can probably remove this
+    environment:
+      POSTGRES_USER: {{ cookiecutter.project_name }}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    image: postgres:12.7-alpine
+    volumes:
+      # Create a volume for persistence
+      - ./.pg:/var/lib/postgresql/data
+    ports:
+      - '127.0.0.1:5432:5432'
+    restart: always
+{% endif %}
+
+  web:
+    container_name: {{ cookiecutter.project_name }}_web
+    restart: always
+    # Use uvicorn for local dev so reload *actually* works
+    entrypoint: ["bash", "ci/docker/fastapi/entrypoint_dev.sh"]
+    build:
+      context: .
+      dockerfile: ci/docker/fastapi/Dockerfile
+    ports:
+      - '127.0.0.1:8000:8000'
+    volumes:
+      - '.:/app'
+    privileged: true  # TODO: Only needed for podman, so you can probably remove this
+    depends_on:
+      - redis
+{% if cookiecutter.sqlmodel == 'True' %}
+      - postgres
+    environment:
+      POSTGRES_HOST: postgres  # Use docker-compose route instead of `localhost`
+{% endif %}
+    env_file:
+      - .env
