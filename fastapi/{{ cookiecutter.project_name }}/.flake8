@@ -1,0 +1,70 @@
+[flake8]
+max-line-length = 120
+
+# This is a opinionated configuration for Flake8, where we've allowed a bunch of things, such as missing docstrings
+# from init functions, no kwargs type annotating etc. If you disagree with any of the error codes, you can either
+# comment `# noqa` behind the line which fails, or add the code here.
+# If you want one of the checks below to be activated, simply remove the code from the list.
+
+ignore=
+    # Missing type annotations for **args
+    ANN002
+    # Missing type annotations for **kwargs
+    ANN003
+    # Missing type annotations for self
+    ANN101
+    # Missing type annotation for cls in classmethod
+    ANN102
+
+    # Remove Depends() argument function call whining
+    B008
+
+    # Docstring at the top of a public module
+    D100
+    # Docstring at the top of a public class (method is enough)
+    D101
+    # Docstring missing in public nested class (e.g. pydantic `class Config:`)
+    D106
+    # Missing docstring in __init__
+    D107
+    # Missing docstring in public package
+    D104
+    # Make docstrings one line if it can fit.
+    D200
+    # 1 blank line required between summary line and description
+    D205
+    # First line should end with a period - here we have a few cases where the first line is too long, and
+    # this issue can't be fixed without using noqa notation
+    D400
+    # Imperative docstring declarations
+    D401
+
+    # Whitespace before ':'. Black formats code this way.
+    E203
+    # Line length
+    E501
+
+    # Missing f-string, we ignore this due to URL patterns
+    FS003
+
+    # Missing spaces between parameter annotation and default value - this is bugged with Path()
+    T800
+
+    # Missing type annotations for `**kwargs`
+    TYP003
+    # Type annotation for `self`
+    TYP101
+    TYP102  # for cls
+
+    # W503 line break before binary operator - conflicts with black
+    W503
+
+
+exclude =
+    .git,
+    .idea,
+    __pycache__,
+    tests/*,
+    venv,
+    .venv
+    migrations/*
