@@ -31,7 +31,7 @@ There are several levels of logging. From most important to least important:
     <Highlight bg="#f0f0f0" title="Silly">When you just want to display some text...</Highlight>
 </div>
 
-## How to use:
+## How to use
 
 Create a new instance of `LoggerService` anywhere in your code and give it an label.
 
@@ -49,3 +49,12 @@ logger.silly('Just a silly message');
 ```
 
 ![Logging levels](/img/node_logging_levels.png)  
+
+## How to customize
+
+Winston is a very dynamic framework and can be customized to emit logs to multiple transports.
+
+There are several [core transports](https://github.com/winstonjs/winston/blob/master/docs/transports.md#winston-core) included in winston, which leverage the built-in networking and file I/O offered by Node.js core. 
+In addition, there are [additional transports](https://github.com/winstonjs/winston/blob/master/docs/transports.md#additional-transports) written by members of the community.
+
+For other customizations head over to the [Official Documentation](https://github.com/winstonjs/winston) at GitHub.
