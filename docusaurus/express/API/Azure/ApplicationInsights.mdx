@@ -21,43 +21,4 @@ And add this to a new secret in your `.env` file:
 APPINSIGHTS_INSTRUMENTATIONKEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
-Next create a new file called `appInsights.ts` in your config folder.
-
-```typescript
-import * as appInsights from 'applicationinsights';
-
-const { NODE_ENV, APPINSIGHTS_INSTRUMENTATIONKEY } = process.env;
-
-if (!NODE_ENV) {
-    throw new Error("Missing Environment variable: NODE_ENV")
-}
-
-if (!APPINSIGHTS_INSTRUMENTATIONKEY) {
-    throw new Error("Missing Environment variable: APPINSIGHTS_INSTRUMENTATIONKEY")
-}
-
-// Application Insights will automatically recognize the instrumentation key localized in the environment variables
-appInsights.setup()
-    .setAutoDependencyCorrelation(true)
-    .setAutoCollectRequests(true)
-    .setAutoCollectConsole(true, true);
-
-appInsights.defaultClient.commonProperties = {
-    environment: NODE_ENV,
-};
-
-// No need to submit logs in development environment
-appInsights.defaultClient.config.disableAppInsights = NODE_ENV === 'development';
-
-export default appInsights;
-```
-
-In your `index.ts` file, import the configured appInsights Client and start the service. Place this command right beneath the other import statements.
-
-```typescript
-import appInsights from './middlewares/appInsights';
-
-appInsights.start();
-```
-
 More on how to configure Application insights can be found here: [Monitor your Node.js services and apps with Application Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/app/nodejs)

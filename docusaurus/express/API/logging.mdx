@@ -1,0 +1,51 @@
+---
+title: API - Logging
+sidebar_label: Logging
+slug: /API/Logging
+sidebar_position: 6
+---
+
+This template includes an `LoggingService` class for simple and informative logging. 
+This service expands on the well known and well integrated framework [winston](https://www.npmjs.com/package/winston).
+
+export const Highlight = ({children, bg, title}) => (
+  <div
+    style={{
+      padding: '0.5rem',
+      borderLeft: '10px solid ' + bg,
+      margin: '0'
+    }}>
+    <span style={{paddingRight: '.2rem'}}><strong>{title}</strong>:</span>
+    {children}
+  </div>
+);
+
+There are several levels of logging. From most important to least important:
+
+<div style={{marginBottom: '1rem'}}>
+    <Highlight bg="var(--ifm-color-danger)" title="Error">Hight criticality information about non-recoverable exceptions and faulty states</Highlight>
+    <Highlight bg="var(--ifm-color-warning)" title="Warning">Medium criticality information and recoverable exceptions</Highlight>
+    <Highlight bg="#00BFFF" title="Verbose">Events related to code performance and infrastructure</Highlight>
+    <Highlight bg="#32CD32" title="Info">Low criticality application information</Highlight>
+    <Highlight bg="#FF1493" title="Debug">General debug information used in development environments with high verbosity</Highlight>
+    <Highlight bg="#f0f0f0" title="Silly">When you just want to display some text...</Highlight>
+</div>
+
+## How to use:
+
+Create a new instance of `LoggerService` anywhere in your code and give it an label.
+
+From that instance you have access to all the different logging levels. 
+
+```typescript
+const logger = new LoggerService('Server');
+
+logger.error('Unable to connect to external service');
+logger.warn('Skipping external request');
+logger.info('Configuring service!');
+logger.verbose('Created new entity');
+logger.debug('Working?');
+logger.silly('Just a silly message');
+```
+
+![Logging levels](/img/node_logging_levels.png)  
