@@ -6,19 +6,28 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "ci:"
       
   - package-ecosystem: "npm"
     directory: "/cra"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "build(cra):"
       
   - package-ecosystem: "npm"
     directory: "/docusaurus"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "build(docs):"
       
   - package-ecosystem: "nuget"
     directory: "/dotnet/iwebapiproject"
     schedule:
       interval: "daily"
+    commit-message:
+      # considered fix because it affects the template itself, not the template package
+      prefix: "fix(dotnet):"
       
