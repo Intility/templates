@@ -1,0 +1,13 @@
+Generic single-database configuration with an async dbapi.
+
+**Generate a new migration file**
+`alembic revision --autogenerate -m "my_comment"`
+
+**Upgrade database to reflect migrations**
+`alembic upgrade head` (This is done on startup for containers)
+
+# New models
+For new models, add them to `env.py`:
+```
+from app.models.cars import Car  # noqa
+```

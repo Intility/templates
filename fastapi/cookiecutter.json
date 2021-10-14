@@ -1,0 +1,8 @@
+{
+  "full_name": null,
+  "email": "...@intility.no",
+  "project_name": "my_project",
+  "description": null,
+  "mypy": [true, false],
+  "sqlmodel": [true, false]
+}

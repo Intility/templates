@@ -1,0 +1,24 @@
+# Variables
+.env
+
+# PyCharm
+.idea
+
+# Python
+venv/
+.venv/
+env/
+.env/
+*.pyc
+*.egg-info/
+build/
+dist/
+
+# Postgres container-db
+.pg/*
+
+# Coverage / tests
+.coverage
+htmlcov/
+coverage.xml
+.pytest_cache

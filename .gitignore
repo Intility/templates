@@ -37,3 +37,14 @@ yarn-error.log*
 
 # Test outputs
 test-output
+my_project
+
+# PyCharm
+.idea
+
+# Python
+.venv
+*.pyc
+fastapi/build/
+fastapi/dist/
+*.egg-info/
