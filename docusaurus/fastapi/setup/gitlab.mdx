@@ -1,0 +1,47 @@
+---
+title: GitLab Repository
+sidebar_position: 2
+---
+
+Go to [New Project in GitLab](https://gitlab.intility.com/projects/new).
+
+Select a fitting name; it should be as globally unique and descriptive for your project as possible.
+![New Project in Gitlab photo](/img/gitlab-new.png)  
+Take note of the Project Slug, as we'll use it later to configure the project in Sentry and OpenShift.
+
+## Pushing your application
+
+Creating a FastAPI project from a template does not automatically create a git repository for you,
+so we have to make one ourselves.
+
+:::info pre-commit
+Remember, we use pre-commit, so we'll have to initiate that before we try to commit!
+:::
+
+Follow the "Push an existing folder" example, but mix in pre-commit. The commands should look like this:
+
+```bash
+git init
+git remote add origin git@gitlab.intility.no:Group/intility-api.git
+pre-commit install  # <--- This is an important step
+git add .
+git commit -m "Initial commit"
+```
+
+Sometimes checks will fail, or some files might be modified (by e.g. ``black``).
+When this happens, add the modified files and try again:
+```bash
+git add .
+git commit -m "Initial commit"
+```
+
+Later, when you have made changes to your code, other checks may fail. These checks can be anything from missing
+docstrings, leftover prints etc. If you want to ignore checks, you can typically do so globally in the configuration files,
+or the line where the check fail. How to configure these checks will vary, so spend some time to get familiar with the tools.
+
+If you want to ignore ``pre-commit`` checks, you can use the ``--no-verify`` flag when committing:
+
+```bash
+git add .
+git commit -m "Initial commit" --no-verify
+```

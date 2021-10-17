@@ -26,20 +26,17 @@ const FeatureList = [
     href: '/express',
     Svg: '/img/node_express.png',
     description: <>Start developing using TypeScript and build APIs using our template for express.js.</>,
-  }
-  // PYTHON
-  // {
-  //   title: 'python',
-  //   href: '/python',
-  //   Svg: '/img/python-logo.svg',
-  //   description: (
-  //     <>
-  //       "Python er best" - jonas 2019
-  //       "Python er best" - jonas 2020
-  //       "Python er best" - jonas 2021
-  //     </>
-  //   ),
-  // },
+  },
+  {
+    title: 'FastAPI',
+    href: '/fastapi',
+    Svg: '/img/python-logo.svg',
+    description: (
+      <>
+        Create a FastAPI app with batteries included.
+      </>
+    ),
+  },
 
   // METROWORKER
   // {

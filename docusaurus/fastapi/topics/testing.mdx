@@ -1,0 +1,27 @@
+---
+title: Testing
+sidebar_position: 1
+---
+
+Testing is important. Your app is shipped with a `tests` folder, which contains a bunch of example tests. In order to
+understand them, you should read these resources:
+
+* [Official docs on testing](https://fastapi.tiangolo.com/tutorial/testing/)
+* [Official docs on testing a database](https://fastapi.tiangolo.com/advanced/testing-database/)
+* [Official docs on async tests](https://fastapi.tiangolo.com/advanced/async-tests/)
+
+And lastly, learn about `pytest`, specifically how `conftest.py` and `fixtures` work.
+You can do so here:
+
+* [Official docs on pytest fixtures](https://docs.pytest.org/en/6.2.x/fixture.html)
+* [Official docs on pytest `conftest.py`](https://docs.pytest.org/en/6.2.x/fixture.html#scope-sharing-fixtures-across-classes-modules-packages-or-session)
+
+When running tests, remember to first run your containers by running `docker-compose up`.
+You can now run `pytest` through `poetry`:
+
+```bash
+poetry run pytest . --cov
+```
+
+You can also run tests through PyCharm. Right click your `tests` folder and click `Run 'pytest in tests'`.
+If you're facing issues, click the dropdown in the top right corner and ensure the tests are run from your root folder.

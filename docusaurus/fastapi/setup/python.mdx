@@ -1,0 +1,89 @@
+---
+title: Python and virtual environment
+sidebar_position: 3
+---
+
+### Virtual environment
+There are two options for creating your virtual environment, either manually through ``poetry`` or PyCharm.
+
+#### 1. Using PyCharm
+
+Open PyCharm settings and search for ``interpreter``
+
+![Add interpreter](/img/fastapi/setup/add_interpreter.png)
+
+Create a new interpreter from your Python:
+
+![Create interpreter](/img/fastapi/setup/interpreter.png)
+
+Activate the virtual environment (open a terminal) and install the dependencies:
+
+```bash
+poetry install
+```
+
+#### 2. Using Poetry
+
+:::info
+If you used PyCharm above, you can skip this step.
+:::
+
+First create a virtual environment and install dependencies:
+
+```bash
+poetry install
+```
+
+Then configure PyCharm to use your new virtual environment. Where this is placed will vary, based on your
+poetry settings. Follow the steps for PyCharm above, but select the existing environment instead of creating a new
+one.
+
+### Docker-compose
+
+`docker-compose` is configured to run docker images for your development server, and for tests.
+Ensure you have `Docker` and `docker-compose` installed, open a terminal and type
+`docker-compose up`. This will spin up `redis` for caching and testing,
+and if you selected `sqlmodel` also a `PostgreSQL` database for development use.
+
+### Migrations
+You can skip this section if you didn't select `sqlmodel` and have a database.
+
+In order to configure the database tables to reflect your models, you must run migrations.
+In this project, we use `alembic` to manage our migrations. Running migrations is done through the terminal:
+
+```bash
+alembic upgrade head
+```
+
+### Configuring PyCharm to run the server
+
+Configure PyCharm to use `uvicorn` locally, pointing to your FastAPI application.
+It's important to run this on `localhost:8000` and not `127.0.0.1:8000` for OpenAPI authentication to work properly.
+The `--reload` flag will ensure the server is restarted on every file change in the `app` folder.
+
+First, click the drop down in the top right corner.
+
+![Dropdown](/img/fastapi/setup/edit_configuration.png)
+
+Click the `+` sign and select `Python`.
+
+![Add new](/img/fastapi/setup/add_new.png)
+
+
+![Select Python](/img/fastapi/setup/add_python.png)
+
+Then configure PyCharm:
+
+* Name: `Server`
+* Module name: `uvicorn`
+* Parameters: `app.main:app --host localhost --port 8000 --reload`
+* Python interpreter: The one you created earlier
+* Working directory: Your current directory
+
+![Configuration](/img/fastapi/setup/server_config.png)
+
+Click `OK` to save and exit. Run the server.
+
+:::info
+Remember to run `docker-compose` before attempting to run your server.
+:::

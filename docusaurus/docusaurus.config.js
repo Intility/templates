@@ -35,11 +35,11 @@ module.exports = {
           position: 'left',
         },
         // PYTHON
-        // {
-        //   href: '/python',
-        //   label: 'python',
-        //   position: 'left',
-        // },
+        {
+          href: '/fastapi',
+          label: 'FastAPI',
+          position: 'left',
+        },
         // 
         // METROWORKER
         // {
@@ -195,19 +195,18 @@ module.exports = {
         // ... other options
       },
     ],
-    // PYTHON
-    // [
-    //   '@docusaurus/plugin-content-docs',
-    //   {
-    //     id: 'python',
-    //     path: 'python',
-    //     routeBasePath: 'python',
-    //     sidebarPath: require.resolve('./sidebarsPython.js'),
-    //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
-    //     sidebarCollapsible: false,
-    //     // ... other options
-    //   },
-    // ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'fastapi',
+        path: 'fastapi',
+        routeBasePath: 'fastapi',
+        sidebarPath: require.resolve('./sidebarsFastapi.js'),
+        editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
+        sidebarCollapsible: false,
+        // ... other options
+      },
+    ],
     // METROWORKER
     // [
     //   '@docusaurus/plugin-content-docs',
