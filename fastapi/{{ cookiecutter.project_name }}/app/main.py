@@ -32,7 +32,7 @@ app = FastAPI(
 
 if settings.ENVIRONMENT in ['lab', 'qa', 'prod']:
     sentry_init(
-        dsn=f'https://{settings.SENTRY_TOKEN}@sentry.intility.no/{settings.SENTRY_PROJECT}',
+        dsn=settings.SENTRY_DSN,
         environment=settings.ENVIRONMENT,
     )
     app.add_middleware(SentryAsgiMiddleware)
