@@ -34,26 +34,3 @@ services:
       - '127.0.0.1:5432:5432'
     restart: always
 {% endif %}
-
-  web:
-    container_name: {{ cookiecutter.project_name }}_web
-    restart: always
-    # Use uvicorn for local dev so reload *actually* works
-    entrypoint: ["bash", "ci/docker/fastapi/entrypoint_dev.sh"]
-    build:
-      context: .
-      dockerfile: ci/docker/fastapi/Dockerfile
-    ports:
-      - '127.0.0.1:8000:8000'
-    volumes:
-      - '.:/app'
-    privileged: true  # TODO: Only needed for podman, so you can probably remove this
-    depends_on:
-      - redis
-{% if cookiecutter.sqlmodel == 'True' %}
-      - postgres
-    environment:
-      POSTGRES_HOST: postgres  # Use docker-compose route instead of `localhost`
-{% endif %}
-    env_file:
-      - .env
