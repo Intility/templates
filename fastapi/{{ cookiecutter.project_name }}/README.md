@@ -25,7 +25,25 @@
 
 
 ## Getting Started
+<!--
+Provide step by step instructions that will allow a new contributor to get a copy of the project up and running on their local machine.
+Installation of common development tools such as `git`, `docker` and IDEs can be covered here, but is not necessary.
 
+The granularity and extent of these instructions will depend on the size and type of the project,
+but may extend to things such as platform specific steps, etc.
+-->
+This project is based off the [Create-FastAPI-App template](https://create.intility.app/fastapi). 
+
+### Running the project
+<!-- Provide examples of how to run the project locally here, if applicable. -->
+<!-- If the project can be run in multiple ways (Docker, Minishift, command line, etc), -->
+<!-- it might be appropriate to have a section for each of them-->
 1. Populate a `.env` file in the root folder.
 2. Run `docker-compose up`
 3. Run your application with `poetry run uvicorn app.main:app --host localhost --port 8000 --reload`
+
+## Deployment
+
+<!-- Provide step by step instructions that explain the process of deploying the application in QA or Prod environments -->
+
+<!-- If the project uses a CI/CD pipeline describe the high level concepts of the pipeline strategy here. -->

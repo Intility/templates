@@ -26,7 +26,7 @@ class RedisCredentials(CustomBaseSettings):
 
 redis = RedisCredentials()
 
-
+{% if cookiecutter.sqlmodel == 'True' %}
 class PostgresCredentials(CustomBaseSettings):
     POSTGRES_USER: str = Field('{{ cookiecutter.project_name }}', env='POSTGRES_USER')
     POSTGRES_PASSWORD: str = Field('', env='POSTGRES_PASSWORD')
@@ -34,7 +34,7 @@ class PostgresCredentials(CustomBaseSettings):
 
 
 postgres = PostgresCredentials()
-
+{% endif %}
 
 class Credentials(CustomBaseSettings):
     REDIS_URL = (
@@ -45,10 +45,12 @@ class Credentials(CustomBaseSettings):
         else f'redis.my_proj-{env.ENVIRONMENT}.svc'
     )
     REDIS_CONNECTION_STRING: str = f'redis://:{redis.REDIS_PASSWORD}@{REDIS_URL}'
+    {% if cookiecutter.sqlmodel == 'True' %}
     POSTGRES_USERNAME: str = '{{ cookiecutter.project_name }}'
     POSTGRES_CONNECTION_STRING: str = Field(
         f'postgresql+asyncpg://{postgres.POSTGRES_USER}:{postgres.POSTGRES_PASSWORD}@{postgres.POSTGRES_HOST}',
     )
+    {% endif %}
 
 
 class Authentication(CustomBaseSettings):
@@ -75,7 +77,7 @@ class Authorization(CustomBaseSettings):
 class Settings(
     Env,
     RedisCredentials,
-    PostgresCredentials,
+    {% if cookiecutter.sqlmodel == 'True' %}PostgresCredentials,{% endif %}
     Credentials,
     Authentication,
     Authorization,
