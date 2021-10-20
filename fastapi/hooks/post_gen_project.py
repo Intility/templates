@@ -32,3 +32,6 @@ if not sqlmodel:
     # Test files for SQLModel
     remove(os.path.join(os.getcwd(), 'tests', 'models'))
     remove(os.path.join(os.getcwd(), 'tests', 'api', 'test_cars_api.py'))
+
+
+print('\n\n**A folder named `{{ cookiecutter.project_name }}` has been successfully created.**')

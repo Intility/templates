@@ -1,12 +1,16 @@
 ---
-title: Python and virtual environment
-sidebar_position: 3
+title: Using PyCharm
+sidebar_position: 2
 ---
 
-### Virtual environment
+## Virtual environment
 There are two options for creating your virtual environment, either manually through ``poetry`` or PyCharm.
 
-#### 1. Using PyCharm
+:::info
+This section will cover how to use PyCharm. [Head over to the next page if you want to use ``poetry`` instead.](/fastapi/setup/poetry)
+:::
+
+### Creating a virtual environment
 
 Open PyCharm settings and search for ``interpreter``
 
@@ -16,27 +20,14 @@ Create a new interpreter from your Python:
 
 ![Create interpreter](/img/fastapi/setup/interpreter.png)
 
-Activate the virtual environment (open a terminal) and install the dependencies:
+Open a new terminal in PyCharm (it will automatically be activated and install the dependencies:
 
 ```bash
-poetry install
+poetry update
 ```
 
-#### 2. Using Poetry
+The ``update`` command both updates the ``poetry.lock`` file and installs the dependencies.
 
-:::info
-If you used PyCharm above, you can skip this step.
-:::
-
-First create a virtual environment and install dependencies:
-
-```bash
-poetry install
-```
-
-Then configure PyCharm to use your new virtual environment. Where this is placed will vary, based on your
-poetry settings. Follow the steps for PyCharm above, but select the existing environment instead of creating a new
-one.
 
 ### Docker-compose
 
@@ -54,6 +45,7 @@ In this project, we use `alembic` to manage our migrations. Running migrations i
 ```bash
 alembic upgrade head
 ```
+
 
 ### Configuring PyCharm to run the server
 

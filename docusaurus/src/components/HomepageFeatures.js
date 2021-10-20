@@ -21,13 +21,7 @@ const FeatureList = [
     Svg: '/img/dotnet-logo.svg',
     description: <>Start developing APIs using our templates for .NET.</>,
   },
-  {
-    title: 'TypeScript & Express.js',
-    href: '/express',
-    Svg: '/img/node_express.png',
-    description: <>Start developing using TypeScript and build APIs using our template for express.js.</>,
-  },
-  {
+    {
     title: 'FastAPI',
     href: '/fastapi',
     Svg: '/img/python-logo.svg',
@@ -37,7 +31,12 @@ const FeatureList = [
       </>
     ),
   },
-
+  {
+    title: 'TypeScript & Express.js',
+    href: '/express',
+    Svg: '/img/node_express.png',
+    description: <>Start developing using TypeScript and build APIs using our template for express.js.</>,
+  },
   // METROWORKER
   // {
   //   title: 'Metro Worker',
@@ -56,11 +55,7 @@ const FeatureList = [
 
 function Feature({ id, Svg = 'div', title, href, description }) {
   return (
-    <div
-      className={clsx('col col--4', {
-        'col--offset-2': FeatureList.length === 2 && !id,
-      })}
-    >
+    <div className={clsx('col col--3')}>
       <Link to={href}>
         <div className="text--center">
           <img src={Svg} className={styles.featureSvg} alt={title} />
