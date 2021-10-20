@@ -1,6 +1,6 @@
 ---
 title: Using PyCharm
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 ## Virtual environment
@@ -28,13 +28,6 @@ poetry update
 
 The ``update`` command both updates the ``poetry.lock`` file and installs the dependencies.
 
-
-### Docker-compose
-
-`docker-compose` is configured to run docker images for your development server, and for tests.
-Ensure you have `Docker` and `docker-compose` installed, open a terminal and type
-`docker-compose up`. This will spin up `redis` for caching and testing,
-and if you selected `sqlmodel` also a `PostgreSQL` database for development use.
 
 ### Migrations
 You can skip this section if you didn't select `sqlmodel` and have a database.

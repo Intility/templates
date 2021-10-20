@@ -1,6 +1,6 @@
 ---
 title: Without PyCharm (poetry)
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 ## Virtual environment
@@ -63,13 +63,6 @@ source .venv/bin/activate
 </TabItem>
 </Tabs>
 
-### Docker-compose
-
-`docker-compose` is configured to run docker images for your development server, and for tests.
-Ensure you have `Docker` and `docker-compose` installed, open a terminal and type
-`docker-compose up`. This will spin up `redis` for caching and testing,
-and if you selected `sqlmodel` also a `PostgreSQL` database for development use.
-
 ### Migrations
 You can skip this section if you didn't select `sqlmodel` and have a database.
 
@@ -85,5 +78,5 @@ alembic upgrade head
 With your virtual environment activated and docker-compose running, we can run our server.
 
 ```bash
-uvicorn app.main:app host--port 8000 --reload
+uvicorn app.main:app --host localhost --port 8000 --reload
 ```

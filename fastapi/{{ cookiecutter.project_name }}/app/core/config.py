@@ -85,7 +85,7 @@ class Settings(
     API_V1_STR: str = '/api/v1'
     PROJECT_NAME: str = '{{ cookiecutter.project_name }}'
     SECRET_KEY: str = Field(..., env='SECRET_KEY')
-    SENTRY_DSN: str = Field(..., env='SENTRY_DSN')
+    SENTRY_DSN: str = Field('', env='SENTRY_DSN')
 
     # CORS settings should answer this question: Which frontends (through browser) are allowed to access the API?
     # This includes your OpenAPI documentation, your react frontend etc.
