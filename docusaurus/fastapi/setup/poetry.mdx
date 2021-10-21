@@ -78,5 +78,5 @@ alembic upgrade head
 With your virtual environment activated and docker-compose running, we can run our server.
 
 ```bash
-uvicorn app.main:app --host localhost --port 8000 --reload
+poetry run uvicorn app.main:app --host localhost --port 8000 --reload
 ```

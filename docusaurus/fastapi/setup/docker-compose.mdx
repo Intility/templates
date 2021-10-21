@@ -9,7 +9,12 @@ sidebar_position: 2
 Before we can run these containers, we need to configure our environment variables.
 
 Head over to your `.env` file and fill in the remaining values (highlighted). These are only for development use,
-but it is still recommended to generate a secure password. (`openssl rand -base64 32`)
+but it is still recommended to generate a secure password.
+
+:::warning
+Your password should not contain slashes (`/`), since these passwords are used in connection strings.
+You can generate passwords by using this command: `openssl rand -base64 -hex 32`
+:::
 
 ```bash title=".env" {2,14,16}
 # Basics

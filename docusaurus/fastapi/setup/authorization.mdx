@@ -22,7 +22,7 @@ should head over to the [multi-tenant documentation](../multi-tenant/azure_setup
 
 Press **Register**
 
-![1_application_registration](../../static/img/single-tenant/1_application_registration.png)
+![1_application_registration](/img/fastapi/setup/single-tenant/1_application_registration.png)
 
 
 
@@ -35,7 +35,7 @@ Press **Save**
 
 (This change can take some time to happen, which is why we do this first.)
 
-![2_manifest](../../static/img/single-tenant/2_manifest.png)
+![2_manifest](/img/fastapi/setup/single-tenant/2_manifest.png)
 
 
 ### Step 3 - Note down your application IDs
@@ -49,7 +49,7 @@ APP_CLIENT_ID=
 OPENAPI_CLIENT_ID=
 ````
 
-![3_overview](../../static/img/single-tenant/3_overview.png)
+![3_overview](/img/fastapi/setup/single-tenant/3_overview.png)
 
 
 ### Step 4 - Add an application scope
@@ -58,7 +58,7 @@ OPENAPI_CLIENT_ID=
 2. Press **+ Add a scope**
 3. You'll be prompted to set an Application ID URI, leave the suggested one and press **Save and continue**
 
-![4_add_scope](../../static/img/single-tenant/4_add_scope.png)
+![4_add_scope](/img/fastapi/setup/single-tenant/4_add_scope.png)
 
 Add a scope named `user_impersonation` that can be consented by `Admins and users`.
 
@@ -73,7 +73,7 @@ Allows the app to access the API as you.
 ```
 
 
-![5_add_scope_props](../../static/img/single-tenant/5_add_scope_props.png)
+![5_add_scope_props](/img/fastapi/setup/single-tenant/5_add_scope_props.png)
 
 
 ## OpenAPI Documentation
@@ -98,7 +98,7 @@ Use the same name, but with `- OpenAPI` appended to it.
 
 Press **Register**
 
-![6_application_registration_openapi](../../static/img/single-tenant/6_application_registration_openapi.png)
+![6_application_registration_openapi](/img/fastapi/setup/single-tenant/6_application_registration_openapi.png)
 
 
 ### Step 2 - Change token version to `v2`
@@ -108,7 +108,7 @@ that says `accessTokenAcceptedVersion`. Change its value from `null` to `2`.
 
 Press **Save**
 
-![3_manifest](../../static/img/single-tenant/2_manifest.png)
+![3_manifest](/img/fastapi/setup/single-tenant/2_manifest.png)
 
 
 ### Step 3 - Note down your application IDs
@@ -122,7 +122,7 @@ APP_CLIENT_ID=
 OPENAPI_CLIENT_ID=
 ````
 
-![7_overview_openapi](../../static/img/single-tenant/7_overview_openapi.png)
+![7_overview_openapi](/img/fastapi/setup/single-tenant/7_overview_openapi.png)
 
 
 ### Step 4 - Allow OpenAPI to talk to the backend
@@ -130,13 +130,13 @@ OPENAPI_CLIENT_ID=
 To allow OpenAPI to talk to the backend API, you must add API permissions to the OpenAPI app registration.
 In the left menu, go to **API Permissions** and **Add a permission**.
 
-![8_api_permissions](../../static/img/single-tenant/8_api_permissions.png)
+![8_api_permissions](/img/fastapi/setup/single-tenant/8_api_permissions.png)
 
 Select the `user_impersonation` scope, and press **Add a permission**.
 
 Your view should now look something like this:
 
-![9_api_permissions_finish](../../static/img/single-tenant/9_api_permissions_finish.png)
+![9_api_permissions_finish](/img/fastapi/setup/single-tenant/9_api_permissions_finish.png)
 
 That's it! With these environment variables, FastAPI has been correctly configured from the template.
 
