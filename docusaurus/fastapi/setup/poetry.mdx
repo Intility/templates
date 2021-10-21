@@ -1,0 +1,82 @@
+---
+title: Without PyCharm (poetry)
+sidebar_position: 4
+---
+
+## Virtual environment
+There are two options for creating your virtual environment, either manually through ``poetry`` or PyCharm.
+
+:::info
+This section will cover how to use ``poetry``. [Head over to the previous page if you want to use ``PyCharm`` instead.](/fastapi/setup/pycharm)
+:::
+
+### Creating a virtual environment
+
+:::info
+Its easier to deal with poetry when the virtual environment is placed in your working directory.
+You can [configure poetry](https://python-poetry.org/docs/configuration/#virtualenvsin-project) to do this by issuing this command:
+
+```bash
+poetry config virtualenvs.in-project true
+```
+:::
+
+First create a virtual environment and install dependencies:
+
+```bash
+poetry update
+```
+
+The ``update`` command both updates the ``poetry.lock`` file and creates the virtual environment.
+
+Activate your new virtual environment:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  groupId="shell"
+  defaultValue="bash"
+  values={[
+  {
+    label: 'bash',
+    value: 'bash'
+  }, {
+    label: 'PowerShell',
+    value: 'ps'
+  }
+  ]}
+>
+<TabItem value="bash">
+
+```bash
+source .venv/bin/activate
+```
+
+</TabItem>
+<TabItem value="ps">
+
+```ps
+.\.venv\bin\activate.ps1
+```
+
+</TabItem>
+</Tabs>
+
+### Migrations
+You can skip this section if you didn't select `sqlmodel` and have a database.
+
+In order to configure the database tables to reflect your models, you must run migrations.
+In this project, we use `alembic` to manage our migrations. Running migrations is done through the terminal:
+
+```bash
+alembic upgrade head
+```
+
+### Running the server
+
+With your virtual environment activated and docker-compose running, we can run our server.
+
+```bash
+poetry run uvicorn app.main:app --host localhost --port 8000 --reload
+```

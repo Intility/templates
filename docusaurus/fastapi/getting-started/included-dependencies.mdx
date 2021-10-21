@@ -1,0 +1,52 @@
+---
+title: Included Dependencies
+sidebar_position: 3
+---
+
+The template includes some dependencies which are found to be common needs of most FastAPI apps by Intility.
+
+## fastapi-azure-auth
+
+- [Docs](https://intility.github.io/fastapi-azure-auth/)
+
+Used for Azure AD authentication for your API. Created and maintained by Intility.
+
+## sentry-sdk
+
+- [Docs](https://docs.sentry.io/platforms/python/guides/asgi/)
+
+Used for error reporting to Sentry.
+
+## pre-commit
+
+- [Docs](https://pre-commit.com/)
+
+Pre-commit is a code-checker that will run every time you attempt to commit any changes.
+It runs different programs, such as .flake8, black etc.,
+all of which can be configured individually through either config files or the ``pyproject.toml``.
+
+:::info pre-commit
+When pre-commit changes something,
+you must add the modified file before you rerun pre-commit. It only runs on files staged for commit.
+:::
+
+## flake8
+
+- [Docs](https://flake8.pycqa.org/en/latest/)
+
+Static code analysis which looks for different things, such as leftover print statements etc.
+
+
+## black
+
+- [Docs](https://black.readthedocs.io/en/stable/)
+
+Formats your code. Configuration is limited but can be found in ``pyproject.toml``.
+
+
+## aioredis and fastapi-cache2
+
+- [Docs aioredis](https://aioredis.readthedocs.io/en/latest/)
+- [Docs fastapi-cache2](https://github.com/long2ice/fastapi-cache/)
+
+All projects need caching at some point, either for views, storing a key among your pods etc.

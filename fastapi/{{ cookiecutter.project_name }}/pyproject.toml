@@ -1,10 +1,8 @@
 [tool.poetry]
 name = "{{cookiecutter.project_name}}"
-version = "0.1.0"  # Remember to change in __init__.py as well
+version = "0.1"
 description = "{{cookiecutter.description}}"
 authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
-maintainers = []
-license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9"

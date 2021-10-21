@@ -1,0 +1,34 @@
+---
+title: Inspecting our OpenAPI docs
+sidebar_position: 5
+---
+
+Now that we have a running application, we can head over and check out our OpenAPI documentation, and confirm that
+Azure AD Authentication works.
+
+Run the application, either through
+[``poetry``](fastapi/setup/poetry#running-the-server) or through
+[PyCharm](http://localhost:3000/fastapi/setup/pycharm#configuring-pycharm-to-run-the-server).
+
+Head over to `http://localhost:8000/docs`. Here you'll see your API documentation, generated automatically from
+``pydantic`` models. Try clicking on an API and try it out:
+
+![Testing out an API](/img/fastapi/setup/1_inspect_openapi.png)
+
+As we can see, the response body is:
+
+```json
+{
+  "detail": "Not authenticated"
+}
+```
+
+This is because this specific API view requires authentication. Click the `Authorize` button, leave the `client_secret` blank, and authorize.
+
+![Testing out an API](/img/fastapi/setup/2_popup.png)
+
+Log in through Azure AD, and try out the API again, and it should work.
+
+The next API, `api/v1/hello-admin` requires the user to have the `AdminUser` role. You can read more about roles
+in the [official documentation](https://docs.microsoft.com/en-us/azure/active-directory/roles/),
+and how to lock down views on them in the [`FastAPI-Azure-Auth` documentation](https://intility.github.io/fastapi-azure-auth/single-tenant/locking_down_on_roles).

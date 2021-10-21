@@ -1,0 +1,42 @@
+---
+title: Installation
+sidebar_position: 1
+---
+
+
+
+## Prerequisites
+
+- Some experience with Python
+- [Python3.9+](https://python.org/)
+- [Poetry](https://python-poetry.org/docs/#installation)
+
+### Intility ``Cruft``
+You'll need [cruft](https://github.com/cruft/cruft) in order to use this template.
+```bash
+python3.9 -m pip install cruft
+```
+
+:::info cruft
+cruft is a templating language built on top of cookiecutter, which uses jinja templates.
+:::
+
+## Create FastAPI App
+
+Use ``cruft`` to start your project.
+
+```bash
+python3.9 -m cruft create git@github.com:Intility/templates.git --directory="fastapi"
+```
+
+A few questions you will be prompted, here with a more verbose description:
+
+* ``full_name``: Required for ``pyproject.toml``
+* ``email``: Required for ``pyproject.toml``
+* ``project_name``: The folder name, and required for ``pyproject.toml``. Keep it short and simple!
+* ``description``: Required for ``pyproject.toml``
+* ``mypy``: **Strict** type checking. This is for advanced users but highly recommended to implement at some point in your project. This will configure ``pre-commit``.
+* ``sqlmodel``: An ORM for ``FastAPI``. Select ``1`` if you need a database. This will create example APIs,
+install ``alembic`` for migrations, add ``postgres`` to the ``docker-compose`` file etc.
+
+You'll now have a new folder, matching your `project_name`.
