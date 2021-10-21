@@ -31,37 +31,9 @@ The ``update`` command both updates the ``poetry.lock`` file and creates the vir
 
 Activate your new virtual environment:
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs
-  groupId="shell"
-  defaultValue="bash"
-  values={[
-  {
-    label: 'bash',
-    value: 'bash'
-  }, {
-    label: 'PowerShell',
-    value: 'ps'
-  }
-  ]}
->
-<TabItem value="bash">
-
 ```bash
-source .venv/bin/activate
+poetry shell
 ```
-
-</TabItem>
-<TabItem value="ps">
-
-```ps
-.\.venv\bin\activate.ps1
-```
-
-</TabItem>
-</Tabs>
 
 ### Migrations
 You can skip this section if you didn't select `sqlmodel` and have a database.
