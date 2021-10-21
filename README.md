@@ -60,6 +60,10 @@ Contains all templates for Create React App.
 
 Contains all templates for .NET.
 
+### [fastapi](./fastapi/)
+
+Contains all templates for FastAPI.
+
 ### [docusaurus](./docusaurus)
 
 Docs for these templates, made with [docusaurus](https://v2.docusaurus.io/).

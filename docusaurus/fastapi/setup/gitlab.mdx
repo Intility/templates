@@ -23,6 +23,7 @@ Follow the "Push an existing folder" example, but mix in pre-commit. The command
 ```bash
 git init
 git remote add origin git@gitlab.intility.no:Group/intility-api.git
+git checkout -b main
 pre-commit install  # <--- This is an important step
 git add .
 git commit -m "Initial commit"
@@ -33,6 +34,7 @@ When this happens, add the modified files and try again:
 ```bash
 git add .
 git commit -m "Initial commit"
+git push origin main
 ```
 
 Later, when you have made changes to your code, other checks may fail. These checks can be anything from missing
