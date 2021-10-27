@@ -28,8 +28,10 @@ RUN poetry install --no-dev --no-root
 # Copy files
 COPY ./ci/docker/fastapi/entrypoint.sh /app/entrypoint.sh
 COPY ./ci/docker/fastapi/gunicorn.conf.py /app/gunicorn.conf.py
+{% if cookiecutter.sqlmodel == 'True' %}
 COPY ./alembic.ini /app/alembic.ini
 COPY ./migrations/ /app/migrations/
+{% endif %}
 COPY ./app/ /app/app/
 
 
