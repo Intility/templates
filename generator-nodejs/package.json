@@ -12,7 +12,11 @@
     "url": "https://intility.com"
   },
   "files": [
-    "generators"
+    "generators", 
+    "!generators/app/templates/.env",
+    "!generators/app/templates/node_modules",
+    "!generators/app/templates/coverage",
+    "!generators/app/templates/reports"
   ],
   "main": "generators/index.js",
   "keywords": [

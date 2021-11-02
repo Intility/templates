@@ -19,6 +19,11 @@ class IntilityNodeGenerator extends Generator {
         message: "Please enter a description for your project"
       },
       {
+        type: "confirm",
+        name: "includeDemoFolders",
+        message: "Would you like to include demo endpoints?"
+      },
+      {
         type: "input",
         name: "gitSshAddress",
         message: `Insert your Git SSH Address (Optional)`,
@@ -26,7 +31,12 @@ class IntilityNodeGenerator extends Generator {
           if (!str) {
             return true;
           } else {
-            return str.startsWith("git@");
+            if (str.startsWith("git@")) {
+              return true;
+            } else {
+              this.log(`Skipping Git setup`)
+              return false;
+            }
           }
         }
       }

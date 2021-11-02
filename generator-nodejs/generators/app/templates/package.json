@@ -1,0 +1,62 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "build/index.js",
+  "scripts": {
+    "clean": "rimraf build",
+    "compile": "run-s tsc:compile copy:static",
+    "tsc:compile": "tsc",
+    "copy:static": "cp -r src/static/ build/src/",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "start": "node build/index.js",
+    "start:dev": "nodemon",
+    "start:prod": "run-s clean compile start",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
+  },
+  "author": {
+    "name": "Christian Marker",
+    "email": "christian.marker@intility.no"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@sentry/node": "^6.12.0",
+    "@sentry/tracing": "^6.12.0",
+    "applicationinsights": "^2.1.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-content-length-validator": "^1.0.0",
+    "express-jsdoc-swagger": "^1.6.6",
+    "helmet": "^4.6.0",
+    "hpp": "^0.2.3",
+    "mongodb": "^4.1.0",
+    "mongoose": "^5.13.7",
+    "passport-azure-ad": "^4.3.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.2.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/hpp": "^0.2.2",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^14.14.31",
+    "@types/passport": "^1.0.7",
+    "@types/passport-azure-ad": "^4.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
+    "eslint": "^7.32.0",
+    "jest": "^27.3.1",
+    "jest-junit": "^13.0.0",
+    "nodemon": "^2.0.12",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.3.5"
+  }
+}
