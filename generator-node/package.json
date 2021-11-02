@@ -1,8 +1,8 @@
 {
-  "name": "@intility/generator-intility-node",
+  "name": "@intility/generator-node",
   "version": "0.0.5",
   "description": "Yeoman CLI to generate a new Node.JS project based on Intility developer standards",
-  "repository": "Intility/generator-intility-node",
+  "repository": "Intility/templates/generator-node",
   "homepage": "https://intility.com",
   "private": false,
   "license": "MIT",

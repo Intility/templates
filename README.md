@@ -51,10 +51,12 @@ dotnet new intilityapi -o MyApi
 Node.JS:
 
 ```bash
-npm install -g yo                         # Install Yeoman CLI
-npm install -g generator-intility-node    # Install Intility Node project generator
+npm install -g yo                       # Install Yeoman CLI
+npm install -g generator-node           # Install Intility Node project generator
 
-yo intility-node                          # Use Yeoman CLI to run the template generator
+yo @intility/node                       # Use Yeoman CLI to run the template generator
+
+Optional: yo @intility/node:resource    # Use Yeoman CLI to generate a new REST resource with  
 ```
 
 There is a lot more to it, so please visit the [docs](https://create.intility.app/) for the next steps.
