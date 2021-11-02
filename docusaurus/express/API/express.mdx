@@ -27,26 +27,32 @@ In this repo i'll follow a multi-layered API architecture which divides the API 
 
 ![Multilayer-api-architecture](/img/Multilayer-api-architecture.png)
 
-
 **NOTE: In this architecture it is important that the communication between each layer always flows downwards or sideways, never upwards. Like a service calling an controller.**
 
 ```text
 Project folder structure
 This repository contains an example of an multilayered API design structure, as well as an example API for an User entity.
 📂 src
-┣ 📂 routes
-┃ ┗ 📜 baseRouter.ts        // This is where you will register all your routes, this router is exposed at `/api/v1`.
-┣ 📂 controllers            // This is where you handle the incoming requests registered by the routers, only simple data validation is done at this level.
-┣ 📂 services               // This is where you handle the more advanced business logic, like like logic that span across to other database entities.
-┣ 📂 repository             // This is where you write the database CRUD-operations like database queries etc.
-┣ 📂 models                 // This is where you define the Mongoose Schemas for validation.
-┣ 📂 middlewares            // This is where you store all the custom express middlewares
-┣ 📂 interfaces             // This is where you define all typescript interfaces, types, enums etc.
-┣ 📂 utils                  // Other utility functions.
-┣ 📂 config                 
-┃ ┣ 📜 appInsights.ts       // Configuration of the App Insights framework.
-┃ ┣ 📜 mongoose.ts          // Configuration of the Mongoose framework.
-┃ ┗ 📜 app.ts               // Configuration the Express server.
+┣ 📂 api
+┃  ┗ 📂 user   
+┃    ┣ 📂 dto
+┃    ┃  ┣ 📜 create-user.dto.ts     // DTO for creating a User           
+┃    ┃  ┣ 📜 update-user.dto.ts     // DTO for updating a User
+┃    ┃  ┗ 📜 user.dto.ts            // Main DTO for a User
+┃    ┣ 📂 entities  
+┃    ┃  ┗ 📜 user.entity.ts         // Database entity for a User
+┃    ┣ 📜 user.router.ts            // Express router for handling incoming requests
+┃    ┣ 📜 user.controller.ts        // Controller class for handling incoming request from the router, only simple data validation is done at this level
+┃    ┗ 📜 user.service.ts           // Service class for handling business logic, like database queries, external HTTP requests etc
+┃    ┗ 📜 user.service.ts           // Service class for handling business logic, like database queries, external HTTP requests etc
+┃
+┣ 📂 __tests__                      // Folder for test environment
+┃
+┣ 📂 config                         // Folder for various configuration files
+┣ 📂 middlewares                    // This is where you store all the custom express middlewares
+┣ 📂 interfaces                     // This is where you define all typescript interfaces, types, enums etc.
+┣ 📂 static                         // Folder for hosting static files.
+┗ 📂 utils                          // Other utility functions.
 ```
 
 **To get you started this template provides a User entity with CRUD routes, controller, service and a repository for this entity.** 
