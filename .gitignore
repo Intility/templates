@@ -48,3 +48,8 @@ my_project
 fastapi/build/
 fastapi/dist/
 *.egg-info/
+
+# Node.JS
+nodejs/generators/app/templates/coverage
+nodejs/generators/app/templates/build
+nodejs/generators/app/templates/reports
