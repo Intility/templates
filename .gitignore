@@ -36,6 +36,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+**/**/*.tgz
+
 # Test outputs
 test-output
 my_project
