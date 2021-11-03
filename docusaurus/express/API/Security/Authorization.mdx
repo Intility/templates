@@ -5,123 +5,58 @@ slug: /API/Security/Authorization
 sidebar_position: 2
 ---
 
+| Method | Description |
+| ------ | ----------- |
+| Authentication | Authentication is the process of proving that you are who you say you are. It's sometimes shortened to AuthN. The Microsoft identity platform uses the OpenID Connect protocol for handling authentication. |
+| Authorization | Authorization is the act of granting an authenticated party permission to do something. It specifies what data you're allowed to access and what you can do with that data. Authorization is sometimes shortened to AuthZ. The Microsoft identity platform uses the OAuth 2.0 protocol for handling authorization. |
+Source: [Authentication vs. authorization - Microsoft identity platform](https://docs.microsoft.com/en-us/azure/active-directory/develop/authentication-vs-authorization)
+
+:::info
+This assumes that you have an Azure AD application registration created for your project.
+
+If you dont have created one, head over to this guide: [Azure | Application Registrations](../Azure/ApplicationRegistrations).
+:::
+
+## Authentication
+
+In some cases you only want to authenticate your user. to do this, add the `authenticate` middleware to your routes:
+
+```typescript
+router.get("/", authenticate, controller.getByOid);
+router.post("/", authenticate, controller.createNewUser);
+```
+
+## Authorization
+
 Authorization is mostly done by inspecting the authenticated token and conditionally allow or decline users from accessing certain endpoints. We are checking for values like:
 
 * `tid` or tenantId: The authenticated users origin tenant ID.
 * `acct` or account: Users account status in tenant.
 * `roles`: List of roles for this application.
 
-## Roles
-
-An official guide on how to configure your application registration to use app roles and receiving them in the token can be found in this guide: [How to: Add app roles to your application and receive them in the token](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-add-app-roles-in-azure-ad-apps)
-
-Validating and checking the token is done by creating an Express middleware that validating the claims provided by the token. Passport saves the decoded token fields in the request object.
-
-Add this function to your `middlewares/passport.ts` file:
-
-```typescript
-/**
- * Check and validate the decoded token.
- *
- * @param {string[]} acceptedRoles
- */
- export const authorize = (acceptedRoles: string[]) => (req: Request, res: Response, next: NextFunction): Response | void => {
-
-    const decodedUserInfo = req.user;
-    
-    if (decodedUserInfo) {
-        const { roles } = decodedUserInfo;
-
-        // Validate the provided whitelisted roles against token
-        checkRoles(roles, acceptedRoles)
-            .then(() => next())
-            .catch(() => {
-                return res.status(403).json({
-                    message: 'You are unauthorized to access this resource.'
-                });
-            });
-    } else {
-        return res.status(401).json({
-            message: 'Unable to locate user info from decoded token'
-        });
-    }
-};
-
-/**
- * Check if the users roles is defined and if users roles is in acceptedRoles
- *
- * @param {string[]} userRoles
- * @param {string[]} acceptedRoles
- */
- const checkRoles = (userRoles: string[], acceptedRoles: string[]): Promise<unknown> => {
-    return new Promise((resolve, reject) => {
-
-        if (!userRoles) {
-            reject(false);
-        }
-
-        return userRoles.some((r) => acceptedRoles.includes(r))
-            ? resolve(true)
-            : reject(false);
-    });
-};
-```
-
-Next, secure your endpoints or express router by adding the middleware. e.g.
-
-```typescript
-router.get("/", authenticate, authorize(['<ROLE_NAME>']), controller.getByOid);
-router.post("/", authenticate, authorize(['<ROLE_NAME>']), controller.createNewUser);
-```
-
-## Account type and Tenant ID
-
-`tid` or tenant ID is an claim provided natively by azure AD and needs no configuration.
-
-To check if the user is an guest user in your tenant you need to add the `acct` optional claim to your token. To do this, follow this guide [Provide optional claims to your app](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-optional-claims#configuring-optional-claims).
-
-Alter the if-statement in the `authorize()` configured in the previous step.
-
-```typescript
-if (decodedUserInfo) {
-    const { roles, acct, tid } = decodedUserInfo;
-
-    // Option 1:
-    // Check authenticated users TenantID and block users outside of the AA-Intility tenant 
-    if (tid !== INTILITY_TENANT_ID) {
-        return res.status(401).json({
-            message: 'Users outside of provided tenant is not permitted'
-        });
-    }
-
-    // Option 2: 
-    // Check authenticated users account status. Requires "acct" as an optional claim in the App Registration. 
-    // Regular user = 0, Guest user = 1.
-    if (acct !== 0) {
-        return res.status(401).json({
-            message: 'Guest users is not allowed'
-        }); 
-    }
-
-    // REST OF ROLE VALIDATION
-
-} else {
-    return res.status(401).json({
-        message: 'Unable to locate user info from decoded token'
-    });
-}
-```
-
-## User values in token
+### User values in token
 
 It's equally important to ensure that the API only responds with data or allow actions which corresponds to the authorized user's role. An example can be that you've created a multi-tenant API with a common endpoint for fetching a company's mobile subscriptions. It's then essential to actually force that multi-tenancy in your code. To accomplish this we can take a look at some of the claims provided in the token. We use token claims because they contain information about the user which are provided by a trusted resource (AD/Azure AD). 
 
 * `upn`, User principal name: this is the same as primary email for Intility users and can be used to identify the user.
 * `tid`, Tenant ID: this can either be used alone if you have this filed in your dataset, or with ROT-OData API to lookup the company GUID or company code. This is especially important for multi tenant applications.
 
-### BONUS: ROT OData API query
+### Roles
 
-The following query can be used to get a Company's GUID and/or code (e.g. AA) by using the ROT OData API. You can find the Official API documentation here: [open-rot-api](https://gitlab.intility.com/DeveloperServices/open-rot-api)
+An official guide on how to configure your application registration to use app roles and receiving them in the token can be found in this guide: [How to: Add app roles to your application and receive them in the token](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-add-app-roles-in-azure-ad-apps)
+
+Validating and checking the token is done by creating an Express middleware that validating the claims provided by the token. Passport saves the decoded token fields in the request object.
+
+To implement authorization on your endpoints, add the `authorize` middleware to your routes and provide a set of roles as the parameter
+
+```typescript
+router.get("/", authenticate, authorize(['Api.Read']), controller.getByOid);
+router.post("/", authenticate, authorize(['Api.Read', 'Api.Write']), controller.createNewUser);
+```
+
+#### BONUS: ROT OData API query
+
+The following query can be used to get a Company's GUID and/or code (e.g. AA) by the `tid` claim provided in the token by using the ROT OData API. You can find the Official API documentation here: [open-rot-api](https://gitlab.intility.com/DeveloperServices/open-rot-api)
 
 `<ROT_BASE_URL>/ROTDirectoryAzureTenant?$filter=AzureTenantGUID eq <TENANT_ID_FROM_TOKEN>&$select=Directory, AzureTenantGUID&$expand=Directory($select=Name, CompanyGUID)`
 
