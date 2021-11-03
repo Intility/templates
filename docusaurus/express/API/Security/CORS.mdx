@@ -8,30 +8,9 @@ sidebar_position: 3
 Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served.
 By default only services (clients and servers) hosted on the same server can access each other. To allow other services to access your server you have to whitelist them using HTTP Headers manually or by using dependencies that helps you out with this.
 
-Go ahead and install this dependency:
-
-* [cors](https://www.npmjs.com/package/cors) - Allows for configuring cors without touching the header values manually.
-
-`npm i cors`
-
-* [@types/cors](https://www.npmjs.com/package/@types/cors) - Typescript typing definitions for cors package.
-
-`npm i -D @types/cors`
-
-Next go to the file where you initialize the express server and add the following code snippet:
-
-```typescript
-import cors from "cors"
-
-// Where you initialize the express server
-// const app = express();
-
-app.use(cors());
-```
-
 This allow all external services to connect to your server, which is not ideal. The best solution is to whitelist domains by configuring the cors middleware.
 
-```typescript
+```typescript title="src/config/app.ts"
 app.use(cors({ 
     origin: [
         'my-super-awesome-frontend.azurewebsites.net',
