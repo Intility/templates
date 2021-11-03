@@ -48,7 +48,7 @@ dotnet new --install Intility.Templates
 dotnet new intilityapi -o MyApi
 ```
 
-Node.JS:
+Node.js:
 
 ```bash
 npm install -g yo                       # Install Yeoman CLI
