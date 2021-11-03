@@ -1,7 +1,7 @@
 import { Options } from 'express-jsdoc-swagger';
 import { name, version, license, description } from '../../package.json';
 
-const { INTILITY_TENANT_ID, APP_CLIENT_ID } = process.env;
+const { INTILITY_TENANT_ID, APP_CLIENT_ID, SWAGGER_APP_CLIENT_ID } = process.env;
 
 const oAuthStrategyName = 'OAuthStrategy';
 
@@ -41,10 +41,9 @@ export const swaggerOptions: Options = {
     // https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md
     swaggerUiOptions: {
         swaggerOptions: {
-            persistAuthorization: true,
             deepLinking: true,
             oauth: {
-                clientId: APP_CLIENT_ID
+                clientId: SWAGGER_APP_CLIENT_ID
             }
         }
     },
