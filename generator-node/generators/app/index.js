@@ -10,23 +10,23 @@ class IntilityNodeGenerator extends Generator {
       {
         type: "input",
         name: "projectTitle",
-        message: "Please enter your projects name",
+        message: "🏷 Please enter your projects name",
         default: this.appname
       },
       {
         type: "input",
         name: "projectDescription",
-        message: "Please enter a description for your project"
+        message: "📜 Please enter a description for your project"
       },
       {
         type: "confirm",
         name: "includeDemoFolders",
-        message: "Would you like to exclude example endpoints from the generated project?"
+        message: "🎁 Would you like to include example endpoints from the generated project?"
       },
       {
         type: "input",
         name: "gitSshAddress",
-        message: `Insert your Git SSH Address (Optional)`,
+        message: `🚀 Insert your Git SSH Address (Optional)`,
         validate: str => {
           if (!str) {
             return true;
@@ -34,7 +34,7 @@ class IntilityNodeGenerator extends Generator {
             if (str.startsWith("git@")) {
               return true;
             } else {
-              this.log(`Invalid SSH Git address`)
+              this.log(`😱 Invalid SSH Git address`)
               return false;
             }
           }
@@ -81,8 +81,11 @@ class IntilityNodeGenerator extends Generator {
 
     // If not include demo folders
     if (!this.props.includeDemoFolders) {
+      this.fs.copy(this.templatePath("temp/baseRouter_without_users.ts"), this.destinationPath("src/baseRouter.ts"))
       this.fs.delete(this.destinationPath("src/api/users"))
       this.fs.delete(this.destinationPath("__tests__/api/users"))
+    } else {
+      this.fs.copy(this.templatePath("temp/baseRouter.ts"), this.destinationPath("src/baseRouter.ts"))
     }
   }
 
@@ -91,10 +94,10 @@ class IntilityNodeGenerator extends Generator {
 
   end() {
     if (!this.props.gitSshAddress) {
-      this.log(`Skipping Git setup`)
+      this.log(`😥 Skipping Git setup`)
     } else {
-      this.log(`Initializing your Git environment!`)
-
+      this.log(`🗃 Initializing your Git environment!`)
+      
       this.spawnCommandSync("git", ["init", "--initial-branch=main"]);
       this.spawnCommandSync("git", [
         "remote",
@@ -106,10 +109,16 @@ class IntilityNodeGenerator extends Generator {
       this.spawnCommandSync("git", ["commit", "-m", '"Initial commit"', "--no-verify"]);
       this.spawnCommandSync("git", ["fetch"]);
       this.spawnCommandSync("git", ["push", "-u", "origin", "main"]);
+      this.log(`🚀 Successfully pushed your source code to the provided GitLab Repository!`)
     }
 
-    this.log(`What to do next?`)
-    this.log(`Head over to https://create.intility.app/express to learn more about this template.\n`)
+    this.log(`\n**************************************************************\n`)
+    this.log("🎉✨ Yeey! ✨🎉")
+    this.log("Your project was successfully generated.")
+    this.log(``)
+    this.log(`But what should I do next you ask?`)
+    this.log(`A great place to start is to head over to https://create.intility.app/express to learn more about this template.`)
+    this.log(`\n**************************************************************\n`)
   }
 };
 
