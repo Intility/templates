@@ -4,7 +4,7 @@ import { Routes, validateRouterPathsExist } from '../src/utils/test/expressRoute
 jest.mock('../src/middlewares/passport', () => (mockPassportMiddlewares));
 
 describe('BaseRouter', () => {
-    it('Should create user router', () => {
+    it('Should create base router', () => {
         const actualRouter = jest.requireActual('../src/baseRouter').default;
 
         const routes: Routes[] = [
