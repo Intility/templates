@@ -1,11 +1,3 @@
-/*
-Author: Christian Marker (christian.marker@intility.no)
-passport.ts (c) 2021
-Desc: Setup of authentication and authorization of the requesting user
-Created:  2021-04-29T11:26:31.057Z
-Modified: 2021-05-03T07:24:53.575Z
-*/
-
 import passport from 'passport';
 import { BearerStrategy, ITokenPayload, VerifyCallback } from 'passport-azure-ad';
 import { NextFunction, Request, Response } from 'express';
@@ -22,10 +14,17 @@ if (!APP_CLIENT_ID) {
     throw new Error('Missing Environment variable: APP_CLIENT_ID');
 }
 
+const intilityIssuers = [
+    `https://sts.windows.net/${INTILITY_TENANT_ID}/`,
+    `https://sts.windows.net/${INTILITY_TENANT_ID}/v2.0`,
+    `https://login.microsoftonline.com/${INTILITY_TENANT_ID}/`,
+    `https://login.microsoftonline.com/${INTILITY_TENANT_ID}/v2.0`
+];
+
 /**
  * Create a new passport BearerStrategy to handle authenticate and decoding of the provided token.
  * Complete setup documentation can be found here https://github.com/AzureAD/passport-azure-ad#42-bearerstrategy.
- */ 
+ */
 const mainStrategy = new BearerStrategy(
     {
         identityMetadata:
@@ -36,7 +35,7 @@ const mainStrategy = new BearerStrategy(
         // Validate the `iss` claim in id_token against user provided issuer
         validateIssuer: true,
         // List of allowed issuers
-        issuer: [ `https://sts.windows.net/${INTILITY_TENANT_ID}/` ]
+        issuer: intilityIssuers
     },
     (token: ITokenPayload, done: VerifyCallback) => {
         if (!token.oid) {
@@ -61,7 +60,7 @@ export const authenticate = passport.authenticate([ 'mainStrategy' ], { session:
  *
  * @param {string[]} acceptedRoles
  */
- export const authorize = (acceptedRoles: string[]) => (req: Request, res: Response, next: NextFunction): Response | void => {
+export const authorize = (acceptedRoles: string[]) => (req: Request, res: Response, next: NextFunction): Response | void => {
 
     const decodedUserInfo = req.user as AzureToken;
     
@@ -86,13 +85,13 @@ export const authenticate = passport.authenticate([ 'mainStrategy' ], { session:
         }
 
         // Validate the provided whitelisted roles against token
-        checkRoles(roles, acceptedRoles)
-            .then(() => next())
-            .catch(() => {
-                return res.status(403).json({
-                    message: 'You are unauthorized to access this resource.'
-                });
+        if (checkRoles(roles, acceptedRoles)) {
+            return next();
+        } else {
+            return res.status(403).json({
+                message: 'You are unauthorized to access this resource.'
             });
+        }
     } else {
         return res.status(401).json({
             message: 'Unable to locate user info from decoded token'
@@ -106,17 +105,14 @@ export const authenticate = passport.authenticate([ 'mainStrategy' ], { session:
  * @param {string[]} userRoles
  * @param {string[]} acceptedRoles
  */
- const checkRoles = (userRoles: string[], acceptedRoles: string[]): Promise<unknown> => {
-    return new Promise((resolve, reject) => {
+const checkRoles = (userRoles: string[], acceptedRoles: string[]) => {   
+    if (!userRoles) {
+        return false;
+    }
 
-        if (!userRoles) {
-            reject(false);
-        }
-
-        return userRoles.some((r) => acceptedRoles.includes(r))
-            ? resolve(true)
-            : reject(false);
-    });
+    return userRoles.some((r) => acceptedRoles.includes(r))
+        ? true
+        : false;
 };
 
 // export configures passport instance
