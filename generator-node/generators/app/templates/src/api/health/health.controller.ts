@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { version, name } from '../../../package.json';
+import { HealthDto } from './dto/health.dto';
 
 export class HealthController {
-    public getServerHealth = (_req: Request, res: Response): Response<Record<string, unknown>> => {
+    public getServerHealth = (_req: Request, res: Response): Response<HealthDto> => {
         return res.status(200).json({
             nodeVersion: process.version,
             uptime: this.formatSecondsToHourString(process.uptime()),

@@ -6,6 +6,7 @@ const healthRoute = Router();
 
 // Create controller
 const healthController = new HealthController();
+
 /**
  * GET /api/v1/health/server
  * @summary Get Server Health
