@@ -21,7 +21,7 @@ class IntilityNodeGenerator extends Generator {
       {
         type: "confirm",
         name: "includeDemoFolders",
-        message: "Would you like to include demo endpoints?"
+        message: "Would you like to exclude example endpoints from the generated project?"
       },
       {
         type: "input",
@@ -81,8 +81,8 @@ class IntilityNodeGenerator extends Generator {
 
     // If not include demo folders
     if (!this.props.includeDemoFolders) {
-      this.fs.write(this.destinationPath("src/api/.keep"), "");
       this.fs.delete(this.destinationPath("src/api/users"))
+      this.fs.delete(this.destinationPath("__tests__/api/users"))
     }
   }
 
