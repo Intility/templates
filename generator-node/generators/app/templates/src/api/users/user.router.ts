@@ -60,7 +60,7 @@ userRoute.put('/:oid', authenticate, authorize([ 'Api.Write', 'Api.Admin' ]), us
  * @return {UserDto} 200 - success response - application/json
  * @security OAuthStrategy
  */
-userRoute.put('/:oid', authenticate, authorize([ 'Api.Write', 'Api.Admin' ]), userController.update);
+userRoute.patch('/:oid', authenticate, authorize([ 'Api.Write', 'Api.Admin' ]), userController.update);
 
 /**
  * DELETE /api/v1/users/{oid}

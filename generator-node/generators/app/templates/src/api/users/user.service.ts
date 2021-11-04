@@ -2,11 +2,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 export class UserService {
-    public getByOid = (oid: string) => {
+    public getByOid = async (oid: string) => {
         return `This action returns a #${oid} users`;
     }
     
-    public getAll = () => {
+    public getAll = async () => {
         return 'This action returns all users';
     };
 
