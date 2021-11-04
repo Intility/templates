@@ -44,6 +44,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/faker": "^5.5.9",
     "@types/hpp": "^0.2.2",
     "@types/jest": "^27.0.2",
     "@types/node": "^14.14.31",
@@ -52,6 +53,7 @@
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "eslint": "^7.32.0",
+    "faker": "^5.5.3",
     "jest": "^27.3.1",
     "jest-junit": "^13.0.0",
     "nodemon": "^2.0.12",
