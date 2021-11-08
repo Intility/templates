@@ -40,14 +40,14 @@ This is a great starting point for using Node.js, TypeScript, and Visual Studio 
 You'll need to install [Yeoman](https://yeoman.io/) to install this template.
 
 ```bash
-npm install -g yo                         # Install Yeoman CLI
-npm install -g generator-intility-node    # Install Intility Node project generator
+npm install -g yo                          # Install Yeoman CLI
+npm install -g @intility/generator-node    # Install Intility Node project generator
 ```
 
 Then generate your new project:
 
 ```bash
-yo intility-node                          # Use Yeoman CLI to run the template generator
+yo @intility/node                          # Use Yeoman CLI to run the template generator
 ```
 
 ## Goals
