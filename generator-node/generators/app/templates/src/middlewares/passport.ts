@@ -2,9 +2,9 @@ import passport from 'passport';
 import { BearerStrategy, ITokenPayload, VerifyCallback } from 'passport-azure-ad';
 import { NextFunction, Request, Response } from 'express';
 import { AzureToken } from '../interfaces/token';
+import { AuthorizeOptions } from '../interfaces/authorize';
 
 const { APP_CLIENT_ID, INTILITY_TENANT_ID } = process.env;
-
 
 if (!INTILITY_TENANT_ID) {
     throw new Error('Missing Environment variable: INTILITY_TENANT_ID');
@@ -60,16 +60,16 @@ export const authenticate = passport.authenticate([ 'mainStrategy' ], { session:
  *
  * @param {string[]} acceptedRoles
  */
-export const authorize = (acceptedRoles: string[]) => (req: Request, res: Response, next: NextFunction): Response | void => {
-
+export const authorize = (acceptedRoles: string[], options?: AuthorizeOptions) => (req: Request, res: Response, next: NextFunction): Response | void => {
     const decodedUserInfo = req.user as AzureToken;
     
     if (decodedUserInfo) {
         const { roles, acct, tid } = decodedUserInfo;
 
         // Option 1:
-        // Check authenticated users TenantID and block users outside of the AA-Intility tenant 
-        if (tid !== INTILITY_TENANT_ID) {
+        // Check authenticated users TenantID and block users outside of the AA-Intility tenant
+        const tenants = options?.allowedTenants || [ INTILITY_TENANT_ID ];
+        if (!tenants.includes(tid)) {
             return res.status(401).json({
                 message: 'Users outside of provided tenant is not permitted'
             });
@@ -78,7 +78,7 @@ export const authorize = (acceptedRoles: string[]) => (req: Request, res: Respon
         // Option 2: 
         // Check authenticated users account status. Requires "acct" as an optional claim in the App Registration. 
         // Regular user = 0, Guest user = 1.
-        if (acct !== 0) {
+        if (!options?.allowGuests && acct !== 0) {
             return res.status(401).json({
                 message: 'Guest users is not allowed'
             }); 

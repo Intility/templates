@@ -13,8 +13,15 @@ describe('Passport Auth Middlewares', () => {
             json: jest.fn().mockReturnThis(),
         };
     });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+
+        process.env.INTILITY_TENANT_ID = undefined;
+        process.env.APP_CLIENT_ID = undefined;
+    });
     
-    it('Should invalidate request, wrong tenant', () => {
+    it('Should block request, wrong tenant', () => {
         const mockUserRoles = [ 'Admin' ];
         const mockAcceptedRolesRoles = [ 'Admin' ];
         const intilityTenantId = 'xxx';
@@ -38,7 +45,31 @@ describe('Passport Auth Middlewares', () => {
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: expect.any(String) }));
     });
     
-    it('Should invalidate request, guest user', () => {
+    it('Should block request, wrong tenant with allowedTenants overwrite', () => {
+        const mockUserRoles = [ 'Admin' ];
+        const mockAcceptedRolesRoles = [ 'Admin' ];
+        const intilityTenantId = 'xxx';
+        
+        req = {
+            user: {
+                tid: 'yyy',
+                acct: 0,
+                roles: mockUserRoles
+            } as Partial<AzureToken>
+        };
+        
+        process.env.INTILITY_TENANT_ID = intilityTenantId;
+        process.env.APP_CLIENT_ID = 'xxx';
+
+        const { authorize } = jest.requireActual('../../src/middlewares/passport');
+
+        authorize(mockAcceptedRolesRoles, { allowedTenants: [ 'zzz' ] })(req, res, next);
+
+        expect(res.status).toHaveBeenCalledWith(401);
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: expect.any(String) }));
+    });
+    
+    it('Should block request, guest user', () => {
         const mockUserRoles = [ 'Admin' ];
         const mockAcceptedRolesRoles = [ 'Admin' ];
         const intilityTenantId = 'xxx';
@@ -46,7 +77,7 @@ describe('Passport Auth Middlewares', () => {
         req = {
             user: {
                 tid: intilityTenantId,
-                acct: 1,
+                acct: 1, // Guest user
                 roles: mockUserRoles
             } as Partial<AzureToken>
         };
@@ -61,8 +92,31 @@ describe('Passport Auth Middlewares', () => {
         expect(res.status).toHaveBeenCalledWith(401);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: expect.any(String) }));
     });
+
+    it('Should block the request, allowGuests false and guest User', () => {
+        const mockAcceptedRolesRoles = [ 'Admin' ];
+        const intilityTenantId = 'xxx';
+        
+        req = {
+            user: {
+                tid: intilityTenantId,
+                acct: 1, // Guest User
+                roles: mockAcceptedRolesRoles
+            } as Partial<AzureToken>
+        };
+        
+        process.env.INTILITY_TENANT_ID = intilityTenantId;
+        process.env.APP_CLIENT_ID = 'xxx';
+
+        const { authorize } = jest.requireActual('../../src/middlewares/passport');
+
+        authorize(mockAcceptedRolesRoles, { allowGuests: false })(req, res, next);
+        
+        expect(res.status).toHaveBeenCalledWith(401);
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: expect.any(String) }));
+    });
     
-    it('Should invalidate request, invalid roles', () => {
+    it('Should block request, invalid roles', () => {
         const mockUserRoles = [ 'User' ];
         const mockAcceptedRolesRoles = [ 'Admin' ];
         const intilityTenantId = 'xxx';
@@ -81,6 +135,29 @@ describe('Passport Auth Middlewares', () => {
         const { authorize } = jest.requireActual('../../src/middlewares/passport');
 
         authorize(mockAcceptedRolesRoles)(req, res, next);
+
+        expect(res.status).toHaveBeenCalledWith(403);
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: expect.any(String) }));
+    });
+
+        it('Should block the request, empty array', () => {
+        const mockAcceptedRolesRoles = [ 'Admin' ];
+        const intilityTenantId = 'xxx';
+        
+        req = {
+            user: {
+                tid: intilityTenantId,
+                acct: 0,
+                roles: mockAcceptedRolesRoles
+            } as Partial<AzureToken>
+        };
+        
+        process.env.INTILITY_TENANT_ID = intilityTenantId;
+        process.env.APP_CLIENT_ID = 'xxx';
+
+        const { authorize } = jest.requireActual('../../src/middlewares/passport');
+
+        authorize([])(req, res, next);
 
         expect(res.status).toHaveBeenCalledWith(403);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: expect.any(String) }));
@@ -105,17 +182,19 @@ describe('Passport Auth Middlewares', () => {
 
         authorize(mockAcceptedRolesRoles)(req, res, next);
 
+        expect(res.status).not.toHaveBeenCalled();
+        expect(res.json).not.toHaveBeenCalled();
         expect(next).toHaveBeenCalled();
     });
     
-    it('Should allow the request, all roles allowed', () => {
+    it('Should allow the request, correct roles and allowGuests', () => {
         const mockAcceptedRolesRoles = [ 'Admin' ];
         const intilityTenantId = 'xxx';
         
         req = {
             user: {
                 tid: intilityTenantId,
-                acct: 0,
+                acct: 1,
                 roles: mockAcceptedRolesRoles
             } as Partial<AzureToken>
         };
@@ -125,8 +204,49 @@ describe('Passport Auth Middlewares', () => {
 
         const { authorize } = jest.requireActual('../../src/middlewares/passport');
 
-        authorize([])(req, res, next);
+        authorize(mockAcceptedRolesRoles, { allowGuests: true })(req, res, next);
 
+        expect(res.status).not.toHaveBeenCalled();
+        expect(res.json).not.toHaveBeenCalled();
         expect(next).toHaveBeenCalled();
+    });
+
+    it('Should block the request, missing decoded user values', () => {
+        const mockAcceptedRolesRoles = [ 'Admin' ];
+        const intilityTenantId = 'xxx';
+        
+        req = {
+            user: undefined
+        };
+        
+        process.env.INTILITY_TENANT_ID = intilityTenantId;
+        process.env.APP_CLIENT_ID = 'xxx';
+
+        const { authorize } = jest.requireActual('../../src/middlewares/passport');
+
+        authorize(mockAcceptedRolesRoles, { allowGuests: true })(req, res, next);
+
+        expect(res.status).toHaveBeenCalledWith(401);
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: expect.any(String) }));
+    });
+    
+    it('Should block the request, missing user roles in decoded user', () => {
+        const mockAcceptedRolesRoles = [ 'Admin' ];
+        const intilityTenantId = 'xxx';
+        
+        req = {
+            user: {
+                tid: intilityTenantId,
+                acct: 1,
+                roles: undefined
+            } as Partial<AzureToken>
+        };
+
+        const { authorize } = jest.requireActual('../../src/middlewares/passport');
+
+        authorize(mockAcceptedRolesRoles, { allowGuests: true })(req, res, next);
+
+        expect(res.status).toHaveBeenCalledWith(403);
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ message: expect.any(String) }));
     });
 });
