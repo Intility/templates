@@ -1,8 +1,24 @@
 "use strict";
 const Generator = require("yeoman-generator");
+const chalk = require("chalk");
 
 class IntilityNodeGenerator extends Generator {
   initializing() {
+    this.log(`\n**************************************************************\n`)
+    this.log(`✨ ${chalk.bold("Welcome to Intility Node.js project generator!")} ✨`)
+    this.log("")
+    this.log("Before you advance to the prompts, head over to GitLab and create a new repository:")
+    this.log(chalk.cyan(`https://gitlab.intility.com/projects/new#blank_project`))
+    this.log(`${chalk.yellow.bold("NOTE:")} Unselect the: 'Initialize repository with a README' under 'Project Configuration'`)
+    this.log("")
+    this.log("In the next couple of steps you will be prompted some required and some optional inputs:")
+    this.log(` * ${chalk.bold("Name and description:")} These should be the same as provided when creating a GitLab Repository`)
+    this.log(` * ${chalk.bold("Git SSH Address:")} This can be found by clicking the 'Clone' button located at the empty repository page.`)
+    this.log(` * ${chalk.bold("Example endpoints")}: This is a complete set of CRUD-endpoints, including ${chalk.bold("Swagger Documentation")} and ${chalk.bold("Unit Testing")}`)
+    this.log("")
+    this.log("⚡ Enough talk! Lets go! ⚡")
+    this.log(`\n**************************************************************\n`)
+    this.log("")
   }
 
   prompting() {
@@ -10,13 +26,20 @@ class IntilityNodeGenerator extends Generator {
       {
         type: "input",
         name: "projectTitle",
-        message: "🏷 Please enter your projects name",
+        message: "🏷 Please enter your projects name:",
         default: this.appname
       },
       {
         type: "input",
         name: "projectDescription",
-        message: "📜 Please enter a description for your project"
+        message: "📜 Please enter a description for your project:",
+        validate: str => {
+          if (!str || str.length === 0) {
+            return `😱 ${chalk.red("Please enter a value")}`
+          } else {
+            return true
+          }
+        }
       },
       {
         type: "confirm",
@@ -26,17 +49,12 @@ class IntilityNodeGenerator extends Generator {
       {
         type: "input",
         name: "gitSshAddress",
-        message: `🚀 Insert your Git SSH Address (Optional)`,
+        message: `🚀 Insert your Git SSH Address ${chalk.gray("(Optional)")}:`,
         validate: str => {
-          if (!str) {
+          if (!str || str.startsWith("git@")) {
             return true;
           } else {
-            if (str.startsWith("git@")) {
-              return true;
-            } else {
-              this.log(`😱 Invalid SSH Git address`)
-              return false;
-            }
+            return `😱 ${chalk.red("Invalid SSH Git address, this string must start with: git@")}`;
           }
         }
       }
@@ -110,7 +128,6 @@ class IntilityNodeGenerator extends Generator {
   }
 
   install() {
-    
   }
 
   end() {
@@ -135,7 +152,7 @@ class IntilityNodeGenerator extends Generator {
 
     this.log(`\n**************************************************************\n`)
     this.log("🎉✨ Yeey! ✨🎉")
-    this.log("Your project was successfully generated.")
+    this.log(chalk.green("Your project was successfully generated."))
     
     if (this.props.gitSshAddress) {
       this.log(`You can find it here: ${this.props.projectUrl}`)

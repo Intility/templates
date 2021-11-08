@@ -12,7 +12,7 @@
     "url": "https://intility.com"
   },
   "files": [
-    "generators", 
+    "generators",
     "!generators/app/templates/.env",
     "!generators/app/templates/node_modules",
     "!generators/app/templates/coverage",
@@ -27,8 +27,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "yeoman-generator": "^5.4.2",
-    "chalk": "^4.1.2"
+    "chalk": "^4.1.2",
+    "yeoman-generator": "^5.4.2"
   },
   "devDependencies": {
     "yeoman-test": "^6.2.0",
