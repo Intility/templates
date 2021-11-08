@@ -45,9 +45,8 @@ sonarqube:
     SONAR_PROJECT: $CI_PROJECT_NAME
     SONAR_HOST_URL: https://sonarqube.intility.no
     GIT_DEPTH: "0" # Tells git to fetch all the branches of the project, required by the analysis task
+  allow_failure: true
   script:
-    - ls
-    - ls coverage
     - sonar-scanner
       -Dsonar.login=$SONAR_TOKEN
       -Dsonar.projectKey=$SONAR_PROJECT
@@ -73,37 +72,41 @@ npm-audit:
     AUDIT_FILENAME: reports/npm-audit-report.json
   script:
     - npm audit --json |& tee $AUDIT_FILENAME
+  allow_failure: true
   artifacts:
     paths:
       - $AUDIT_FILENAME
 
 .deploy_base:
   stage: deploy
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    IMAGE_TAG_COMMIT_SHA: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
+  before_script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
 
 deploy_image_qa:
   extends: .deploy_base
   script:
-    - echo "{\"auths\":{\"$ACR_SERVER_QA\":{\"username\":\"$ACR_USERNAME_QA\",\"password\":\"$ACR_PASSWORD_QA\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor
       --context $CI_PROJECT_DIR
       --dockerfile $CI_PROJECT_DIR/Dockerfile
-      --destination $ACR_SERVER_QA/$CI_PROJECT_NAME:latest
-      --destination $ACR_SERVER_QA/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
+      --destination $IMAGE_TAG
+      --destination $IMAGE_TAG_COMMIT_SHA
   only:
     - qa
 
 deploy_image:
   extends: .deploy_base
   script:
-    - echo "{\"auths\":{\"$ACR_SERVER_PROD\":{\"username\":\"$ACR_USERNAME_PROD\",\"password\":\"$ACR_PASSWORD_PROD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor
       --context $CI_PROJECT_DIR
       --dockerfile $CI_PROJECT_DIR/Dockerfile
-      --destination $ACR_SERVER_PROD/$CI_PROJECT_NAME:latest
-      --destination $ACR_SERVER_PROD/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
+      --destination $IMAGE_TAG
+      --destination $IMAGE_TAG_COMMIT_SHA
   when: manual
   only:
     - master
