@@ -45,14 +45,34 @@ class IntilityNodeGenerator extends Generator {
     return this.prompt(prompts).then(props => {
       // To access props later use this.props.someAnswer;
       this.props = props;
+
+      let projectUrl = "";
+      let pipelineStatusBadgeUrl = "";
+      let codeCovBadgeUrl = "";
+      
+      if (props.gitSshAddress) {
+        const projectPath = props.gitSshAddress
+          .split(":")[1] // get path
+          .slice(0, -4); // remove .git from end of ssh
+        
+        projectUrl = "https://gitlab.intility.com/" + projectPath;
+        pipelineStatusBadgeUrl = projectUrl + "/badges/main/pipeline.svg";
+        codeCovBadgeUrl = projectUrl + "/badges/main/coverage.svg";
+      }
+
+      this.props.projectUrl = projectUrl;
+      this.props.pipelineStatusBadgeUrl = pipelineStatusBadgeUrl;
+      this.props.codeCovBadgeUrl = codeCovBadgeUrl;
     });
   }
 
   writing() {
     // Copy all regular files
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath("*"),
       this.destinationPath(),
+      this.props,
+      {},
       {
         globOptions: { dot: true },
       }
@@ -90,6 +110,7 @@ class IntilityNodeGenerator extends Generator {
   }
 
   install() {
+    
   }
 
   end() {
@@ -115,9 +136,15 @@ class IntilityNodeGenerator extends Generator {
     this.log(`\n**************************************************************\n`)
     this.log("🎉✨ Yeey! ✨🎉")
     this.log("Your project was successfully generated.")
+    
+    if (this.props.gitSshAddress) {
+      this.log(`You can find it here: ${this.props.projectUrl}`)
+    }
+
     this.log(``)
     this.log(`But what should I do next you ask?`)
-    this.log(`A great place to start is to head over to https://create.intility.app/express to learn more about this template.`)
+    this.log(`A great place to start is to head over to this projects README.md and have a look,`)
+    this.log(`or head over to https://create.intility.app/express to learn more.`)
     this.log(`\n**************************************************************\n`)
   }
 };
