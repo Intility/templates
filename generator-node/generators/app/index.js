@@ -60,32 +60,33 @@ class IntilityNodeGenerator extends Generator {
       }
     ];
 
-    return this.prompt(prompts).then(props => {
-      // To access props later use this.props.someAnswer;
-      this.props = props;
+    return this.prompt(prompts)
+      .then(props => {
+        // To access props later use this.props.someAnswer;
+        this.props = props;
 
-      let projectUrl = "";
-      let pipelineStatusBadgeUrl = "";
-      let codeCovBadgeUrl = "";
-      
-      if (props.gitSshAddress) {
-        const projectPath = props.gitSshAddress
-          .split(":")[1] // get path
-          .slice(0, -4); // remove .git from end of ssh
+        let projectUrl = "";
+        let pipelineStatusBadgeUrl = "";
+        let codeCovBadgeUrl = "";
         
-        projectUrl = "https://gitlab.intility.com/" + projectPath;
-        pipelineStatusBadgeUrl = projectUrl + "/badges/main/pipeline.svg";
-        codeCovBadgeUrl = projectUrl + "/badges/main/coverage.svg";
-      }
+        if (props.gitSshAddress) {
+          const projectPath = props.gitSshAddress
+            .split(":")[1] // get path
+            .slice(0, -4); // remove .git from end of ssh
+          
+          projectUrl = "https://gitlab.intility.com/" + projectPath;
+          pipelineStatusBadgeUrl = projectUrl + "/badges/main/pipeline.svg";
+          codeCovBadgeUrl = projectUrl + "/badges/main/coverage.svg";
+        }
 
-      this.props.projectUrl = projectUrl;
-      this.props.pipelineStatusBadgeUrl = pipelineStatusBadgeUrl;
-      this.props.codeCovBadgeUrl = codeCovBadgeUrl;
-    });
+        this.props.projectUrl = projectUrl;
+        this.props.pipelineStatusBadgeUrl = pipelineStatusBadgeUrl;
+        this.props.codeCovBadgeUrl = codeCovBadgeUrl;
+      });
   }
 
   writing() {
-    // Copy all regular files
+    // Copy all root level files
     this.fs.copyTpl(
       this.templatePath("*"),
       this.destinationPath(),
@@ -105,7 +106,7 @@ class IntilityNodeGenerator extends Generator {
     pkg.description = this.props.projectDescription
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
-    // Copy all files in subfolders
+    // Copy folders
     this.fs.copy(this.templatePath("src/**/*"), this.destinationPath("src"));
     this.fs.copy(this.templatePath("__tests__/**/*"), this.destinationPath("__tests__"));
     this.fs.copy(
@@ -119,7 +120,10 @@ class IntilityNodeGenerator extends Generator {
 
     // If not include demo folders
     if (!this.props.includeDemoFolders) {
+      // Copy and rename router without user.
       this.fs.copy(this.templatePath("temp/baseRouter_without_users.ts"), this.destinationPath("src/baseRouter.ts"))
+      
+      // Remove demo files
       this.fs.delete(this.destinationPath("src/api/users"))
       this.fs.delete(this.destinationPath("__tests__/api/users"))
     } else {
