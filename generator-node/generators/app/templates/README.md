@@ -9,25 +9,23 @@
 <%= projectDescription %>
 </p>
 
-<p align="center">
-<a href="<%= projectUrl %>">
-    <img alt="pipeline status" src="<%= pipelineStatusBadgeUrl %>" style="max-width:100%;">
-</a>
+![<%= pipelineStatusBadgeUrl %>](<%= projectUrl %>)
+![<%= codeCovBadgeUrl %>](<%= projectUrl %>)
 
-<a href="<%= projectUrl %>">
-    <img alt="publish docs" src="<%= codeCovBadgeUrl %>" style="max-width:100%;">
-</a>
-</p>
 </div>
 
 ## What should I do next?
 
 * Generate SonarQube Token ([Guide](https://create.intility.app/cra/configuration/sonarqube))
+  * Add the badge ([Guide](https://gitlab.intility.com/hannarong.klinjan/sonarqube-badge-proxy/-/blob/master/README.md))
 * Add Code coverage regexp to Gitlab to make the badge work.
   * Navigate to: `GitLab Repository -> Settings -> CI/CD -> General pipelines -> Test coverage parsing`
   * Enter: `All files[^|]*\|[^|]*\s+([\d\.]+)`
 * Create an `.env` file by using the template provided in `.env.template`
   * Setup authentication ([Guide](https://create.intility.app/express/API/Azure/ApplicationRegistrations))
+* Setup your OpenShift environment:
+  * Create a project on OpenShift ([Guide](https://create.intility.app/cra/configuration/deploy))
+  * Create a Deploy Token for your GitLab Repository ([Guide](https://create.intility.app/cra/configuration/gitlab#add-gitlab-deploy-token))
 
 ## About this template
 

@@ -108,6 +108,7 @@ class IntilityNodeGenerator extends Generator {
 
     // Copy folders
     this.fs.copy(this.templatePath("src/**/*"), this.destinationPath("src"));
+    this.fs.copy(this.templatePath("chart/**/*"), this.destinationPath("chart"));
     this.fs.copy(this.templatePath("__tests__/**/*"), this.destinationPath("__tests__"));
     this.fs.copy(
       this.templatePath("assets/**/*"),

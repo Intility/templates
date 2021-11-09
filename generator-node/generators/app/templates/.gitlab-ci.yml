@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - analyze
+  - publish
   - deploy
 
 image: node:14
@@ -77,37 +78,97 @@ npm-audit:
     paths:
       - $AUDIT_FILENAME
 
-.deploy_base:
-  stage: deploy
-  variables:
-    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-    IMAGE_TAG_COMMIT_SHA: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+.publish_base:
+  stage: publish
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
   before_script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
 
-deploy_image_qa:
-  extends: .deploy_base
+publish_qa:
+  extends: .publish_base
+  variables:
+    IMAGE_TAG: qa_latest
+    IMAGE_VERSION: $CI_PIPELINE_IID
   script:
     - /kaniko/executor
       --context $CI_PROJECT_DIR
       --dockerfile $CI_PROJECT_DIR/Dockerfile
-      --destination $IMAGE_TAG
-      --destination $IMAGE_TAG_COMMIT_SHA
+      --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
+      --destination $CI_REGISTRY_IMAGE:$IMAGE_VERSION
   only:
     - qa
 
-deploy_image:
-  extends: .deploy_base
+publish_prod:
+  extends: .publish_base
+  variables:
+    IMAGE_TAG: latest
+    IMAGE_VERSION: $CI_COMMIT_SHORT_SHA
   script:
     - /kaniko/executor
       --context $CI_PROJECT_DIR
       --dockerfile $CI_PROJECT_DIR/Dockerfile
-      --destination $IMAGE_TAG
-      --destination $IMAGE_TAG_COMMIT_SHA
+      --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
+      --destination $CI_REGISTRY_IMAGE:$IMAGE_VERSION
   when: manual
   only:
     - master
     - main
+
+## DEPLOY STAGE
+#
+# Left out on purpose. When you are ready, head over to Create Intility App documentation and start setting up your production environment
+# https://create.intility.app/cra/configuration/deploy - Setup OpenShift project
+# https://create.intility.app/cra/configuration/gitlab#add-gitlab-deploy-token - Create GitLab Deploy Token
+##
+
+# .deploy_base:
+#   stage: deploy
+#   image:
+#     name: intility/helm-oc:latest
+#     entrypoint: [""]
+#   variables:
+#     HELM_EXPERIMENTAL_OCI: 1
+#     IMAGE_TAG: $CI_PIPELINE_IID
+#     OPENSHIFT_SERVER: api.openshift.intility.com:6443
+#   before_script:
+#     - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+#   script:
+#     - helm upgrade
+#       --install $CI_ENVIRONMENT_SLUG ./chart
+#       --set nameOverride=aa-$CI_PROJECT_NAME-dev
+#       --set image.repository=$CI_REGISTRY_IMAGE
+#       --set image.tag=$IMAGE_TAG
+#       --set registry.url=$CI_REGISTRY
+#       --set registry.user=$CI_DEPLOY_USER
+#       --set registry.password=$CI_DEPLOY_PASSWORD
+#       --set route=$ROUTE
+#       --set-string replicaCount=2
+#       --set secrets.NO_COLOR=true
+#       --set secrets.INTILITY_TENANT_ID=$INTILITY_TENANT_ID
+#       --set secrets.APP_CLIENT_ID=$APP_CLIENT_ID
+#       --set secrets.SWAGGER_APP_CLIENT_ID=$SWAGGER_APP_CLIENT_ID
+
+# deploy_qa:
+#   extends: .deploy_base
+#   variables:
+#     IMAGE_TAG: $CI_PIPELINE_IID
+#     ROUTE: qa-$CI_PROJECT_NAME.apps.openshift.intility.com
+#   environment:
+#     name: qa
+#     url: https://qa-$CI_PROJECT_NAME.apps.openshift.intility.com
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "qa"'
+
+# deploy_prod:
+#   extends: .deploy_base
+#   variables:
+#     IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+#     ROUTE: $CI_PROJECT_NAME.apps.openshift.intility.com
+#   environment:
+#     name: prod
+#     url: https://$CI_PROJECT_NAME.apps.openshift.intility.com
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
+#       when: manual
