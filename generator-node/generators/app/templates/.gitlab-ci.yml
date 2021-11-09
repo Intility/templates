@@ -116,12 +116,13 @@ publish_prod:
     - master
     - main
 
-## DEPLOY STAGE
-#
-# Left out on purpose. When you are ready, head over to Create Intility App documentation and start setting up your production environment
-# https://create.intility.app/cra/configuration/deploy - Setup OpenShift project
-# https://create.intility.app/cra/configuration/gitlab#add-gitlab-deploy-token - Create GitLab Deploy Token
-##
+###
+# DEPLOY STAGE
+# This is left out on purpose, since this requires a bit of setup
+# Head over to the documentation to read more on how to configure this.
+#  - Create a project on OpenShift [Guide](https://create.intility.app/cra/configuration/deploy)
+#  - Create a Deploy Token for your GitLab Repository [Guide](https://create.intility.app/cra/configuration/gitlab#add-gitlab-deploy-token)
+###
 
 # .deploy_base:
 #   stage: deploy
@@ -137,7 +138,7 @@ publish_prod:
 #   script:
 #     - helm upgrade
 #       --install $CI_ENVIRONMENT_SLUG ./chart
-#       --set nameOverride=aa-$CI_PROJECT_NAME-dev
+#       --set nameOverride=aa-$CI_PROJECT_NAME
 #       --set image.repository=$CI_REGISTRY_IMAGE
 #       --set image.tag=$IMAGE_TAG
 #       --set registry.url=$CI_REGISTRY
@@ -145,7 +146,7 @@ publish_prod:
 #       --set registry.password=$CI_DEPLOY_PASSWORD
 #       --set route=$ROUTE
 #       --set-string replicaCount=2
-#       --set secrets.NO_COLOR=true
+#       --set-string secrets.NO_COLOR=true
 #       --set secrets.INTILITY_TENANT_ID=$INTILITY_TENANT_ID
 #       --set secrets.APP_CLIENT_ID=$APP_CLIENT_ID
 #       --set secrets.SWAGGER_APP_CLIENT_ID=$SWAGGER_APP_CLIENT_ID
