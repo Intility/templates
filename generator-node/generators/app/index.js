@@ -136,12 +136,19 @@ class IntilityNodeGenerator extends Generator {
   }
 
   end() {
+    this.log(`📦 Initializing your Git repository!`)
+    this.spawnCommandSync("git", ["init", "--initial-branch=main"]);
+    
+    this.log(`🧶 Creating QA branch...`)
+    this.spawnCommandSync("git", ["checkout", "-b", "qa"]);
+    this.spawnCommandSync("git", ["push", "--set-upstream", "origin", "qa"]);
+
+    this.log(`🚀 Your Git Repository was successfully initialized!`)
+    
     if (!this.props.gitSshAddress) {
-      this.log(`😥 Skipping Git setup`)
+      this.log(`😥 Skipping Git push`)
     } else {
-      this.log(`🗃 Initializing your Git environment!`)
-      
-      this.spawnCommandSync("git", ["init", "--initial-branch=main"]);
+      this.log(`🚀 Submitting changes...`)      
       this.spawnCommandSync("git", [
         "remote",
         "add",
