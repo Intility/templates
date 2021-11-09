@@ -141,14 +141,13 @@ class IntilityNodeGenerator extends Generator {
     
     this.log(`🧶 Creating QA branch...`)
     this.spawnCommandSync("git", ["checkout", "-b", "qa"]);
-    this.spawnCommandSync("git", ["push", "--set-upstream", "origin", "qa"]);
-
+    
     this.log(`🚀 Your Git Repository was successfully initialized!`)
     
     if (!this.props.gitSshAddress) {
-      this.log(`😥 Skipping Git push`)
+      this.log(`😥 Skipping commit, no SSH was provided.`)
     } else {
-      this.log(`🚀 Submitting changes...`)      
+      this.log(`🚀 Committing changes...`)      
       this.spawnCommandSync("git", [
         "remote",
         "add",
@@ -158,7 +157,7 @@ class IntilityNodeGenerator extends Generator {
       this.spawnCommandSync("git", ["add", "."]);
       this.spawnCommandSync("git", ["commit", "-m", '"Initial commit"', "--no-verify"]);
       this.spawnCommandSync("git", ["fetch"]);
-      this.spawnCommandSync("git", ["push", "-u", "origin", "main"]);
+      this.spawnCommandSync("git", ["push", "-u", "origin", "qa"]);
       this.log(`🚀 Successfully pushed your source code to the provided GitLab Repository!`)
     }
 
