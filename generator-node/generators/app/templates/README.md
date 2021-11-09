@@ -45,6 +45,7 @@ npm install -g @intility/generator-node    # Install Intility Node project gener
 Then generate your new project:
 
 ```bash
+mkdir <projectName> && cd <projectName>    # Create a new project folder
 yo @intility/node                          # Use Yeoman CLI to run the template generator
 ```
 
