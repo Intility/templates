@@ -5,28 +5,36 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
+      time: "09:00"
+      timezone: "Europe/Oslo"
     commit-message:
       prefix: "ci:"
       
   - package-ecosystem: "npm"
     directory: "/cra"
     schedule:
-      interval: "daily"
+      interval: "monthly"
+      time: "09:00"
+      timezone: "Europe/Oslo"
     commit-message:
       prefix: "build(cra):"
       
   - package-ecosystem: "npm"
     directory: "/docusaurus"
     schedule:
-      interval: "daily"
+      interval: "monthly"
+      time: "09:00"
+      timezone: "Europe/Oslo"
     commit-message:
       prefix: "build(docs):"
       
   - package-ecosystem: "nuget"
     directory: "/dotnet/iwebapiproject"
     schedule:
-      interval: "daily"
+      interval: "monthly"
+      time: "09:00"
+      timezone: "Europe/Oslo"
     commit-message:
       # considered fix because it affects the template itself, not the template package
       prefix: "fix(dotnet):"
