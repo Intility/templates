@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS publish
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS publish
 WORKDIR /src
 
 COPY *.csproj .
@@ -7,7 +7,7 @@ RUN dotnet restore
 COPY . .
 RUN dotnet publish -c Release -o /app --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
 
 # if you use databases, these lines need to be uncommented
 # RUN apk add --no-cache icu-libs
