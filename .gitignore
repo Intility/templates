@@ -48,3 +48,7 @@ my_project
 fastapi/build/
 fastapi/dist/
 *.egg-info/
+
+# Visual Studio 2015/2017/2022 cache/options directory
+.vs/
+.vscode
