@@ -31,11 +31,15 @@
       "choices": [
         {
           "choice": "net5.0",
-          "description": "Target net5.0"
+          "description": "Target .NET 5"
+        },
+        {
+          "choice": "net6.0",
+          "description": "Target .NET 6"
         }
       ],
-      "replaces": "net5.0",
-      "defaultValue": "net5.0"
+      "replaces": "net6.0",
+      "defaultValue": "net6.0"
     },
     "auth": {
       "type": "parameter",
