@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Intility",
   "classifications": ["Intility", "Web", "WebAPI"],
-  "name": "Intility Api (Solution)",
+  "name": "Intility Api",
   "description": "A solution template for creating Intility APIs.",
   "identity": "Intility.Templates.ApiSolution.CSharp",
   "shortName": "iwebapi",
@@ -25,9 +25,16 @@
           "exclude": ["Company.WebApplication1/Properties/launchSettings.json"]
         },
         {
-          "condition": "(HostIdentifier != 'dotnetcli')",
+          "condition": "(HostIdentifier != 'dotnetcli' && !projectOnly)",
           "rename": {
             "Company.WebApplication1.sln": "Company.WebApplication1.generated.sln"
+          }
+        },
+        {
+          "condition": "(projectOnly)",
+          "exclude": ["Company.WebApplication1.sln", ".gitignore"],
+          "rename": {
+            "Company.WebApplication1/": "./"
           }
         }
       ]
@@ -119,6 +126,12 @@
       "datatype": "bool",
       "description": "If specified, skips the automatic restore of the project on create.",
       "defaultValue": "false"
+    },
+    "projectOnly": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "description": "Only sets it up as a project."
     }
   },
   "defaultName": "IntilityApi",
@@ -133,11 +146,28 @@
       ],
       "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
       "continueOnError": true
+    },
+    {
+      "description": "Add projects to solution",
+      "manualInstructions": [
+        { "text": "Add generated project to solution manually." }
+      ],
+      "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+      "continueOnError": true
     }
   ],
   "primaryOutputs": [
     {
+      "condition": "(!projectOnly && HostIdentifier == 'dotnetcli')",
       "path": "Company.WebApplication1.sln"
+    },
+    {
+      "condition": "(!projectOnly && HostIdentifier == 'dotnetcli')",
+      "path": "Company.WebApplication1.generated.sln"
+    },
+    {
+      "condition": "(projectOnly)",
+      "path": "Company.WebApplication1.csproj"
     }
   ]
 }

@@ -25,6 +25,10 @@
       "longName": "no-restore",
       "shortName": ""
     },
+    "projectOnly": {
+      "longName": "project",
+      "shortName": ""
+    },
     "UserSecretsId": {
       "isHidden": true
     }
