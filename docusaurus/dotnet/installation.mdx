@@ -23,21 +23,12 @@ New templates should now be available to bootstrap new projects from. Use `dotne
   Console Application                                console              [C#],F#,VB  Common/Console
   Class library                                      classlib             [C#],F#,VB  Common/Library
   Worker Service                                     worker               [C#],F#     Common/Worker/Web
-> Intility Api (Solution)                            iwebapi              [C#]        Intility/Web/WebAPI
-> Intility Api (Project)                             iwebapiproject       [C#]        Intility/Web/WebAPI
+> Intility Api                                       iwebapi              [C#]        Intility/Web/WebAPI
   xUnit Test Project                                 xunit                [C#],F#,VB  Test/xUnit
   Razor Component                                    razorcomponent       [C#]        Web/ASP.NET
   Razor Page                                         page                 [C#]        Web/ASP.NET
   #...
 ```
-
-You will immediately notice the two projects `iwebapi` and `iwebapiproject`. These projects reperesent the same starting point, but
-one comes with a solution file and one does not. This is currently the best way to provide templates for both scenarios - wether you're
-starting from scratch or already have a solution going.
-
-:::note
-These projects will most likely merge into one if or when the dotnet template tooling supports post-scripts that allows us to move files post installation.
-:::
 
 ## Bootstrap new project using the template
 
@@ -56,9 +47,16 @@ import TabItem from '@theme/TabItem';
 >
 <TabItem value="cli">
 
+:::note
+If you only want to create a project, and skip creating a solution, use the `--project` argument.
+:::
+
 ```shell
-# create project
+# create project with solution
 dotnet new iwebapi -o MyService
+
+# create project only
+dotnet new iwebapi -o MyService --project
 
 # run project
 cd MyService
@@ -72,7 +70,7 @@ dotnet run --project MyService/MyService.csproj
 You need to be on Visual Studio 16.10.0 or higher for the solution template to work properly.
 :::
 
-Find the project template named `Intility Api (Solution)`.
+Find the template named `Intility Api`.
 
 ![Visual Studio new](/img/visual-studio-new.png)
 

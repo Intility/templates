@@ -12,5 +12,18 @@
       "orgAuthenticationOptions": "SSO"
     }
   ],
-  "symbolInfo": []
+  "symbolInfo": [
+    {
+      "id": "projectOnly",
+      "name": {
+        "text": "Project Only"
+      },
+      "description": {
+        "text": "Sets it up as a project only, skipping solution."
+      },
+      "invertBoolean": false,
+      "isVisible": true,
+      "defaultValue": false
+    }
+  ]
 }
