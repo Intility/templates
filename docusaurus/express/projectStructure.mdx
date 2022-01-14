@@ -1,0 +1,113 @@
+---
+title: Project Structure
+sidebar_label: Project Structure
+slug: /ProjectStructure
+sidebar_position: 4
+---
+
+Depending on which template you chose, your project structure will look more or less like the following:
+
+```text
+│   .env.template                       # Template file for .env values
+│   .eslintrc.json                      # ESLint configuration file
+│   .gitignore                          # Files/Directories that Git should ignore
+│   .gitlab-ci.yml                      # GitLab CI Pipeline configuration
+│   docker-compose.yml                  # Docker Compose file
+│   Dockerfile                          # Docker image file
+│   jest.config.ts                      # Jest configuration file
+│   nodemon.json                        # Nodemon configuration file
+│   package-lock.json                   # Installed NPM dependencies
+│   package.json                        # NPM configuration and dependency file
+│   README.md                           # Project README
+│   tsconfig.json                       # TypeScript configuration file
+│
+├───.vscode                             # VS Code configuration files
+│       launch.json
+│       settings.json
+│
+├───assets                              # Media/assets used across the project
+│       mongodb-docker-compose.yml
+│
+├───chart                               # Helm charts for OpenShift deployment
+│   │   Chart.yaml
+│   │   values.yaml
+│   │
+│   └───templates
+│           config.yaml
+│           deployment.yaml
+│           pull-secret.yaml
+│           route.yaml
+│           secrets.yaml
+│           service.yaml
+│           _helpers.tpl
+│
+├───src                                 # Project source code
+│   │   baseRouter.ts                   # Base Express router exposed on `/api/v1` path
+│   │   index.ts                        # Main entrypoint
+│   │
+│   ├───api                             
+│   │   ├───health                      # Endpoints for health checking
+│   │   │   │   health.controller.ts
+│   │   │   │   health.router.ts
+│   │   │   │
+│   │   │   └───dto                     # Interfaces/typings for Health response DTOs
+│   │   │           health.dto.ts
+│   │   │
+│   │   └───users                       # (Optional)    Example CRUD User entity
+│   │       │   user.router.ts          #               Express sub router for User entity
+│   │       │   user.controller.ts      #               Controller class for handling requests
+│   │       │   user.service.ts         #               Service for handling business logic
+│   │       │
+│   │       ├───dto                     #               DTOs (Data Transfer Object)
+│   │       │       create-user.dto.ts  #                   DTO for creating a new User
+│   │       │       update-user.dto.ts  #                   DTO for updating an existing user
+│   │       │       user.dto.ts         #                   DTO for returning a user
+│   │       │
+│   │       └───entities                #               Entities used in databases
+│   │               user.entity.ts      #                   User entity
+│   │
+│   ├───config                          # Common server configuration
+│   │       app.ts
+│   │       appInsights.ts
+│   │       LoggerService.ts
+│   │       mongoose.ts
+│   │       swagger.ts
+│   │
+│   ├───interfaces                      # Common interfaces/types used across the projects
+│   │       authorize.ts
+│   │       token.ts
+│   │
+│   ├───middlewares                     # Express middlewares
+│   │       errorHandler.ts
+│   │       passport.ts
+│   │
+│   ├───static                          # Static files to be exposed as endpoints
+│   │       oauth2-redirect.html
+│   │       oAuthHandler.js
+│   │       README.md
+│   │
+│   └───utils                           # Common utilities
+│       ├───mocks                       #   Mocking values
+│       │       passport.ts
+│       │       
+│       └───test                        #   Utilities for testing of the application
+│               expressRouterUtils.ts
+│
+└───__tests__                           # Folder for test-files.
+    │   baseRouter.test.ts
+    │
+    ├───api                             # Folder for testing API resources
+    │   ├───health                      # Tests for health services
+    │   │       health.controller.test.ts
+    │   │       health.router.test.ts
+    │   │
+    │   └───users                       # (Optional)    Tests for example User entity
+    │           users.controller.test.ts
+    │           users.router.test.ts
+    │           users.service.test.ts
+    │
+    └───middlewares                     # Folder for testing middlewares
+            errorHandler.test.ts
+            passport.test.ts
+
+```

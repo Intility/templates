@@ -1,14 +1,15 @@
 ---
-title: API - Express
+title: Express
 sidebar_label: Express
-slug: /API/Express
+slug: /Topics/Express
 sidebar_position: 1
 ---
 
 Express is a web framework for Node that allows us to create a HTTP server where we can create our API.
-Getting started with an Express app is fairly easy and can be done by a couple of lines of code. This is great if you want to test something, but larger enterprise applications require a more robust structural layered design. 
+Getting started with an Express app is fairly easy and can be done by a couple of lines of code. 
+This is great if you want to test something, but larger enterprise applications require a more robust structural layered design. 
 
-You can find the easy to follow getting started guide at Express' homepage: ["Express Hello World"](https://expressjs.com/en/starter/hello-world.html). But in larger enterprise applications a more structured system is needed.
+You can find the easy to follow getting started guide at Express' homepage: ["Express Hello World"](https://expressjs.com/en/starter/hello-world.html).
 
 In this template i'll follow a multi-layered API architecture which divides the API into 3 layers:
 
@@ -35,7 +36,6 @@ This repository contains an example of an multilayered API design structure, as 
 ┃    ┣ 📜 user.router.ts            // Express router for handling incoming requests
 ┃    ┣ 📜 user.controller.ts        // Controller class for handling incoming request from the router, only simple data validation is done at this level
 ┃    ┗ 📜 user.service.ts           // Service class for handling business logic, like database queries, external HTTP requests etc
-┃    ┗ 📜 user.service.ts           // Service class for handling business logic, like database queries, external HTTP requests etc
 ┃
 ┣ 📂 __tests__                      // Folder for test environment
 ┃
@@ -46,4 +46,6 @@ This repository contains an example of an multilayered API design structure, as 
 ┗ 📂 utils                          // Other utility functions.
 ```
 
-**To get you started this template provides a User entity with CRUD routes, controller, service and a repository for this entity.** 
+:::info
+To get you started this template provides a User entity with CRUD routes, controller, service and a repository for this entity.
+:::

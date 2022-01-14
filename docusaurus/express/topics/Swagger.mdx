@@ -1,7 +1,7 @@
 ---
-title: API - Swagger
+title: Swagger
 sidebar_label: Swagger
-slug: /API/Swagger
+slug: /Topics/Swagger
 sidebar_position: 4
 ---
 One of the most important parts of an application is its documentation.
@@ -9,13 +9,15 @@ One of the most important parts of an application is its documentation.
 [Swagger](https://swagger.io/) and the [OpenAPI Specification](https://swagger.io/specification/) has become the de facto standard for API documentation.
 At Intility there is a requirement for API documentation using Swagger.
 
-But writing an OpenAPI documentation is a tedious task, both to write the first time as well as maintaining and updating.
+Writing an OpenAPI documentation is a tedious task, both to write the first time as well as maintaining and updating.
 So in this template we'll be using the [express-jsdoc-swagger](https://www.npmjs.com/package/express-jsdoc-swagger) for autogenerating the OpenAPI documentation as well as hosting the Swagger page on our API.
 
-***NOTE: There is currently an issue with the Authorization flow built into Swagger doc. There fore we will be hosting our own redirect logic. This can be seen in the `src/static` folder**
+:::info
+There is currently an issue with the Authorization flow built into Swagger doc. There fore we will be hosting our own redirect logic. This can be seen in the `src/static` folder
+:::
 
 The Swagger doc will be hosted at `<BASE_URL>/api-docs`. This can be changed in the `swaggerOptions` object in `config/swagger.ts`. 
-But this might break the default redirection logic provided by us.
+This might break the default redirection logic provided by us.
 
 For an example on how to provide documentation for endpoints and interfaces. Have a look at the example routes and interfaces provided at `routes/` and `interfaces/`.
 
