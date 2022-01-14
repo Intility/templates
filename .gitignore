@@ -1,5 +1,5 @@
 # Dependencies
-**/node_modules
+node_modules
 
 # Production
 build
@@ -26,7 +26,7 @@ obj
 
 # Misc
 .DS_Store
-**/.env
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -36,7 +36,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-**/**/*.tgz
+*.tgz
 
 # Test outputs
 test-output
