@@ -1,9 +1,9 @@
 {
-  "name": "@intility/generator-node",
+  "name": "@intility/generator-express",
   "version": "0.0.5",
   "description": "Yeoman CLI to generate a new Node.JS project based on Intility developer standards",
-  "repository": "Intility/templates/generator-node",
-  "homepage": "https://intility.com",
+  "repository": "Intility/templates/express",
+  "homepage": "https://create.intility.app",
   "private": false,
   "license": "MIT",
   "author": {
@@ -22,37 +22,12 @@
   "keywords": [
     "yeoman-generator"
   ],
-  "scripts": {
-    "pretest": "eslint .",
-    "test": "jest"
-  },
+  "scripts": {},
   "dependencies": {
-    "chalk": "^4.1.2",
-    "yeoman-generator": "^5.4.2"
+    "yeoman-generator": "5.4.2"
   },
-  "devDependencies": {
-    "yeoman-test": "^6.2.0",
-    "yeoman-assert": "^3.1.1",
-    "eslint": "^8.0.1",
-    "husky": "^7.0.2",
-    "lint-staged": "^11.2.3",
-    "jest": "^27.3.1"
-  },
+  "devDependencies": {},
   "engines": {
     "npm": ">= 4.0.0"
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.json": [
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }

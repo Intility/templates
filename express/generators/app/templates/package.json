@@ -10,9 +10,7 @@
     "copy:static": "cp -r src/static/ build/src/",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "start": "node build/index.js",
-    "start:dev": "nodemon",
-    "start:prod": "run-s clean compile start",
+    "start": "nodemon",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage"

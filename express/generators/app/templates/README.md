@@ -17,7 +17,7 @@
 ## What should I do next?
 
 * Generate SonarQube Token ([Guide](https://create.intility.app/cra/configuration/sonarqube))
-  * Add the badge ([Guide](https://gitlab.intility.com/hannarong.klinjan/sonarqube-badge-proxy/-/blob/master/README.md))
+  * Add the badge ([Guide](https://gitlab.intility.com/digital-telco/sonarqube/sonarqube-badge-proxy/-/blob/master/README.md))
 * Add Code coverage regexp to Gitlab to make the badge work.
   * Navigate to: `GitLab Repository -> Settings -> CI/CD -> General pipelines -> Test coverage parsing`
   * Enter: `All files[^|]*\|[^|]*\s+([\d\.]+)`
@@ -32,22 +32,6 @@
 This project provides an ready to use project template as well as guide covering basic setup for an Node.js application written in TypeScript.
 
 This is a great starting point for using Node.js, TypeScript, and Visual Studio Code. All artifacts get created in the `build` folder. All the source code is in `src` folder.
-
-## Getting started using this template
-
-You'll need to install [Yeoman](https://yeoman.io/) to install this template.
-
-```bash
-npm install -g yo                          # Install Yeoman CLI
-npm install -g @intility/generator-node    # Install Intility Node project generator
-```
-
-Then generate your new project:
-
-```bash
-mkdir <projectName> && cd <projectName>    # Create a new project folder
-yo @intility/node                          # Use Yeoman CLI to run the template generator
-```
 
 ## Goals
 

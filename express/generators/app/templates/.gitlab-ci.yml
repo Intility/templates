@@ -49,19 +49,19 @@ sonarqube:
   allow_failure: true
   script:
     - sonar-scanner
-      -Dsonar.login=$SONAR_TOKEN
-      -Dsonar.projectKey=$SONAR_PROJECT
-      -Dsonar.projectName=$SONAR_PROJECT
-      -Dsonar.qualitygate.wait=true
-      -Dsonar.scm.provider=git
-      -Dsonar.projectBaseDir=.
-      -Dsonar.sources=src
-      -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-      -Dsonar.tests=__tests__
-      -Dsonar.links.ci=$CI_PIPELINE_URL
-      -Dsonar.links.scm=$CI_PROJECT_URL
-      -Dsonar.exclusions=__tests__
-      -Dsonar.coverage.exclusions=__tests__
+      -D sonar.login=$SONAR_TOKEN
+      -D sonar.projectKey=$SONAR_PROJECT
+      -D sonar.projectName=$SONAR_PROJECT
+      -D sonar.qualitygate.wait=true
+      -D sonar.scm.provider=git
+      -D sonar.projectBaseDir=.
+      -D sonar.sources=src
+      -D sonar.javascript.lcov.reportPaths=coverage/lcov.info
+      -D sonar.tests=__tests__
+      -D sonar.links.ci=$CI_PIPELINE_URL
+      -D sonar.links.scm=$CI_PROJECT_URL
+      -D sonar.exclusions=__tests__
+      -D sonar.coverage.exclusions=__tests__
   only:
     - master
     - main
