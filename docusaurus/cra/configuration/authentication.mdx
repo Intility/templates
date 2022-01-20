@@ -134,7 +134,7 @@ const LoginButton = () => {
   const { login } = useAuth();
   
   return (
-    <Button onClick={login}>Login</Button>
+    <Button onClick={() => login()}>Login</Button>
   )
 };
 ```
