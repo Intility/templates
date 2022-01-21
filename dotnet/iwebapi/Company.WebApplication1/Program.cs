@@ -40,10 +40,11 @@ builder.Host.UseIntilityLogging((ctx, logging) =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
+builder.Services.AddNonGuestsHandler();
 builder.Services.AddAuthorization(options =>
 {
     options.DefaultPolicy = new AuthorizationPolicyBuilder()
-        .RequireNonGuests(builder.Configuration)
+        .RequireNonGuests()
         .Build();
 });
 
