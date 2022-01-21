@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
+using Company.WebApplication1.Extensions;
 using Company.WebApplication1.Swagger;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -40,13 +42,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    var tenantId = builder.Configuration["AzureAd:TenantId"];
-    if (tenantId != "common" && tenantId != "organizations")
-    {
-        options.AddPolicy("NoGuests", policy => policy.RequireClaim(
-            ClaimConstants.TenantId,
-            tenantId));
-    }
+    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+        .RequireNonGuests(builder.Configuration)
+        .Build();
 });
 
 builder.Services.AddCors(options =>
