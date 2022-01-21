@@ -40,13 +40,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("NoGuests", policy => policy.RequireClaim(
-        ClaimConstants.TenantId,
-        tenantId));
-    
     var tenantId = builder.Configuration["AzureAd:TenantId"];
     if (tenantId != "common" && tenantId != "organizations")
     {
+        options.AddPolicy("NoGuests", policy => policy.RequireClaim(
+            ClaimConstants.TenantId,
+            tenantId));
+
         options.DefaultPolicy = options.GetPolicy("NoGuests");
     }
 });
