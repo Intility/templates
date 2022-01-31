@@ -18,8 +18,8 @@
     <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="4.5.1" />
     <PackageReference Include="Microsoft.Identity.Web" Version="1.21.1"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
-    <PackageReference Include="Intility.Logging.AspNetCore" Version="1.0.3"/>
-    <PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.0.3"/>
-    <PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.0.3"/>
+    <PackageReference Include="Intility.Logging.AspNetCore" Version="1.1.0"/>
+    <PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.1.0"/>
+    <PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.1.0"/>
   </ItemGroup>
 </Project>
