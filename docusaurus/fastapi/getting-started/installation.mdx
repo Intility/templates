@@ -16,7 +16,7 @@ sidebar_position: 1
 ### Intility ``Cruft``
 You'll need [cruft](https://github.com/cruft/cruft) in order to use this template.
 ```bash
-python3.9 -m pip install cruft
+python -m pip install cruft
 ```
 
 :::info cruft
@@ -28,7 +28,7 @@ cruft is a templating language built on top of cookiecutter, which uses jinja te
 Use ``cruft`` to start your project.
 
 ```bash
-python3.9 -m cruft create git@github.com:Intility/templates.git --directory="fastapi"
+python -m cruft create https://github.com/Intility/templates.git --directory="fastapi"
 ```
 
 A few questions you will be prompted, here with a more verbose description:

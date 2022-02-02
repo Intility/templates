@@ -12,5 +12,5 @@ based on selections.
 
 
 ## Usage
-* `cruft create . --directory="fastapi"`
-* `cruft create git@github.com:Intility/templates.git --directory="fastapi"`
+* `cruft create . --directory="fastapi"` to use from source
+* `cruft create https://github.com/Intility/templates.git --directory="fastapi"` to use from GitHub
