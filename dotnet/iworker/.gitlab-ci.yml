@@ -1,0 +1,139 @@
+variables:
+  SONAR_HOST_URL: https://sonarqube.intility.no
+  SONAR_PROJECT: $CI_PROJECT_NAME
+  OPENSHIFT_SERVER: api.openshift.intility.com:6443
+  # Configure these variables in Secure Variables:
+  # SONAR_TOKEN: my.sonarqube.token
+  # SENTRY_DSN: my.sentry.dsn
+  # OPENSHIFT_TOKEN: my.openshift.token
+
+stages:
+  - build
+  - test
+  - analyze
+  - image
+  - deploy
+
+default:
+  interruptible: true
+
+# if the project isn't in the root of your repo you'll have to
+# cd Company.WebApplication1
+# in your build and test scripts
+# as well as use Company.WebApplication1/build
+# for the path of your artifact
+
+build:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  script:
+    - dotnet restore
+    - cd Company.Worker1
+    - dotnet publish -o build
+  artifacts:
+    expire_in: 2 weeks
+    paths:
+      - Company.Worker1/build
+
+test:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  script:
+    - dotnet restore
+    - dotnet test
+  needs: []
+
+analyze:
+  stage: analyze
+  image: nosinovacao/dotnet-sonar:latest
+  script:
+    - dotnet restore
+    - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin 
+      /k:$SONAR_PROJECT
+      /d:sonar.host.url=$SONAR_HOST_URL
+      /d:sonar.login=$SONAR_TOKEN
+      /d:sonar.cs.opencover.reportsPaths=IntegrationTests/coverage.opencover.xml
+      /name:$SONAR_PROJECT
+    - dotnet build 
+    - dotnet /sonar-scanner/SonarScanner.MSBuild.dll end
+        /d:sonar.login=$SONAR_TOKEN
+  allow_failure: true
+  retry: 2
+  needs: []
+
+image:dev:
+  stage: image
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  variables:
+    IMAGE_TAG: dev
+    IMAGE_VERSION: $CI_PIPELINE_IID
+  environment:
+    name: Development
+    action: prepare
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context $CI_PROJECT_DIR/Company.Worker1
+      --dockerfile Dockerfile.CI
+      --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
+      --destination $CI_REGISTRY_IMAGE:$IMAGE_VERSION
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
+  needs: [ "build" ]
+
+image:prod:
+  extends: image:dev
+  variables:
+    IMAGE_TAG: latest
+    IMAGE_VERSION: $CI_COMMIT_TAG
+  environment:
+    name: Production
+  rules:
+    - if: '$CI_COMMIT_TAG'
+
+# --- deployment ---
+deploy:dev:
+  stage: deploy
+  image:
+    name: intility/helm-oc:latest
+    entrypoint: [""]
+  variables:
+    HELM_EXPERIMENTAL_OCI: 1
+    IMAGE_TAG: $CI_PIPELINE_IID
+    ROUTE: $CI_PROJECT_NAME-dev.apps.int.intility.no
+  environment:
+    name: Development
+    url: https://$CI_PROJECT_NAME-dev.apps.int.intility.no
+  before_script:
+    - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+  script:
+    - helm upgrade
+      --install $CI_ENVIRONMENT_SLUG ./Company.Worker1/chart
+      --set nameOverride=$CI_PROJECT_NAME
+      --set image.repository=$CI_REGISTRY_IMAGE
+      --set image.tag=$IMAGE_TAG
+      --set registry.url=$CI_REGISTRY
+      --set registry.user=$CI_DEPLOY_USER
+      --set registry.password=$CI_DEPLOY_PASSWORD
+      --set route=$ROUTE
+      --set replicaCount=2
+      --set secrets.Sentry__Dsn=$SENTRY_DSN
+      --set config.ASPNETCORE_ENVIRONMENT=$CI_ENVIRONMENT_NAME
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
+  needs: [ "test", "image:dev" ]
+
+.deploy:prod:
+  extends: deploy:dev
+  variables:
+    IMAGE_TAG: $CI_COMMIT_TAG
+    ROUTE: $CI_PROJECT_NAME.apps.int.intility.no
+  environment:
+    name: Production
+    url: https://$CI_PROJECT_NAME.apps.int.intility.no
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: manual
+  needs: [ "test", "image:prod" ]

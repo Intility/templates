@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Intility",
+  "classifications": [
+    "Intility",
+    "Worker",
+    "Web"
+  ],
+  "name": "Intility Worker Service",
+  "description": "A solution template for creating Intility APIs.",
+  "identity": "Intility.Templates.WorkerSolution.CSharp",
+  "shortName": "iworker",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "Company.Worker1",
+  "preferNameDirectory": true,
+  "guids": [
+    "53bc9b9d-9d6a-45d4-8429-2a2761773502"
+  ],
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(windir == 'C:\\Windows')",
+          "exclude": [ "Company.Worker1/Properties/launchSettings.json" ]
+        },
+        {
+          "condition": "(HostIdentifier != 'dotnetcli' && !projectOnly)",
+          "rename": {
+            "Company.WebApplication1.sln": "Company.Worker1.generated.sln"
+          }
+        },
+        {
+          "condition": "(projectOnly)",
+          "exclude": [ "Company.Worker1.sln", ".gitignore" ],
+          "rename": {
+            "Company.WebApplication1/": "./"
+          }
+        }
+      ]
+    }
+  ],
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net6.0",
+          "description": "Target .NET 6"
+        }
+      ],
+      "replaces": "net6.0",
+      "defaultValue": "net6.0"
+    },
+    "skipRestore": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": "false"
+    },
+    "projectOnly": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "description": "Only sets it up as a project."
+    }
+  },
+  "defaultName": "IntilityWorkerService",
+  "postActions": [
+    {
+      "condition": "(!skipRestore)",
+      "description": "Restore NuGet packages required by this project.",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet restore'"
+        }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "continueOnError": true
+    },
+    {
+      "description": "Add projects to solution",
+      "manualInstructions": [
+        { "text": "Add generated project to solution manually." }
+      ],
+      "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+      "continueOnError": true
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "condition": "(!projectOnly && HostIdentifier == 'dotnetcli')",
+      "path": "Company.Worker1.sln"
+    },
+    {
+      "condition": "(!projectOnly && HostIdentifier == 'dotnetcli')",
+      "path": "Company.Worker1.generated.sln"
+    },
+    {
+      "condition": "(projectOnly)",
+      "path": "Company.Worker1.csproj"
+    }
+  ]
+}

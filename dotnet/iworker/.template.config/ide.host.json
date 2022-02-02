@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json.schemastore.org/vs-2017.3.host",
+  "learnMoreLink": "https://create.intility.app/",
+  "supportsDocker": false,
+  "symbolInfo": [
+    {
+      "id": "projectOnly",
+      "name": {
+        "text": "Project Only"
+      },
+      "description": {
+        "text": "Sets it up as a project only, skipping solution."
+      },
+      "invertBoolean": false,
+      "isVisible": true,
+      "defaultValue": false
+    }
+  ]
+}
