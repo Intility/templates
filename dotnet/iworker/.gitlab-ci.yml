@@ -102,10 +102,8 @@ deploy:dev:
   variables:
     HELM_EXPERIMENTAL_OCI: 1
     IMAGE_TAG: $CI_PIPELINE_IID
-    ROUTE: $CI_PROJECT_NAME-dev.apps.int.intility.no
   environment:
     name: Development
-    url: https://$CI_PROJECT_NAME-dev.apps.int.intility.no
   before_script:
     - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
   script:
@@ -117,10 +115,9 @@ deploy:dev:
       --set registry.url=$CI_REGISTRY
       --set registry.user=$CI_DEPLOY_USER
       --set registry.password=$CI_DEPLOY_PASSWORD
-      --set route=$ROUTE
       --set replicaCount=2
       --set secrets.Sentry__Dsn=$SENTRY_DSN
-      --set config.ASPNETCORE_ENVIRONMENT=$CI_ENVIRONMENT_NAME
+      --set config.DOTNET_ENVIRONMENT=$CI_ENVIRONMENT_NAME
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
   needs: [ "test", "image:dev" ]
@@ -129,10 +126,8 @@ deploy:dev:
   extends: deploy:dev
   variables:
     IMAGE_TAG: $CI_COMMIT_TAG
-    ROUTE: $CI_PROJECT_NAME.apps.int.intility.no
   environment:
     name: Production
-    url: https://$CI_PROJECT_NAME.apps.int.intility.no
   rules:
     - if: '$CI_COMMIT_TAG'
       when: manual

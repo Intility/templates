@@ -1,4 +1,4 @@
-namespace Company.Application1;
+namespace Company.Worker1;
 
 public class Worker : BackgroundService
 {
