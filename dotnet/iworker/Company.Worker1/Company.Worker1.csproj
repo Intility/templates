@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>dotnet-Company.Worker1-53bc9b9d-9d6a-45d4-8429-2a2761773502</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<RootNamespace Condition="'$(name)' != '$(name{-VALUE-FORMS-}safe_namespace)'">Company.Worker1</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Identity" Version="1.5.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="4.5.1" />
+		<PackageReference Include="Intility.Logging.AspNetCore" Version="1.1.0"/>
+		<PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.1.0"/>
+		<PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.1.0"/>
+	</ItemGroup>
+</Project>
