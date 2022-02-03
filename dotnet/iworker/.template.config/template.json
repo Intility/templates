@@ -1,42 +1,36 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Intility",
-  "classifications": [
-    "Intility",
-    "Worker",
-    "Web"
-  ],
-  "name": "Intility Worker Service",
-  "description": "A solution template for creating Intility APIs.",
+  "classifications": ["Intility", "Worker", "Web"],
+  "name": "Intility Worker",
+  "description": "A solution template for creating Intility Worker Services.",
   "identity": "Intility.Templates.WorkerSolution.CSharp",
   "shortName": "iworker",
   "tags": {
     "language": "C#",
-    "type": "project"
+    "type": "solution"
   },
   "sourceName": "Company.Worker1",
   "preferNameDirectory": true,
-  "guids": [
-    "53bc9b9d-9d6a-45d4-8429-2a2761773502"
-  ],
+  "guids": ["53bc9b9d-9d6a-45d4-8429-2a2761773502"],
   "sources": [
     {
       "modifiers": [
         {
           "condition": "(windir == 'C:\\Windows')",
-          "exclude": [ "Company.Worker1/Properties/launchSettings.json" ]
+          "exclude": ["Company.Worker1/Properties/launchSettings.json"]
         },
         {
           "condition": "(HostIdentifier != 'dotnetcli' && !projectOnly)",
           "rename": {
-            "Company.WebApplication1.sln": "Company.Worker1.generated.sln"
+            "Company.Worker1.sln": "Company.Worker1.generated.sln"
           }
         },
         {
           "condition": "(projectOnly)",
-          "exclude": [ "Company.Worker1.sln", ".gitignore" ],
+          "exclude": ["Company.Worker1.sln", ".gitignore"],
           "rename": {
-            "Company.WebApplication1/": "./"
+            "Company.Worker1/": "./"
           }
         }
       ]
@@ -97,7 +91,7 @@
       "path": "Company.Worker1.sln"
     },
     {
-      "condition": "(!projectOnly && HostIdentifier == 'dotnetcli')",
+      "condition": "(!projectOnly && HostIdentifier != 'dotnetcli')",
       "path": "Company.Worker1.generated.sln"
     },
     {

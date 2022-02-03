@@ -162,7 +162,7 @@
       "path": "Company.WebApplication1.sln"
     },
     {
-      "condition": "(!projectOnly && HostIdentifier == 'dotnetcli')",
+      "condition": "(!projectOnly && HostIdentifier != 'dotnetcli')",
       "path": "Company.WebApplication1.generated.sln"
     },
     {
