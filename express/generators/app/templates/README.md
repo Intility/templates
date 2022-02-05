@@ -1,3 +1,15 @@
+<!-- template available at https://gitlab.intility.no/Intility/readme-template -->
+
+<!-- Badges -->
+<!-- While not required, badges are recommended; and in particular pipeline status -->
+<!-- Uncomment the below line and replace `project` with the path to your project (e.g. -->
+<!-- `group[s]/project`). If you want the status for a different branch than `master`, change -->
+<!-- the branch too.-->
+<!-- [![pipeline status](https://gitlab.intility.no/<project>/master/pipeline.svg)](https://gitlab.intility.no/<project>/pipelines)   -->
+
+<!------------------------------------------------------------------------------------>
+<!-- REQUIRED -->
+<!------------------------------------------------------------------------------------>
 
 <div align="center">
 <h1 align="center">
@@ -13,39 +25,49 @@
 ![<%= codeCovBadgeUrl %>](<%= projectUrl %>)
 
 </div>
+<!-- Describe the project briefly here. -->
+<!-- Also, unless it's clear: specify what type of project it is; API, library, application, collection of scripts, etc -->
 
-## What should I do next?
+## Purpose
 
-* Generate SonarQube Token ([Guide](https://create.intility.app/cra/configuration/sonarqube))
-  * Add the badge ([Guide](https://gitlab.intility.com/digital-telco/sonarqube/sonarqube-badge-proxy/-/blob/master/README.md))
-* Add Code coverage regexp to Gitlab to make the badge work.
-  * Navigate to: `GitLab Repository -> Settings -> CI/CD -> General pipelines -> Test coverage parsing`
-  * Enter: `All files[^|]*\|[^|]*\s+([\d\.]+)`
-* Create an `.env` file by using the template provided in `.env.template`
-  * Setup authentication ([Guide](https://create.intility.app/express/API/Azure/ApplicationRegistrations))
-* Setup your OpenShift environment:
-  * Create a project on OpenShift ([Guide](https://create.intility.app/cra/configuration/deploy))
-  * Create a Deploy Token for your GitLab Repository ([Guide](https://create.intility.app/cra/configuration/gitlab#add-gitlab-deploy-token))
+<!-- What does the application do and why? What problem does it solve? -->
 
-## About this template
+## Intended consumers
 
-This project provides an ready to use project template as well as guide covering basic setup for an Node.js application written in TypeScript.
+<!--  Who is the application intended for, and who can utilize its features? -->
 
-This is a great starting point for using Node.js, TypeScript, and Visual Studio Code. All artifacts get created in the `build` folder. All the source code is in `src` folder.
+## Main technologies
 
-## Goals
+<!-- What are the main languages and frameworks are used in the project -->
 
-* Provide an ready to develop TypeScript configuration setup.
-* Ready configured EsLint with the most common rules.
-* Async error handling.
-* Logging to Azure Application Insights.
-* Integrate common security measures:
-  * CORS
-  * Authentication and authorization using [Passport](https://www.passportjs.org/) as well as custom common token rules. Including Role-based access control, guest user validation and checking user tenant.
+## Available at
 
-## Questions and Contributions
+<!-- If the application is live, mention where it can be 'viewed' and where it is deployed, e.g. OpenShift, Azure etc. -->
+<!-- For libraries, this might also include what package repository it's available at -->
+<!-- If the project is an API or a library, where can I find documentation for it? -->
 
-While this setup might work, it is nor perfect or complete!
-Maybe I'm missing some key part? or you have a suggestion on something that can be done different or in another way?
+<!------------------------------------------------------------------------------------>
+<!-- OPTIONAL -->
+<!------------------------------------------------------------------------------------>
 
-If you have any questions or suggestions, please send an merge request on the GitLab project located [HERE](https://gitlab.intility.com/documentation/NodeTypeScriptProjectTemplate) or [message me](https://teams.microsoft.com/l/chat/0/0?users=christian.marker@intility.no) at Microsoft Teams
+## Getting Started
+
+<!--
+Provide step by step instructions that will allow a new contributor to get a copy of the project up and running on their local machine.
+Installation of common development tools such as `git`, `docker` and IDEs can be covered here, but is not necessary.
+
+The granularity and extent of these instructions will depend on the size and type of the project,
+but may extend to things such as platform specific steps, etc.
+-->
+
+### Running the project
+
+<!-- Provide examples of how to run the project locally here, if applicable. -->
+<!-- If the project can be run in multiple ways (Docker, Minishift, command line, etc), -->
+<!-- it might be appropriate to have a section for each of them-->
+
+## Deployment
+
+<!-- Provide step by step instructions that explain the process of deploying the application in QA or Prod environments -->
+
+<!-- If the project uses a CI/CD pipeline describe the high level concepts of the pipeline strategy here. -->

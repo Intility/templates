@@ -48,14 +48,14 @@ dotnet new --install Intility.Templates
 dotnet new intilityapi -o MyApi
 ```
 
-Node.js:
+Express:
 
 ```bash
-npm install -g yo                         # Install Yeoman CLI
-npm install -g @intility/generator-node   # Install Intility Node project generator
+npm install -g yo                           # Install Yeoman CLI
+npm install -g @intility/generator-express  # Install Intility Express project generator
 
-mkdir <projectName> && cd <projectName>   # Create a new project folder
-yo @intility/node                         # Use Yeoman CLI to run the template generator 
+mkdir <projectName> && cd <projectName>     # Create a new project folder
+yo @intility/express                        # Use Yeoman CLI to run the template generator 
 ```
 
 There is a lot more to it, so please visit the [docs](https://create.intility.app/) for the next steps.

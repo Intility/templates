@@ -3,7 +3,7 @@
 <img src="https://avatars.githubusercontent.com/u/35199565" width="124px"/><br/>
 
 <h1 align="center">
-  Intility Node.JS Project generator
+  Intility Express.JS Project generator
 </h1>
 
 <p align="center">
@@ -22,14 +22,11 @@ This repository contains a CLI build with Yeoman framework to auto generate a ne
 First, install [Yeoman](http://yeoman.io) and generator-intility-node using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
-npm install -g yo                          # Install Yeoman CLI
-npm install -g @intility/generator-node    # Install Intility Node project generator
-```
+npm install -g yo                           # Install Yeoman CLI
+npm install -g @intility/generator-express  # Install Intility Express project generator
 
-Then generate your new project:
-
-```bash
-yo @intility/node                          # Use Yeoman CLI to run the template generator
+mkdir <projectName> && cd <projectName>     # Create a new project folder
+yo @intility/express                        # Use Yeoman CLI to run the template generator
 ```
 
 ## License
