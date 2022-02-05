@@ -1,8 +1,8 @@
 {
   "name": "@intility/generator-express",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Yeoman CLI to generate a new Node.JS project based on Intility developer standards",
-  "repository": "Intility/templates/express",
+  "repository": "https://github.com/Intility/templates.git",
   "homepage": "https://create.intility.app",
   "private": false,
   "license": "MIT",
