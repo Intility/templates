@@ -22,7 +22,7 @@ if (MONGO_DB_CONNECTION_STRING) {
 
 const logger = new LoggerService('Server');
 
-const appPort = PORT || 3000;
+const appPort = PORT || 4000;
 
 const startServer = async (): Promise<Server> => {
 

@@ -23,4 +23,4 @@ USER node
 WORKDIR /usr/app
 
 CMD ["node", "build/src/index.js"]
-EXPOSE 3000
+EXPOSE 4000
