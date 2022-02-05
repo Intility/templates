@@ -49,7 +49,7 @@ class IntilityNodeGenerator extends Generator {
       {
         type: "input",
         name: "gitSshAddress",
-        message: `🚀 Insert your Git SSH Address ${chalk.gray("(Optional)")}:`,
+        message: `🚀 Enter the SSH Address of your repository ${chalk.gray("(Optional)")}:`,
         validate: str => {
           if (!str || str.startsWith("git@")) {
             return true;
@@ -139,9 +139,6 @@ class IntilityNodeGenerator extends Generator {
     this.log(`📦 Initializing your Git repository!`)
     this.spawnCommandSync("git", ["init", "--initial-branch=main"]);
     
-    this.log(`🧶 Creating QA branch...`)
-    this.spawnCommandSync("git", ["checkout", "-b", "qa"]);
-    
     this.log(`🚀 Your Git Repository was successfully initialized!`)
     
     if (!this.props.gitSshAddress) {
@@ -157,7 +154,7 @@ class IntilityNodeGenerator extends Generator {
       this.spawnCommandSync("git", ["add", "."]);
       this.spawnCommandSync("git", ["commit", "-m", '"Initial commit"', "--no-verify"]);
       this.spawnCommandSync("git", ["fetch"]);
-      this.spawnCommandSync("git", ["push", "-u", "origin", "qa"]);
+      this.spawnCommandSync("git", ["push", "-u", "origin", "main"]);
       this.log(`🚀 Successfully pushed your source code to the provided GitLab Repository!`)
     }
 
@@ -175,6 +172,6 @@ class IntilityNodeGenerator extends Generator {
     this.log(`or head over to https://create.intility.app/express to learn more.`)
     this.log(`\n**************************************************************\n`)
   }
-};
+}
 
 module.exports = IntilityNodeGenerator;
