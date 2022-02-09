@@ -12,12 +12,12 @@ const { PORT, APPINSIGHTS_INSTRUMENTATIONKEY, MONGO_DB_CONNECTION_STRING } = pro
 
 if (APPINSIGHTS_INSTRUMENTATIONKEY) {
     import('./config/appInsights')
-    .then((appInsConfig) => appInsConfig.default.start());
+        .then((appInsConfig) => appInsConfig.default.start());
 }
 
 if (MONGO_DB_CONNECTION_STRING) {
     import('./config/mongoose')
-    .then(async (mongoose) => mongoose.connect());
+        .then(async (mongoose) => mongoose.connect());
 }
 
 const logger = new LoggerService('Server');
@@ -32,6 +32,7 @@ const startServer = async (): Promise<Server> => {
     // Setup server and listen for requests on specified port
     return app.listen(appPort, () => {
         logger.info(`HTTP Server successfully initialized and listening for requests on port ${appPort}`);
+        logger.info(`Swagger is available at ${swaggerOptions.swaggerUIPath}`);
     });
 };
 
