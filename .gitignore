@@ -26,6 +26,7 @@ obj
 
 # Misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -34,6 +35,8 @@ obj
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+*.tgz
 
 # Test outputs
 test-output
@@ -48,6 +51,11 @@ my_project
 fastapi/build/
 fastapi/dist/
 *.egg-info/
+
+# Node.JS
+nodejs/generators/app/templates/coverage
+nodejs/generators/app/templates/build
+nodejs/generators/app/templates/reports
 
 # Visual Studio 2015/2017/2022 cache/options directory
 .vs/

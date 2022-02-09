@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "chart.fullname" . }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+    {{- if ne "" .Values.ingressTenant }}
+    ingress-tenant: {{ .Values.ingressTenant }}
+    {{- end }}
+spec:
+  host: {{ .Values.route }}
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: {{ include "chart.fullname" . }}
+    weight: 100
+  wildcardPolicy: None

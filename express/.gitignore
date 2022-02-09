@@ -1,0 +1,7 @@
+.env
+build
+node_modules
+coverage
+reports
+
+./pacage-lock.json
