@@ -44,7 +44,7 @@ npm run start                           # Start the project
 ```
 
 After starting the project an `Missing Environment variable: INTILITY_TENANT_ID` Error will ber thrown. 
-To fix this, create an `.env` file by using the template provided in `.env.template` and setup authentication by following this ([Guide](./API/Azure/ApplicationRegistrations))
+To fix this, create an `.env` file by using the template provided in `.env.template` and setup authentication by following this ([Guide](./setup/ApplicationRegistrations))
 
 For an more comprehensive overview of all included Npm Scripts, have a look at this page: [NPM Scripts](./NpmScripts)
 
@@ -56,7 +56,7 @@ For an more comprehensive overview of all included Npm Scripts, have a look at t
   * Navigate to: `GitLab Repository -> Settings -> CI/CD -> General pipelines -> Test coverage parsing`
   * Enter: `All files[^|]*\|[^|]*\s+([\d\.]+)`
 * Create an `.env` file by using the template provided in `.env.template`
-  * Setup authentication ([Guide](https://create.intility.app/express/API/Azure/ApplicationRegistrations))
+  * Setup authentication ([Guide](./setup/ApplicationRegistrations))
 * Setup your OpenShift environment:
   * Create a project on OpenShift ([Guide](https://create.intility.app/cra/configuration/deploy))
   * Create a Deploy Token for your GitLab Repository ([Guide](https://create.intility.app/cra/configuration/gitlab#add-gitlab-deploy-token))
