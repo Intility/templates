@@ -19,11 +19,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Build
         run: |
-          cd nodejs
+          cd express
           npm ci
       - name: Publish
         run: |
-          cd nodejs
+          cd express
           npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
