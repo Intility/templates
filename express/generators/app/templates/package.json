@@ -1,0 +1,62 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "build/index.js",
+  "scripts": {
+    "clean": "rimraf build",
+    "compile": "run-s tsc:compile copy:static",
+    "tsc:compile": "tsc",
+    "copy:static": "cp -r src/static/ build/src/",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "start": "nodemon",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
+  },
+  "author": {
+    "name": "Christian Marker",
+    "email": "christian.marker@intility.no"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@sentry/node": "6.17.6",
+    "@sentry/tracing": "6.17.6",
+    "applicationinsights": "2.2.1",
+    "cors": "2.8.5",
+    "dotenv": "16.0.0",
+    "express": "4.17.2",
+    "express-async-errors": "3.1.1",
+    "express-content-length-validator": "1.0.0",
+    "express-jsdoc-swagger": "1.6.7",
+    "helmet": "5.0.2",
+    "hpp": "0.2.3",
+    "mongodb": "4.3.1",
+    "mongoose": "6.2.1",
+    "passport-azure-ad": "4.3.1",
+    "rimraf": "3.0.2",
+    "ts-node": "10.5.0",
+    "winston": "3.5.1"
+  },
+  "devDependencies": {
+    "@types/cors": "2.8.12",
+    "@types/express": "4.17.13",
+    "@types/faker": "5.5.9",
+    "@types/hpp": "0.2.2",
+    "@types/jest": "27.4.0",
+    "@types/node": "17.0.17",
+    "@types/passport": "1.0.7",
+    "@types/passport-azure-ad": "4.3.1",
+    "@typescript-eslint/eslint-plugin": "5.11.0",
+    "@typescript-eslint/parser": "5.11.0",
+    "eslint": "8.8.0",
+    "faker": "5.5.3",
+    "jest": "27.5.1",
+    "jest-junit": "13.0.0",
+    "nodemon": "2.0.15",
+    "npm-run-all": "4.1.5",
+    "ts-jest": "27.1.3",
+    "typescript": "4.5.5"
+  }
+}
