@@ -13,8 +13,8 @@
 		<PackageReference Include="Azure.Identity" Version="1.5.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="4.5.1" />
-		<PackageReference Include="Intility.Logging.AspNetCore" Version="1.1.0"/>
-		<PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.1.0"/>
-		<PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.1.0"/>
+		<PackageReference Include="Intility.Logging.AspNetCore" Version="1.3.0"/>
+		<PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.3.0"/>
+		<PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.3.0"/>
 	</ItemGroup>
 </Project>
