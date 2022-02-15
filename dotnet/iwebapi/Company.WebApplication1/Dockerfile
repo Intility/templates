@@ -15,7 +15,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
 
 # if you depend on timezones, these lines need to be uncommented
 # RUN apk add --no-cache tzdata
-# ENV TZ Europe/Oslo
+# ENV TZ=Europe/Oslo
 
 WORKDIR /app
 COPY --from=publish /app .
