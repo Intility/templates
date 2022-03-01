@@ -43,24 +43,15 @@ The proxy works as the following `sonarqube-badge-proxy.apps.openshift.intility.
  - `debt`
  - `vulnerabilities`
 
-Yoy will have to replace badge image url using your sonarqube project name and desired badge type e.g `sonarqube-badge-proxy.apps.openshift.intility.com/badges/cool-portal/bugs`
+You will have to replace badge image url using your sonarqube project name and desired badge type e.g `sonarqube-badge-proxy.apps.openshift.intility.com/badges/cool-portal/bugs`
 
-The badge will be rendered in preview if configured correctly.
+The badge will be rendered in preview if configured correctly as such
+
+![Rendered badge](/img/sonarqube-badge-rendered-preview.png)
 
 
-#### Optionally: embedding badges in readme
-
+:::note
 You can also embed badges in readme by using any of the following markdown syntaxes
-    
-*  `[![Description](proxy-badge-image-url)](url-to-your-project)`
-    
-*  `![Description](proxy-badge-image-url)`
-
-Examples: 
-
-* Badge linked to your project 
-     [![Quality gate](https://sonarqube-badge-proxy.apps.openshift.intility.com/badges/flexview-functions/ncloc)](https://sonarqube.intility.no/dashboard?id=flexview-functions)
-
-* Just badge
-     ![Quality gate](https://sonarqube-badge-proxy.apps.openshift.intility.com/badges/flexview-functions/security)
-
+`[![Description](proxy-badge-image-url)](url-to-your-project)` or 
+`![Description](proxy-badge-image-url)`
+:::
