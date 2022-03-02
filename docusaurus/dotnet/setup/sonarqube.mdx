@@ -10,8 +10,11 @@ First, we need to [create a new project in SonarQube](https://sonarqube.intility
 
 ![New Project in SonarQube](/img/sonarqube-new.png)  
 The project key should be the same as the project slug from GitLab.
-If you use something other than the project slug,
+
+:::note
+If you use something other than the GitLab project slug,
 you'll need to modify the `SONAR_PROJECT` variable in the top of the .gitlab-ci.yml file.
+:::
 
 Then in the next step, either generate a new token, or select an existing one.  
 ![Generate Token](/img/sonarqube-token.png)  
@@ -19,10 +22,36 @@ Copy the token and [add it to GitLab CI/CD variables](/dotnet/setup/gitlab#addin
 
 ## Badge
 
-On your project dashboard, you can click `Get project badges` in the bottom right corner.
+Due to intility's sonarqube domain being private, retrieving badge directly from that domain would not work.
 
-![Badge from SonarQube](/img/sonarqube-badge.png)
+Therefore you will need to retrieve your project badges from this proxy: `sonarqube-badge-proxy.apps.openshift.intility.com/badges/`
 
-Select `Quality Gate Status`, and `Image URL only`. You can then use the Image URL and project dashboard URL to [create a badge in GitLab](/dotnet/setup/gitlab#adding-badges).
+On your project dashboard in gitlab select the following from the navigation drawer `Settings > General > Badges`
 
-![SonarQube badge in GitLab](/img/gitlab-badge-sonarqube.png)
+![Badge settings in gitlab](/img/sonarqube-badge-settings.png)
+
+The proxy works as the following `sonarqube-badge-proxy.apps.openshift.intility.com/badges/<your-sonarqube-project-name>/<badge-type>` and the following badge types are available:
+
+ - `quality_gate`
+ - `maintainability`
+ - `bugs`
+ - `code_smells`
+ - `duplications`
+ - `ncloc`
+ - `reliability`
+ - `security`
+ - `debt`
+ - `vulnerabilities`
+
+You will have to replace badge image url using your sonarqube project name and desired badge type e.g `sonarqube-badge-proxy.apps.openshift.intility.com/badges/cool-portal/bugs`
+
+The badge will be rendered in preview if configured correctly as such: 
+
+![Rendered badge](/img/sonarqube-badge-rendered-preview.png)
+
+:::note
+You can also embed badges in readme by using any of the following markdown syntaxes
+`[![Description](proxy-badge-image-url)](url-to-your-project)` or 
+`![Description](proxy-badge-image-url)`
+:::
+
