@@ -1,19 +1,30 @@
 # Default values for chart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
+#if (!cronJob)
 replicaCount: 1
+#endif
 
 image:
   repository: nginx
   pullPolicy: IfNotPresent
   tag: ""
 
+#if (cronJob)
+cron:
+  schedule: "*/5 * * * *"
+  restartPolicy: OnFailure
+  concurrencyPolicy: Replace
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+#endif
+
 nameOverride: ""
 fullnameOverride: ""
 
 podAnnotations: {}
 
+#if (!cronJob)
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -25,7 +36,7 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
+#endif
 registry:
   url: https://gitlab-registry.intility.com
   user: ""

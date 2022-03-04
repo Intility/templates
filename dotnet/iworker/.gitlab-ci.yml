@@ -115,10 +115,13 @@ deploy:dev:
       --set registry.url=$CI_REGISTRY
       --set registry.user=$CI_DEPLOY_USER
       --set registry.password=$CI_DEPLOY_PASSWORD
+#if (cronJob)
+      --set cron.schedule="*/5 * * * *"
+#else
       --set replicaCount=2
+#endif
       --set secrets.Sentry__Dsn=$SENTRY_DSN
       --set config.DOTNET_ENVIRONMENT=$CI_ENVIRONMENT_NAME
-      --set schedule="* * * * *"
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
   needs: [ "test", "image:dev" ]
