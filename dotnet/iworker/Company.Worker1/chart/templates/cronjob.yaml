@@ -5,16 +5,16 @@ metadata:
   labels:
     {{- include "chart.labels" . | nindent 4 }}
 spec:
-  schedule: {{ quote .Values.schedule }}
-  successfulJobsHistoryLimit: {{ .Values.successfulJobsHistoryLimit }}
-  failedJobsHistoryLimit: {{ .Values.failedJobsHistoryLimit }}
+  schedule: {{ quote .Values.cron.schedule }}
+  successfulJobsHistoryLimit: {{ .Values.cron.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.cron.failedJobsHistoryLimit }}
   startingDeadlineSeconds: 200
-  concurrencyPolicy: {{ .Values.concurrencyPolicy }}
+  concurrencyPolicy: {{ .Values.cron.concurrencyPolicy }}
   jobTemplate:
     spec:
       template:
         spec:
-          restartPolicy: {{ .Values.restartPolicy }}
+          restartPolicy: {{ .Values.cron.restartPolicy }}
           terminationGracePeriodSeconds: 30
           imagePullSecrets:
             - name: {{ include "chart.fullname" . }}-pull-secret

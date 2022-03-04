@@ -35,15 +35,11 @@
         },
         {
           "condition": "(cronJob)",
-          "exclude": [ "Company.Worker1/chart/templates/deployment.yaml", "Company.Worker1/chart/values.yaml", "Company.Worker1/Worker.cs" ],
-          "rename": {
-            "Company.Worker1/chart/valuesCron.yaml": "Company.Worker1/chart/values.yaml",
-            "Company.Worker1/WorkerCron.cs": "Company.Worker1/Worker.cs"
-          }
+          "exclude": [ "Company.Worker1/chart/templates/deployment.yaml" ]
         },
         {
           "condition": "(!cronJob)",
-          "exclude": [ "Company.Worker1/chart/templates/cronjob.yaml", "Company.Worker1/chart/valuesCron.yaml", "Company.Worker1/WorkerCron.cs" ]
+          "exclude": [ "Company.Worker1/chart/templates/cronjob.yaml" ]
         }
       ]
     }
