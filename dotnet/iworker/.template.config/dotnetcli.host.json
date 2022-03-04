@@ -8,6 +8,10 @@
     "projectOnly": {
       "longName": "project",
       "shortName": ""
+    },
+    "cronJob": {
+      "longName": "cronjob",
+      "shortName": ""
     }
   },
   "usageExamples": [""]

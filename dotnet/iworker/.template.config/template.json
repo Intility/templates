@@ -28,10 +28,22 @@
         },
         {
           "condition": "(projectOnly)",
-          "exclude": ["Company.Worker1.sln", ".gitignore"],
+          "exclude": [ "Company.Worker1.sln", ".gitignore" ],
           "rename": {
             "Company.Worker1/": "./"
           }
+        },
+        {
+          "condition": "(cronJob)",
+          "exclude": [ "Company.Worker1/chart/templates/deployment.yaml", "Company.Worker1/chart/values.yaml", "Company.Worker1/Worker.cs" ],
+          "rename": {
+            "Company.Worker1/chart/valuesCron.yaml": "Company.Worker1/chart/values.yaml",
+            "Company.Worker1/WorkerCron.cs": "Company.Worker1/Worker.cs"
+          }
+        },
+        {
+          "condition": "(!cronJob)",
+          "exclude": [ "Company.Worker1/chart/templates/cronjob.yaml", "Company.Worker1/chart/valuesCron.yaml", "Company.Worker1/WorkerCron.cs" ]
         }
       ]
     }
@@ -61,6 +73,12 @@
       "datatype": "bool",
       "defaultValue": "false",
       "description": "Only sets it up as a project."
+    },
+    "cronJob": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "description": "Cron job instead of a continuous job"
     }
   },
   "defaultName": "IntilityWorkerService",

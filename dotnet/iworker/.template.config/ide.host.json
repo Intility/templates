@@ -14,6 +14,18 @@
       "invertBoolean": false,
       "isVisible": true,
       "defaultValue": false
+    },
+    {
+      "id": "cronJob",
+      "name": {
+        "text": "Cron job"
+      },
+      "description": {
+        "text": "Adds a cron jon instead of a continuous job"
+      },
+      "invertBoolean": false,
+      "isVisible": true,
+      "defaultValue": false
     }
   ]
 }
