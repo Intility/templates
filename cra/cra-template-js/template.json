@@ -2,7 +2,7 @@
   "package": {
     "dependencies": {
       "@testing-library/jest-dom": "^5.15.0",
-      "@testing-library/react": "^12.1.2",
+      "@testing-library/react": "^13.0.0",
       "@testing-library/user-event": "^13.5.0",
       "@intility/bifrost-react": "^2.13.0",
       "@intility/helm-version": "^1.2.1",
