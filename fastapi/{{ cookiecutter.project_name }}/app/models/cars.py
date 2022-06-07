@@ -17,7 +17,7 @@ class Car(CarBase, table=True):  # type: ignore
     and represents a database table.
     """
 
-    id: int = Field(default=None, primary_key=True)
+    id: int = Field(default=None, primary_key=True, nullable=False)
 
 
 class CarRead(CarBase):

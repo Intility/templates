@@ -13,10 +13,10 @@ but it is still recommended to generate a secure password.
 
 :::warning
 Your password should not contain slashes (`/`), since these passwords are used in connection strings.
-You can generate passwords by using this command: `openssl rand -base64 -hex 32`
+You can generate passwords by using this command: `openssl rand -hex 32`.
 :::
 
-```bash title=".env" {2,14,16}
+```bash title=".env" {2,14}
 # Basics
 SECRET_KEY=
 ENVIRONMENT=dev
@@ -29,11 +29,8 @@ TENANT_ID=9b5ff18e-53c0-45a2-8bc2-9c0c8f60b2c6
 APP_CLIENT_ID=
 OPENAPI_CLIENT_ID=
 
-# Databases, cache etc.
-REDIS_PASSWORD=
 # Only needed if you selected SQLModel
 POSTGRES_PASSWORD=
-
 ````
 
 Then, run docker-compose:

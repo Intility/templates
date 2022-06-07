@@ -51,6 +51,8 @@ my_project
 fastapi/build/
 fastapi/dist/
 *.egg-info/
+poetry.lock
+pyproject.toml
 
 # Node.JS
 nodejs/generators/app/templates/coverage

@@ -19,68 +19,56 @@ class Env(CustomBaseSettings):
 env = Env()
 
 
-class RedisCredentials(CustomBaseSettings):
-    REDIS_PASSWORD: str = Field('', env='REDIS_PASSWORD')
-    TEST_REDIS_HOST: str = Field('localhost:6380', env='TEST_REDIS_HOST')
-
-
-redis = RedisCredentials()
-
-{% if cookiecutter.sqlmodel == 'True' %}
-class PostgresCredentials(CustomBaseSettings):
+class Credentials(CustomBaseSettings):
+    {% if cookiecutter.sqlmodel == 'True' %}
     POSTGRES_USER: str = Field('{{ cookiecutter.project_name }}', env='POSTGRES_USER')
     POSTGRES_PASSWORD: str = Field('', env='POSTGRES_PASSWORD')
-    POSTGRES_HOST: str = Field('localhost', env='POSTGRES_HOST')
-
-
-postgres = PostgresCredentials()
-{% endif %}
-
-class Credentials(CustomBaseSettings):
-    REDIS_URL = (
-        redis.TEST_REDIS_HOST
-        if env.ENVIRONMENT == 'test'
-        else 'localhost'
-        if env.ENVIRONMENT in ['dev', 'test']
-        else f'redis.my_proj-{env.ENVIRONMENT}.svc'
-    )
-    REDIS_CONNECTION_STRING: str = f'redis://:{redis.REDIS_PASSWORD}@{REDIS_URL}'
-    {% if cookiecutter.sqlmodel == 'True' %}
-    POSTGRES_USERNAME: str = '{{ cookiecutter.project_name }}'
-    POSTGRES_CONNECTION_STRING: str = Field(
-        f'postgresql+asyncpg://{postgres.POSTGRES_USER}:{postgres.POSTGRES_PASSWORD}@{postgres.POSTGRES_HOST}',
-    )
+    POSTGRES_URL: str = Field('localhost', env='POSTGRES_URL')
     {% endif %}
-
-
-class Authentication(CustomBaseSettings):
+    {% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}
     TENANT_ID: str = Field(default='9b5ff18e-53c0-45a2-8bc2-9c0c8f60b2c6', description='Intility tenant ID')
     APP_CLIENT_ID: str = Field(..., description='ClientID for web-app. (First step)')
     OPENAPI_CLIENT_ID: str = Field(..., description='OpenAPI/Swagger SPA client ID')
+    {% endif %}
+    {% if cookiecutter.authentication_strategy != 'FastAPI Azure Auth (default)' and cookiecutter.sqlmodel == 'False' %}
+    ...
+    {% endif %}
 
 
-authentication = Authentication()
+credentials = Credentials()
 
 
-class Authorization(CustomBaseSettings):
+class SettingsWithDerivedValues(CustomBaseSettings):
+    """
+    These variables are separately defined here because they need to use the actual value of some fields after the
+    Field-class has determined a fields actual value (default or based from an environment variable).
+    This doesn't work if defined in the same settings class.
+    """
+    {% if cookiecutter.sqlmodel == 'True' %}
+    POSTGRES_CONNECTION_STRING: str = Field(
+        f'postgresql+asyncpg://{credentials.POSTGRES_USER}:{credentials.POSTGRES_PASSWORD}@{credentials.POSTGRES_URL}',
+    )
+    {% endif %}
+    {% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}
     SCOPES: dict[str, str] = Field(
         {
-            f'api://{authentication.APP_CLIENT_ID}/user_impersonation': 'User impersonation',
+            f'api://{credentials.APP_CLIENT_ID}/user_impersonation': 'User impersonation',
         },
         description=(
             'A dictionary with scopes, used for OpenAPI authentication/authorization. '
             'You can add multiple scopes here.'
         ),
     )
+    {% endif %}
+    {% if cookiecutter.authentication_strategy != 'FastAPI Azure Auth (default)' and cookiecutter.sqlmodel == 'False' %}
+    ...
+    {% endif %}
 
 
 class Settings(
     Env,
-    RedisCredentials,
-    {% if cookiecutter.sqlmodel == 'True' %}PostgresCredentials,{% endif %}
     Credentials,
-    Authentication,
-    Authorization,
+    SettingsWithDerivedValues
 ):
     API_V1_STR: str = '/api/v1'
     PROJECT_NAME: str = '{{ cookiecutter.project_name }}'
@@ -90,7 +78,7 @@ class Settings(
     # CORS settings should answer this question: Which frontends (through browser) are allowed to access the API?
     # This includes your OpenAPI documentation, your react frontend etc.
     BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = ['http://localhost:8000']
-    BACKEND_CORS_ORIGINS_REGEX: str = r'https://.*\.intility\.[no|com]'
+    BACKEND_CORS_ORIGINS_REGEX: str = r'https://.*\.intility\.(no|com)'
 
 
 settings = Settings()

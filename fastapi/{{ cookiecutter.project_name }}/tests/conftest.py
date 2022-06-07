@@ -1,11 +1,10 @@
 {% if cookiecutter.sqlmodel == 'True' %}import asyncio
-
 import pytest
 from migrations.alembic_functions import downgrade_base, upgrade_head
 from sqlalchemy.ext.asyncio import AsyncConnection
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from app.core.db import engine
+from app.core.db import ASYNC_ENGINE
 
 
 @pytest.fixture
@@ -14,7 +13,7 @@ async def connection() -> AsyncConnection:
     Connect to the database, yield connection.
     When we're done with our connection, rollback whatever changes we made.
     """
-    async with engine.begin() as conn:
+    async with ASYNC_ENGINE.begin() as conn:
         yield conn
         await conn.rollback()
 

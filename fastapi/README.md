@@ -12,5 +12,8 @@ based on selections.
 
 
 ## Usage
-* `cruft create . --directory="fastapi"` to use from source
+* `poetry init` from `templates` folder.
+* `poetry add cruft`
+* `cruft create . --directory="fastapi"` to use from source (current commit)
+  * `cookiecutter fastapi` to use from current state (used while testing uncommitted changes)
 * `cruft create https://github.com/Intility/templates.git --directory="fastapi"` to use from GitHub

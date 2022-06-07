@@ -37,8 +37,18 @@ A few questions you will be prompted, here with a more verbose description:
 * ``email``: Required for ``pyproject.toml``
 * ``project_name``: The folder name, and required for ``pyproject.toml``. Keep it short and simple!
 * ``description``: Required for ``pyproject.toml``
-* ``mypy``: **Strict** type checking. This is for advanced users but highly recommended to implement at some point in your project. This will configure ``pre-commit``.
 * ``sqlmodel``: An ORM for ``FastAPI``. Select ``1`` if you need a database. This will create example APIs,
 install ``alembic`` for migrations, add ``postgres`` to the ``docker-compose`` file etc.
+* ``authentication_strategy``: Every API _must_ have authentication through Azure AD, but which strategy you chose is
+up to you. The options are:
+  * ``FastAPI Azure Auth (default)``: Authentication and authorization is done in your FastAPI
+  application. This is the default and recommended authentication strategy, which this tutorial will assume you chose.
+  Under the hood, this uses [``fastapi-azure-auth``](https://github.com/Intility/fastapi-azure-auth),
+  a library written and maintained by Intility.
+  * ``Kong (no auth included)``: The alternative is to use Kong. This removes all authentication
+  from your FastAPI application, and assume you host your application behind Kong. This tutorial will not cover this
+  strategy.
+* ``include_example_apis``: Chose whether you want example APIs and tests to be included in the generated files.
+  If this is the first time using this template, **select ``true``**.
 
 You'll now have a new folder, matching your `project_name`.
