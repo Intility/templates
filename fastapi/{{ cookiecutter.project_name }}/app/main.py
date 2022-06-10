@@ -1,5 +1,6 @@
 import logging
 
+from asgi_correlation_id import CorrelationIdMiddleware
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sentry_sdk import init as sentry_init
@@ -9,6 +10,7 @@ from app.api.api_v1.api import api_router
 from app.api.security import azure_scheme
 {% endif %}
 from app.core.config import settings
+from app.core.logging_config import setup_logging
 
 log = logging.getLogger(__name__)
 
@@ -22,6 +24,7 @@ app = FastAPI(
     version='1.0.0',
     description='## Welcome to my API! \n This is my description, written in `markdown`',
     title=settings.PROJECT_NAME,
+    on_startup=[setup_logging],
 )
 {% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}
 
@@ -39,8 +42,16 @@ if settings.ENVIRONMENT in ['lab', 'qa', 'prod']:
         environment=settings.ENVIRONMENT,
     )
     app.add_middleware(SentryAsgiMiddleware)
-
-
+{% if cookiecutter.authentication_strategy == 'Kong (no auth included)' %}
+if settings.ENVIRONMENT == 'dev':
+    app.add_middleware(
+        CORSMiddleware,
+        allow_credentials=True,
+        allow_headers=['*'],
+        allow_methods=['*'],
+        allow_origins=['*'],
+    )
+{% else %}
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
@@ -49,6 +60,10 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*'],
 )
+{% endif %}
+
+app.add_middleware(CorrelationIdMiddleware)
+
 
 
 app.include_router(
