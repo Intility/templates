@@ -10,7 +10,7 @@ run_migrations() {
 
 run_web_server() {
   echo "Starting web server"
-  exec gunicorn --worker-class uvicorn.workers.UvicornWorker --config gunicorn.conf.py app.main:app
+  exec gunicorn app.main:app --worker-class uvicorn.workers.UvicornWorker --config ci/docker/fastapi/gunicorn.conf.py
 }
 {% if cookiecutter.sqlmodel == 'True' %}
 run_migrations

@@ -1,34 +1,40 @@
 import logging
 
-from aioredis import from_url
-from fastapi import FastAPI, Security
+from asgi_correlation_id import CorrelationIdMiddleware
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
 from sentry_sdk import init as sentry_init
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
-{% if cookiecutter.sqlmodel == 'True' %}
-from app.api.api_v1.api import api_router, car_api_router
-{% else %}
 from app.api.api_v1.api import api_router
-{% endif %}
-
+{% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}
 from app.api.security import azure_scheme
+{% endif %}
 from app.core.config import settings
+from app.core.logging_config import setup_logging
 
 log = logging.getLogger(__name__)
 
 app = FastAPI(
     openapi_url=f'{settings.API_V1_STR}/openapi.json',
     swagger_ui_oauth2_redirect_url='/oauth2-redirect',
-    swagger_ui_init_oauth={
+    {% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}swagger_ui_init_oauth={
         'usePkceWithAuthorizationCodeGrant': True,
         'clientId': settings.OPENAPI_CLIENT_ID,
-    },
+    },{% endif %}
     version='1.0.0',
     description='## Welcome to my API! \n This is my description, written in `markdown`',
     title=settings.PROJECT_NAME,
+    on_startup=[setup_logging],
 )
+{% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}
+
+@app.on_event('startup')
+async def load_config() -> None:
+    """
+    Load OpenID config on startup.
+    """
+    await azure_scheme.openid_config.load_config()
+{% endif %}
 
 if settings.ENVIRONMENT in ['lab', 'qa', 'prod']:
     sentry_init(
@@ -36,8 +42,16 @@ if settings.ENVIRONMENT in ['lab', 'qa', 'prod']:
         environment=settings.ENVIRONMENT,
     )
     app.add_middleware(SentryAsgiMiddleware)
-
-
+{% if cookiecutter.authentication_strategy == 'Kong (no auth included)' %}
+if settings.ENVIRONMENT == 'dev':
+    app.add_middleware(
+        CORSMiddleware,
+        allow_credentials=True,
+        allow_headers=['*'],
+        allow_methods=['*'],
+        allow_origins=['*'],
+    )
+{% else %}
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
@@ -46,30 +60,13 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*'],
 )
+{% endif %}
 
+app.add_middleware(CorrelationIdMiddleware)
 
-@app.on_event('startup')
-async def load_config() -> None:
-    """
-    Load OpenID config on startup.
-    """
-    await azure_scheme.openid_config.load_config()
-
-
-@app.on_event('startup')
-async def startup_redis_and_cache() -> None:
-    """
-    Startup function, initiating the FastAPICache.
-    """
-    redis = from_url(settings.REDIS_CONNECTION_STRING, encoding='utf8')
-    FastAPICache.init(RedisBackend(redis), prefix='fastapi-cache')
 
 
 app.include_router(
     api_router,
     prefix=settings.API_V1_STR,
-    dependencies=[Security(azure_scheme, scopes=['user_impersonation'])],
 )
-{% if cookiecutter.sqlmodel == 'True' %}
-app.include_router(car_api_router, prefix=settings.API_V1_STR, dependencies=[])  # No auth required for this route
-{% endif %}

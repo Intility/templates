@@ -1,15 +1,20 @@
 {% if cookiecutter.sqlmodel == 'True' %}
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import sessionmaker
+from sqlmodel.ext.asyncio.session import AsyncSession
 
-from app.core.db import engine
+from app.core.db import ASYNC_ENGINE
 
 
 async def get_session() -> AsyncSession:
     """
+    Return a session to the database
+    """
+    return AsyncSession(ASYNC_ENGINE, expire_on_commit=False)
+
+
+async def yield_session() -> AsyncSession:
+    """
     Yield a session to the database
     """
-    async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-    async with async_session() as session:
+    async with AsyncSession(ASYNC_ENGINE, expire_on_commit=False) as session:
         yield session
 {% endif %}

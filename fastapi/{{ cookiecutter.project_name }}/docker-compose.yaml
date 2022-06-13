@@ -1,36 +1,27 @@
 version: '3.8'
 
 services:
-  redis:
-    container_name: {{ cookiecutter.project_name }}_redis
-    image: redis:6.2.5-alpine
-    command: --requirepass ${REDIS_PASSWORD}
-    ports:
-      - '127.0.0.1:6379:6379'
-    restart: always
-
-  redis_test:
-    container_name: {{ cookiecutter.project_name }}_redis_test
-    image: redis:6.2.5-alpine
-    command: --requirepass ${REDIS_PASSWORD}
-    ports:
-      - '127.0.0.1:6380:6379'
-    restart: always
-
-{% if cookiecutter.sqlmodel == 'True' %}
   postgres:
     container_name: {{ cookiecutter.project_name }}_postgres
-    # DATABASE_URL: postgresql+asyncpg://{username}:{pw}@127.0.0.1:{ext-port}/{db-name}
-    # psql: docker compose run postgres psql --host=postgres --username=user db
-    privileged: true  # TODO: Only needed for podman, so you can probably remove this
     environment:
       POSTGRES_USER: {{ cookiecutter.project_name }}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    image: postgres:12.7-alpine
+    image: postgres:13-alpine
     volumes:
-      # Create a volume for persistence
-      - ./.pg:/var/lib/postgresql/data
+      - database:/var/lib/postgresql/data
     ports:
       - '127.0.0.1:5432:5432'
     restart: always
-{% endif %}
+
+  postgres_test:
+    container_name: {{ cookiecutter.project_name }}_postgres_test
+    environment:
+      POSTGRES_USER: {{ cookiecutter.project_name }}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    image: postgres:13-alpine
+    ports:
+      - '127.0.0.1:5433:5432'
+    restart: always
+
+volumes:
+  database:
