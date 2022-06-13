@@ -46,5 +46,8 @@ if not sqlmodel:
     remove(os.path.join(os.getcwd(), 'tests', 'models'))
     remove(os.path.join(os.getcwd(), 'tests', 'api', 'test_cars_api.py'))
 
+    # Remove docker-compose, it is no longer used
+    remove(os.path.join(os.getcwd(), 'docker-compose.yaml'))
+
 
 print('\n\n**A folder named `{{ cookiecutter.project_name }}` has been successfully created.**')
