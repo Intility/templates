@@ -6,4 +6,4 @@ max_requests = 1000
 max_request_jitter = 100
 worker_class = 'uvicorn.workers.UvicornWorker'
 worker_tmp_dir = '/dev/shm'
-workers = len(os.sched_getaffinity(0))
+workers = len(os.sched_getaffinity(0))  # type: ignore
