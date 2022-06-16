@@ -1,7 +1,10 @@
 from typing import Literal
 
+{% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}
 from pydantic import AnyHttpUrl, BaseSettings, Field
-
+{% else %}
+from pydantic import BaseSettings, Field
+{% endif %}
 
 class CustomBaseSettings(BaseSettings):
     """Configure .env settings for all our setting-classes"""
