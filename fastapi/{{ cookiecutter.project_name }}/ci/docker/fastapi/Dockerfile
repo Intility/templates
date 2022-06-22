@@ -3,4 +3,4 @@ FROM $BASE_IMAGE
 
 EXPOSE 8000
 
-ENTRYPOINT  ["bash", "entrypoint.sh"]
+ENTRYPOINT  ["sh", "ci/docker/fastapi/entrypoint.sh"]
