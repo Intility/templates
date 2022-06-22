@@ -35,6 +35,7 @@ pytest-env = "^0.6.2"
 pytest-mock = "^3.7.0"
 pytest-socket = "^0.5.1"
 pytest-xdist = {version = "^2.5.0", extras = ["psutil"]}
+pytest-dotenv = "^0.5.2"
 requests = "^2.26.0"
 {% if cookiecutter.sqlmodel == 'True' %}
 greenlet = "^1.1.2"
@@ -44,7 +45,7 @@ greenlet = "^1.1.2"
 [tool.black]
 line-length = 120
 skip-string-normalization = true
-target-version = ['py38']
+target-version = ['py310']
 include = '\.pyi?$'
 exclude = '''
 (
