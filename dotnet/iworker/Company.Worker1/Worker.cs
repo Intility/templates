@@ -12,6 +12,8 @@ public class Worker : BackgroundService
         _lifetime = lifetime;
     }
     #else
+    private readonly PeriodicTimer _timer = new(TimeSpan.FromMilliseconds(1000));
+
     public Worker(ILogger<Worker> logger)
     {
         _logger = logger;
@@ -28,10 +30,9 @@ public class Worker : BackgroundService
         _logger.LogInformation("Worker stopping at: {time}", DateTimeOffset.Now);
         _lifetime.StopApplication();
         #else
-        while (!stoppingToken.IsCancellationRequested)
+        while (await _timer.WaitForNextTickAsync(stoppingToken) && !stoppingToken.IsCancellationRequested)
         {
             _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-            await Task.Delay(1000, stoppingToken);
         }
         #endif
     }
