@@ -62,9 +62,7 @@ app.add_middleware(
 )
 {% endif %}
 
-app.add_middleware(CorrelationIdMiddleware)
-
-
+app.add_middleware(CorrelationIdMiddleware, header_name='Correlation-ID')
 
 app.include_router(
     api_router,
