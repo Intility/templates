@@ -30,7 +30,7 @@ updates:
       prefix: "build(docs):"
       
   - package-ecosystem: "nuget"
-    directory: "/dotnet/iwebapiproject"
+    directory: "/dotnet/iwebapi/Company.WebApplication1"
     schedule:
       interval: "monthly"
       time: "09:00"
@@ -39,3 +39,12 @@ updates:
       # considered fix because it affects the template itself, not the template package
       prefix: "fix(dotnet):"
       
+  - package-ecosystem: "nuget"
+    directory: "/dotnet/iworker/Company.Worker1"
+    schedule:
+      interval: "monthly"
+      time: "09:00"
+      timezone: "Europe/Oslo"
+    commit-message:
+      # considered fix because it affects the template itself, not the template package
+      prefix: "fix(dotnet):"
