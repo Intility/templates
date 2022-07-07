@@ -12,6 +12,7 @@ gunicorn = "^20.1.0"
 uvicorn = {extras = ["standard"], version = "^0.17.6"}
 sentry-sdk = "^1.5.12"
 python-json-logger = "^2.0.2"
+fastapi-stack-utils = "^0.1.0"
 {% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}
 fastapi-azure-auth = "^3.0.3"
 {% endif %}

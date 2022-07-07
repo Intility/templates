@@ -57,10 +57,11 @@ LOGGING: dict = {
         },
     },
     'loggers': {
-        # project logger
-        '{{cookiecutter.project_name}}': {'level': 'INFO', 'propagate': True},
         # third-party packages
         'asgi_correlation_id': {'level': 'WARNING'},
+        'fastapi_audit_log': {'level': 'INFO'},
+        'gunicorn': {'level': 'INFO'},
+        'uvicorn': {'level': 'INFO'}
     },
     'root': {
         # use JSON loggers in anything but dev and test, in order to make OpenShift logging work better.

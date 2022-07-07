@@ -3,7 +3,7 @@ from fastapi_azure_auth.user import User
 
 from app.api.security import validate_is_admin_user, azure_scheme
 {% endif %}
-
+from fastapi_stack_utils.route import AuditLog
 from app.schemas.hello_world import HelloWorldResponse{% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}, HelloUserResponse{% endif %}
 from fastapi import APIRouter, Depends
 {% if cookiecutter.sqlmodel == 'True' %}
@@ -13,8 +13,9 @@ from app.api.dependencies import yield_session
 from app.models.cars import Car, CarCreate, CarRead
 {% endif %}
 
-
-router = APIRouter()
+# The AuditLog router will add extra logging to your APIs
+# This should always be included on routes closest to the API
+router = APIRouter(route_class=AuditLog)
 
 
 @router.get(
