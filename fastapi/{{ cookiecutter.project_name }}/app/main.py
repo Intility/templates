@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sentry_sdk import init as sentry_init
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 from app.api.api_v1.api import api_router
+from fastapi_stack_utils.exception_handler import format_and_log_exception_internal, http_exception_handler
+from fastapi_stack_utils.middleware import LoggingMiddleware
 {% if cookiecutter.authentication_strategy == 'FastAPI Azure Auth (default)' %}
 from app.api.security import azure_scheme
 {% endif %}
@@ -62,7 +64,12 @@ app.add_middleware(
 )
 {% endif %}
 
+
+app.add_exception_handler(HTTPException, http_exception_handler)
+app.add_exception_handler(Exception, format_and_log_exception_internal)
+
 app.add_middleware(CorrelationIdMiddleware, header_name='Correlation-ID')
+app.add_middleware(LoggingMiddleware)
 
 app.include_router(
     api_router,
