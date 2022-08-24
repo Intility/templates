@@ -1,11 +1,8 @@
-<!-- template available at https://gitlab.intility.no/Intility/readme-template -->
-
 <!-- Badges -->
 <!-- While not required, badges are recommended; and in particular pipeline status -->
 <!-- Uncomment the below line and replace `project` with the path to your project (e.g. -->
 <!-- `group[s]/project`). If you want the status for a different branch than `master`, change -->
 <!-- the branch too.-->
-<!-- [![pipeline status](https://gitlab.intility.no/<project>/master/pipeline.svg)](https://gitlab.intility.no/<project>/pipelines)   -->
 
 <!------------------------------------------------------------------------------------>
 <!-- REQUIRED -->
