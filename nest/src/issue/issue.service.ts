@@ -1,26 +1,50 @@
-import { Injectable } from '@nestjs/common';
-import { CreateIssueDto } from './dto/create-issue.dto';
-import { UpdateIssueDto } from './dto/update-issue.dto';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { CreateIssueDto } from "./dto/create-issue.dto";
+import { UpdateIssueDto } from "./dto/update-issue.dto";
+import { Issue } from "./entities/issue.entity";
+import { IssueRepository } from "./issue.repository";
 
 @Injectable()
 export class IssueService {
+  constructor(private readonly repository: IssueRepository) {}
+
   create(createIssueDto: CreateIssueDto) {
-    return 'This action adds a new issue';
+    const issue: Issue = {
+        ...createIssueDto,
+      id: Math.floor(Math.random() * 1000000),
+      created: new Date().toISOString(),
+      open: true,
+    };
+    this.repository.create(issue);
+
+    return issue;
   }
 
   findAll() {
-    return `This action returns all issue`;
+    return this.repository.read();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} issue`;
+    const matchingIssues = this.repository.read(id);
+
+    if (matchingIssues.length === 0) throw new NotFoundException();
+
+    return matchingIssues[0];
   }
 
   update(id: number, updateIssueDto: UpdateIssueDto) {
-    return `This action updates a #${id} issue`;
+    let issue = this.findOne(id);
+    issue = {
+        ...issue, 
+        ...updateIssueDto
+    };
+    this.repository.update(issue);
+
+    return issue;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} issue`;
+    this.findOne(id);
+    this.repository.delete(id);
   }
 }
