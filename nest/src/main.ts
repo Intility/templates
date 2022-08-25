@@ -1,3 +1,4 @@
+import { configureSwagger } from './config/swagger';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
@@ -30,7 +31,10 @@ async function bootstrap() {
 			policy: 'unsafe-none',
 		},
 	}));
+	
 
-  	await app.listen(port || 4000);
+	configureSwagger(app)
+
+	await app.listen(port || 4000);
 }
 bootstrap();
