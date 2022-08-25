@@ -19,13 +19,10 @@ async function bootstrap() {
 		contentSecurityPolicy: {
 			directives: {
 				...helmet.contentSecurityPolicy.getDefaultDirectives(),
-				'script-src': [ '\'sha256-OpxCZnOOZiLaVhybyx3fw6kxbScQz672StP4vrWXcds=\'', '\'self\'', ],
+				'script-src': [ '\'sha256-4IiDsMH+GkJlxivIDNfi6qk0O5HPtzyvNwVT3Wt8TIw=\'', '\'self\'', ],
 				'connect-src': [
 					'\'self\'',
-					// Single tenant app
-					`https://login.microsoftonline.com/${azureTenantId}/oauth2/v2.0/token`,
-					// Multi tenant app
-					`https://login.microsoftonline.com/common/oauth2/v2.0/token`,
+					`https://login.microsoftonline.com/${azureTenantId}/oauth2/v2.0/token`
 				],
 			},
 		},
