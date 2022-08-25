@@ -3,7 +3,7 @@ import { IssueService } from './issue.service';
 import { CreateIssueDto } from './dto/create-issue.dto';
 import { UpdateIssueDto } from './dto/update-issue.dto';
 
-@Controller('issues')
+@Controller({ path: 'issues', version: '1' })
 export class IssueController {
   constructor(private readonly issueService: IssueService) {}
 
