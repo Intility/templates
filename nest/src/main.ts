@@ -10,6 +10,14 @@ async function bootstrap() {
 	const configService = app.get<ConfigService<EnvironmentVariables, true>>(ConfigService);
 	const port = configService.get('PORT', { infer: true });
 	const azureTenantId = configService.get('AZURE_TENANT_ID', { infer: true });
+
+	// Configure CORS
+	// Official Nest Documentation: https://docs.nestjs.com/security/cors
+	app.enableCors({
+		origin: [
+			`https://super-awesome-frontend.intility.com`
+		]
+	})
 	
 	// Configure Helmet security plugin.
 	// Official Nest Documentation: https://docs.nestjs.com/security/helmet
