@@ -1,73 +1,58 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+<!-- Badges -->
+<!-- While not required, badges are recommended; and in particular pipeline status -->
+<!-- Uncomment the below line and replace `project` with the path to your project (e.g. -->
+<!-- `group[s]/project`). If you want the status for a different branch than `master`, change -->
+<!-- the branch too.-->
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<!------------------------------------------------------------------------------------>
+<!-- REQUIRED -->
+<!------------------------------------------------------------------------------------>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# [Project Title]
 
-## Description
+<!-- Describe the project briefly here. -->
+<!-- Also, unless it's clear: specify what type of project it is; API, library, application, collection of scripts, etc -->
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Purpose
 
-## Installation
+<!-- What does the application do and why? What problem does it solve? -->
 
-```bash
-$ npm install
-```
+## Intended consumers
 
-## Running the app
+<!--  Who is the application intended for, and who can utilize its features? -->
 
-```bash
-# development
-$ npm run start
+## Main technologies
 
-# watch mode
-$ npm run start:dev
+<!-- What are the main languages and frameworks are used in the project -->
 
-# production mode
-$ npm run start:prod
-```
+## Available at
 
-## Test
+<!-- If the application is live, mention where it can be 'viewed' and where it is deployed, e.g. OpenShift, Azure etc. -->
+<!-- For libraries, this might also include what package repository it's available at -->
+<!-- If the project is an API or a library, where can I find documentation for it? -->
 
-```bash
-# unit tests
-$ npm run test
+<!------------------------------------------------------------------------------------>
+<!-- OPTIONAL -->
+<!------------------------------------------------------------------------------------>
 
-# e2e tests
-$ npm run test:e2e
+## Getting Started
 
-# test coverage
-$ npm run test:cov
-```
+<!--
+Provide step by step instructions that will allow a new contributor to get a copy of the project up and running on their local machine.
+Installation of common development tools such as `git`, `docker` and IDEs can be covered here, but is not necessary.
 
-## Support
+The granularity and extent of these instructions will depend on the size and type of the project,
+but may extend to things such as platform specific steps, etc.
+-->
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Running the project
 
-## Stay in touch
+<!-- Provide examples of how to run the project locally here, if applicable. -->
+<!-- If the project can be run in multiple ways (Docker, Minishift, command line, etc), -->
+<!-- it might be appropriate to have a section for each of them-->
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Deployment
 
-## License
+<!-- Provide step by step instructions that explain the process of deploying the application in QA or Prod environments -->
 
-Nest is [MIT licensed](LICENSE).
+<!-- If the project uses a CI/CD pipeline describe the high level concepts of the pipeline strategy here. -->

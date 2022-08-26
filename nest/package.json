@@ -1,7 +1,7 @@
 {
 	"name": "intility-paste",
 	"version": "0.0.1",
-	"description": "",
+	"description": "A boilerplate for Nest JS application",
 	"author": "",
 	"private": true,
 	"license": "UNLICENSED",
@@ -26,9 +26,12 @@
 		"@nestjs/core": "^8.4.7",
 		"@nestjs/mapped-types": "*",
 		"@nestjs/platform-express": "^8.4.7",
+		"@nestjs/swagger": "5.2.1",
+		"helmet": "5.1.1",
 		"reflect-metadata": "^0.1.13",
 		"rimraf": "^3.0.2",
-		"rxjs": "^7.2.0"
+		"rxjs": "^7.2.0",
+		"swagger-ui-express": "4.5.0"
 	},
 	"devDependencies": {
 		"@nestjs/cli": "^8.0.0",
