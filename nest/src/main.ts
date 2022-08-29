@@ -1,4 +1,4 @@
-import { VersioningType } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { configureSwagger } from './config/swagger';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -49,11 +49,19 @@ async function bootstrap() {
 
 	// Configure API prefix
 	// Official Nest Documentation: https://docs.nestjs.com/faq/global-prefix
-  app.setGlobalPrefix(apiPrefix, { exclude: [ 'health' ] });
+    app.setGlobalPrefix(apiPrefix, { exclude: [ 'health' ] });
 
 	// Configure API versioning.
 	// Official Nest Documentation: https://docs.nestjs.com/techniques/versioning
 	app.enableVersioning();
+
+    // Configure validation of DTOs.
+    // https://docs.nestjs.com/techniques/validation#using-the-built-in-validationpipe
+    app.useGlobalPipes(new ValidationPipe({ 
+        // Whitelist removes properties from the request which are not specified in the DTO
+        whitelist: true, 
+        errorHttpStatusCode: 422 
+    }));
 
 	// Create API and listen to port
   await app.listen(port || 4000);
