@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { LogLevel, ValidationPipe } from '@nestjs/common';
 import { configureSwagger } from './config/swagger';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -8,8 +8,16 @@ import { EnvironmentVariables } from './interfaces/environment-variables.interfa
 
 async function bootstrap() {
 	const apiPrefix = 'api';
+    // Normally we get env variables using the config service, but we need this variable before the config service is available,
+    // so we make an exception for this value.
+    const logLevels = process.env.LOG_LEVELS;
 
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule, {
+        // Enable specific log levels https://docs.nestjs.com/techniques/logger
+        // When setting log level all the levels "above" it will also be included.
+        // E.g. if log level is set to "warn", "error" will also be included.
+        logger: logLevels?.split(',') as LogLevel[] || ['log'],
+    });
 
 	// Get config from environment variables, using ConfigService
 	const configService = app.get<ConfigService<EnvironmentVariables, true>>(ConfigService);
