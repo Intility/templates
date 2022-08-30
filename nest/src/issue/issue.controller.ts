@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Logger, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { ApiBody, ApiCreatedResponse, ApiOAuth2, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AdminApiScope } from './../config/swagger';
 import { CreateIssueDto } from './dto/create-issue.dto';
@@ -19,10 +19,16 @@ import { IssueService } from './issue.service';
 @ApiOAuth2([ AdminApiScope ]) 	              // Set Swagger OAuth scope
 @ApiTags('Issues')				              // Set Swagger Tag
 export class IssueController {
+    // Nest provides its own logger, which can be used instead of console.log() to log messages with the same formatting as logs from the Nest framework gets.
+    // This will also enable Nest not to log messages below the log level configured in main.ts
+    // https://docs.nestjs.com/techniques/logger#using-the-logger-for-application-logging
+    private readonly logger = new Logger(IssueController.name);
 
 	// Inject IssueService through Dependency injection
 	// Official Nest Documentation: https://docs.nestjs.com/providers#dependency-injection
-    constructor(private readonly issueService: IssueService) {}
+    constructor(private readonly issueService: IssueService) {
+        this.logger.log('Issue controller initialized');
+    }
 
 	@Post()
 	@ApiCreatedResponse({ description: 'Created issue', type: IssueDto })
