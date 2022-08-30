@@ -17,12 +17,12 @@ import { IssueService } from './issue.service';
 
 @Controller({ path: 'issues', version: '1' }) // Set controller prefix and api version for all endpoints in this controller
 @ApiOAuth2([ AdminApiScope ]) 	              // Set Swagger OAuth scope
-@ApiTags('Issues')				                    // Set Swagger Tag
+@ApiTags('Issues')				              // Set Swagger Tag
 export class IssueController {
 
 	// Inject IssueService through Dependency injection
 	// Official Nest Documentation: https://docs.nestjs.com/providers#dependency-injection
-  constructor(private readonly issueService: IssueService) {}
+    constructor(private readonly issueService: IssueService) {}
 
 	@Post()
 	@ApiCreatedResponse({ description: 'Created issue', type: IssueDto })
