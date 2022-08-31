@@ -38,8 +38,8 @@ import { IssueService } from './issue.service';
  */
 
 @Controller({ path: 'issues', version: '1' }) // Set controller prefix and api version for all endpoints in this controller
-@ApiOAuth2([AdminApiScope]) // Set Swagger OAuth scope
 @UseInterceptors(CacheInterceptor) // Add auto-caching for GET endpoints. Can also be done globally, or manually. https://docs.nestjs.com/techniques/caching
+@ApiOAuth2([AdminApiScope]) // Set Swagger OAuth scope
 @ApiTags('Issues') // Set Swagger Tag
 export class IssueController {
     // Nest provides its own logger, which can be used instead of console.log() to log messages with the same formatting as logs from the Nest framework gets.

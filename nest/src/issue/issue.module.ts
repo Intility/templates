@@ -5,8 +5,8 @@ import { IssueRepository } from './issue.repository';
 
 @Module({
     imports: [
+        // Add caching. This can also be done globally instead of for specific modules. https://docs.nestjs.com/techniques/caching
         CacheModule.register({
-            // Add caching. https://docs.nestjs.com/techniques/caching
             ttl: 10,
         }),
     ],
