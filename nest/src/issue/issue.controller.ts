@@ -1,5 +1,6 @@
 import {
     Body,
+    CacheInterceptor,
     Controller,
     Delete,
     Get,
@@ -10,6 +11,7 @@ import {
     ParseIntPipe,
     Patch,
     Post,
+    UseInterceptors,
 } from '@nestjs/common';
 import {
     ApiBody,
@@ -36,6 +38,7 @@ import { IssueService } from './issue.service';
  */
 
 @Controller({ path: 'issues', version: '1' }) // Set controller prefix and api version for all endpoints in this controller
+@UseInterceptors(CacheInterceptor) // Add auto-caching for GET endpoints. Can also be done globally, or manually. https://docs.nestjs.com/techniques/caching
 @ApiOAuth2([AdminApiScope]) // Set Swagger OAuth scope
 @ApiTags('Issues') // Set Swagger Tag
 export class IssueController {
