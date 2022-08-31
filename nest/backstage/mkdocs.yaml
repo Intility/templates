@@ -1,0 +1,9 @@
+site_name: {{ project-name | toSnakeCase }}-component
+site_description: {{ project-description }}
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core
+
