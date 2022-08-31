@@ -4,7 +4,7 @@ import { IssueController } from './issue.controller';
 import { IssueRepository } from './issue.repository';
 
 @Module({
-  controllers: [IssueController],
-  providers: [IssueService, IssueRepository]
+    controllers: [IssueController],
+    providers: [IssueService, IssueRepository],
 })
 export class IssueModule {}
