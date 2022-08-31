@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Logger, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, CacheInterceptor, Controller, Delete, Get, HttpCode, HttpStatus, Logger, Param, ParseIntPipe, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { ApiBody, ApiCreatedResponse, ApiOAuth2, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AdminApiScope } from './../config/swagger';
 import { CreateIssueDto } from './dto/create-issue.dto';
@@ -17,6 +17,7 @@ import { IssueService } from './issue.service';
 
 @Controller({ path: 'issues', version: '1' }) // Set controller prefix and api version for all endpoints in this controller
 @ApiOAuth2([ AdminApiScope ]) 	              // Set Swagger OAuth scope
+@UseInterceptors(CacheInterceptor)            // Add auto-caching for GET endpoints. Can also be done globally, or manually. https://docs.nestjs.com/techniques/caching
 @ApiTags('Issues')				              // Set Swagger Tag
 export class IssueController {
     // Nest provides its own logger, which can be used instead of console.log() to log messages with the same formatting as logs from the Nest framework gets.
