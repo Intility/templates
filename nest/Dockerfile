@@ -19,6 +19,7 @@ FROM node:16-alpine as runtime
 ## Set time zone config for Linux image
 ENV TZ="Europe/Oslo"
 
+## Receive build argument from Kaniko. Use "unknown" as default if now value is provided.
 ARG BUILD_VERSION=unknown
 ENV BUILD_VERSION=$BUILD_VERSION
 
