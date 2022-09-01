@@ -40,7 +40,7 @@ export const configureSwagger = (app: INestApplication): void => {
 
     const document = SwaggerModule.createDocument(app, swaggerConfig);
 
-    SwaggerModule.setup(`api/docs`, app, document, {
+    SwaggerModule.setup('api/docs', app, document, {
         customSiteTitle: `${name} - Swagger`,
         // Customize Swagger Client
         // Official Swagger Documentation: https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
