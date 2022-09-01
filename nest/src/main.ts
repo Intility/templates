@@ -28,7 +28,7 @@ async function bootstrap() {
     // Configure CORS
     // Official Nest Documentation: https://docs.nestjs.com/security/cors
     app.enableCors({
-        origin: [`https://super-awesome-frontend.intility.com`],
+        origin: ['https://super-awesome-frontend.intility.com'],
     });
 
     // Configure Helmet security plugin.
@@ -53,13 +53,13 @@ async function bootstrap() {
     // Configure API prefix
     // Official Nest Documentation: https://docs.nestjs.com/faq/global-prefix
     app.setGlobalPrefix(apiPrefix, { exclude: ['health'] });
-	
+
     // Configure API versioning.
     // Official Nest Documentation: https://docs.nestjs.com/techniques/versioning
     app.enableVersioning();
-	
+
     // Configure validation of DTOs.
-    // https://docs.nestjs.com/techniques/validation#using-the-built-in-validationpipe
+    // Official Nest Documentation: https://docs.nestjs.com/techniques/validation#using-the-built-in-validationpipe
     app.useGlobalPipes(
         new ValidationPipe({
             // Whitelist removes properties from the request which are not specified in the DTO
@@ -71,10 +71,11 @@ async function bootstrap() {
     // Configure Sentry to intercept all thrown errors.
     // https://github.com/ntegral/nestjs-sentry
     app.useGlobalInterceptors(new SentryInterceptor());
-	configureSwagger(app);
+
+    configureSwagger(app);
 
     // Create API and listen to port
-	// NOTE If the runtime port is changed form 4000, you need to update the EXPORT <port> instruction at the bottom of the Dockerfile.
+    // NOTE If the runtime port is changed form 4000, you need to update the EXPORT <port> instruction at the bottom of the Dockerfile.
     await app.listen(port || 4000);
 }
 
