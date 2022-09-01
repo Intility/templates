@@ -27,6 +27,8 @@
 		"@nestjs/mapped-types": "*",
 		"@nestjs/platform-express": "^8.4.7",
 		"@nestjs/swagger": "5.2.1",
+		"@ntegral/nestjs-sentry": "3.0.7",
+		"@sentry/node": "6.19.7",
 		"cache-manager": "4.1.0",
 		"class-transformer": "0.5.1",
 		"class-validator": "0.13.2",
