@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: {{ project-name | toSnakeCase }}-component
+  name: {{ project-name | toKebabCase }}-component
   title: {{ project-name }}
   description: {{ project-description }}
   annotations:
@@ -17,4 +17,4 @@ spec:
   system: {{ backstage-system }}
   owner: group:{{ backstage-owner-group }}
   providesApis:
-    - {{ project-name | toSnakeCase }}-api
+    - {{ project-name | toKebabCase }}-api

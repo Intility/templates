@@ -1,4 +1,4 @@
-site_name: {{ project-name | toSnakeCase }}-component
+site_name: {{ project-name | toKebabCase }}-component
 site_description: {{ project-description }}
 
 nav:
