@@ -12,7 +12,7 @@ variables:
   # Configure Backstage mkdocs publication
   ENTITY_NAMESPACE: default
   ENTITY_KIND: Component
-  ENTITY_NAME: "{{ project-name }}"
+  ENTITY_NAME: "${{project-name}}"
   SOURCE_DIR: ./backstage
 
 # Include common GitLab jobs used internally in Intility
