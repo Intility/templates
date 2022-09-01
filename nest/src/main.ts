@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { EnvironmentVariables } from './interfaces/environment-variables.interface';
+import { SentryInterceptor } from '@ntegral/nestjs-sentry';
 
 async function bootstrap() {
     const apiPrefix = 'api';
@@ -67,6 +68,9 @@ async function bootstrap() {
         }),
     );
 
+    // Configure Sentry to intercept all thrown errors.
+    // https://github.com/ntegral/nestjs-sentry
+    app.useGlobalInterceptors(new SentryInterceptor());
 	configureSwagger(app);
 
     // Create API and listen to port
