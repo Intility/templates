@@ -30,4 +30,9 @@ export interface EnvironmentVariables {
      * Client ID for Azure Application Registration used for the Swagger client
      */
     SWAGGER_APP_CLIENT_ID: string;
+
+    /**
+     * Connection URL for Sentry logger
+     */
+    SENTRY_DSN: string;
 }
