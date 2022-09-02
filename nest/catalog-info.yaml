@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: ${{project-name | toKebabCase}}-location
+  title:  ${{project-name}}
+  description:  ${{project-description}}
+spec:
+  targets:
+    - ./backstage/component.yaml
+    - ./backstage/api.yaml
+    - ./backstage/resources.yaml

@@ -9,6 +9,11 @@ image: node:16-alpine
 
 variables:
   SONAR_PROJECT: $CI_PROJECT_NAME
+  # Configure Backstage mkdocs publication
+  ENTITY_NAMESPACE: default
+  ENTITY_KIND: Component
+  ENTITY_NAME: "${{project-name}}"
+  SOURCE_DIR: ./backstage
 
 # Include common GitLab jobs used internally in Intility
 include:
