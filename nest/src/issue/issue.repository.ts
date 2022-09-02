@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Issue } from './entities/issue.entity';
 
+/**
+ * Right now this class only contains mocked data, but ideally it should be used to handle database access.
+ * Nest has created documentation for how to integrate with different databases, but you can use other ones as well.
+ * https://docs.nestjs.com/techniques/database
+ * https://docs.nestjs.com/techniques/mongodb
+ */
 @Injectable()
 export class IssueRepository {
     private issues: Map<number, Issue>;

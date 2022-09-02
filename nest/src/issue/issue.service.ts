@@ -4,6 +4,10 @@ import { UpdateIssueDto } from './dto/update-issue.dto';
 import { Issue } from './entities/issue.entity';
 import { IssueRepository } from './issue.repository';
 
+/**
+ * Create a service to handle business logic.
+ * Nest doc for services: https://docs.nestjs.com/techniques/mongodb
+ */
 @Injectable()
 export class IssueService {
     // Nest provides its own logger, which can be used instead of console.log() to log messages with the same formatting as logs from the Nest framework gets.
