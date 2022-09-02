@@ -1,5 +1,5 @@
-site_name: ${{project-name | toKebabCase}}-component
-site_description: ${{project-description}}
+site_name: ${{projectName | toKebabCase}}-component
+site_description: ${{projectDescription}}
 
 nav:
   - Introduction: index.md

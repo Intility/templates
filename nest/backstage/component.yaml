@@ -1,20 +1,20 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ${{project-name | toKebabCase}}-component
-  title: ${{project-name}}
-  description: ${{project-description}}
+  name: ${{projectName | toKebabCase}}-component
+  title: ${{projectName}}
+  description: ${{projectDescription}}
   annotations:
     backstage.io/techdocs-ref: dir:.
-    gitlab.com/project-slug: ${{gitlab-project-slug}}
+    gitlab.com/project-slug: ${{gitlabProjectSlug}}
   links:
     - title: Operativ Samhandling
       icon: chat
-      url: ${{teams-ops-channel-url}}
+      url: ${{teamsOpsChannelUrl}}
 spec:
   type: service
   lifecycle: experimental
-  system: ${{backstage-system}}
-  owner: group:${{backstage-owner-group}}
+  system: ${{backstageOwnerSystem}}
+  owner: group:${{backstageOwnerGroup}}
   providesApis:
-    - ${{project-name | toKebabCase}}-api
+    - ${{projectName | toKebabCase}}-api

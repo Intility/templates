@@ -1,9 +1,9 @@
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
-  name: ${{project-name | toKebabCase}}-location
-  title:  ${{project-name}}
-  description:  ${{project-description}}
+  name: ${{projectName | toKebabCase}}-location
+  title:  ${{projectName}}
+  description:  ${{projectDescription}}
 spec:
   targets:
     - ./backstage/component.yaml

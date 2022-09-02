@@ -1,16 +1,16 @@
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: ${{project-name | toKebabCase}}
-  title:  ${{project-name}}
-  description:  ${{project-description}}
+  name: ${{projectName | toKebabCase}}
+  title:  ${{projectName}}
+  description:  ${{projectDescription}}
   tags:
     - node
     - nestjs
 spec:
   type: openapi
   lifecycle: experimental
-  owner: group:${{backstage-owner-group}}
-  system: ${{ backstage-owner-system}}
+  owner: group:${{backstageOwnerGroup}}
+  system: ${{backstageOwnerSystem}}
   definition: 
 	$text: https://petstore.swagger.io/v2/swagger.json
