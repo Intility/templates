@@ -26,6 +26,6 @@ module.exports = {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
 		'tsdoc/syntax': 'warn',
-		'linebreak-style': 'windows'
+		'linebreak-style': ["warn", 'windows']
     }
 };
