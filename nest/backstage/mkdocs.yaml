@@ -1,0 +1,9 @@
+site_name: ${{projectName | toKebabCase}}-component
+site_description: ${{projectDescription}}
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core
+

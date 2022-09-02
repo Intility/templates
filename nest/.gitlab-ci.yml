@@ -1,0 +1,129 @@
+stages:
+  - build
+  - test
+  - analyze
+  - deploy
+
+# Set image to be used across all stages
+image: node:16-alpine
+
+variables:
+  SONAR_PROJECT: $CI_PROJECT_NAME
+  # Configure Backstage mkdocs publication
+  ENTITY_NAMESPACE: default
+  ENTITY_KIND: Component
+  ENTITY_NAME: "${{projectName}}"
+  SOURCE_DIR: ./backstage
+
+# Include common GitLab jobs used internally in Intility
+include:
+  - project: "developer-infrastructure/backstage/intility-software-templates"
+    file: "/ci-template/techdoc.gitlab-ci.yml"
+  - project: "soc/static-application-security"
+    file: "/StaticApplicationSecurity.gitlab-ci.yml"
+  - project: "digital-telco/utils/gitlabci"
+    file:
+      - sonarqube/SonarQube-Template.gitlab-ci.yml
+      - git/Gitleaks-Template.gitlab-ci.yml
+      - npm/npm-audit-Template.gitlab-ci.yml
+      - docker/Dockerfile-audit.gitlab-ci.yml
+
+# Install dependencies and compile typescript for later jobs
+build:
+  stage: build
+  artifacts:
+    paths:
+      - dist
+      - node_modules
+    expire_in: "1 day"
+  before_script:
+    - npm ci
+  script:
+    - npm run build
+  except:
+    - tags
+
+# Execute unit tests and upload test results to GitLab
+test:
+  stage: test
+  # Upload coverage percentage from terminal output to GitLab: https://docs.gitlab.com/ee/ci/yaml/#coverage
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  needs:
+    - job: build
+      artifacts: true
+  script:
+    - npm run test -- --ci --coverage
+  artifacts:
+    when: always
+    paths:
+      - coverage
+    # Upload coverage data ti GitLab: https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+    expire_in: 1 day
+  except:
+    - tags
+
+# SonarQube code analysis upload.
+# This overwrites the default script provided by included job: https://gitlab.intility.com/digital-telco/utils/gitlabci/-/blob/master/sonarqube/SonarQube-Template.gitlab-ci.yml
+# TODO: Insert link to SonarQube docs
+sonarqube:
+  dependencies:
+    - test
+  script:
+    - sonar-scanner
+      -Dsonar.projectKey=$SONAR_PROJECT
+      -Dsonar.projectName=$SONAR_PROJECT
+      -Dsonar.scm.provider=git
+      -Dsonar.sources=src
+      -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+      -Dsonar.exclusions=src/**/*.{spec,test}.ts
+      -Dsonar.coverage.exclusions=src/**/*.{module,spec,test,dto,entity,enum}.ts, src/{__mocks__,config}/**/*.ts, src/**/__mocks__/**/*.ts, src/main.ts
+  only:
+    - master
+    - main
+
+# Setup base deploy config, using Kaniko for building and pushing Docker image to GitLab Container Registry
+# Kaniko Documentation: https://github.com/GoogleContainerTools/kaniko/blob/main/README.md
+.deploy_base:
+  stage: deploy
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context $CI_PROJECT_DIR
+      --dockerfile $CI_PROJECT_DIR/Dockerfile
+      --destination $CI_REGISTRY_IMAGE/$IMAGE_NAME:latest
+      --destination $CI_REGISTRY_IMAGE/$IMAGE_NAME:$IMAGE_TAG
+      --build-arg BUILD_VERSION=$IMAGE_TAG
+
+# Development deployment
+# Only triggers on commits and merge requests to master/main branch.
+deploy_image_development:
+  extends: .deploy_base
+  environment: development
+  variables:
+    IMAGE_NAME: $CI_ENVIRONMENT_NAME
+    IMAGE_TAG: $CI_PIPELINE_IID
+  only:
+    ## Should be your development branch
+    - master
+    - main
+
+# Production deployment
+# Only triggers on semantic version tag on a commit.
+deploy_image_production:
+  extends: .deploy_base
+  environment: production
+  variables:
+    IMAGE_NAME: $CI_ENVIRONMENT_NAME
+    IMAGE_TAG: $CI_COMMIT_TAG
+  when: manual
+  only:
+    - /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+  except:
+    - branches

@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { EnvironmentVariables } from './interfaces/environment-variables.interface';
+import { SentryInterceptor } from '@ntegral/nestjs-sentry';
 
 async function bootstrap() {
     const apiPrefix = 'api';
@@ -27,7 +28,7 @@ async function bootstrap() {
     // Configure CORS
     // Official Nest Documentation: https://docs.nestjs.com/security/cors
     app.enableCors({
-        origin: [`https://super-awesome-frontend.intility.com`],
+        origin: ['https://super-awesome-frontend.intility.com'],
     });
 
     // Configure Helmet security plugin.
@@ -58,7 +59,7 @@ async function bootstrap() {
     app.enableVersioning();
 
     // Configure validation of DTOs.
-    // https://docs.nestjs.com/techniques/validation#using-the-built-in-validationpipe
+    // Official Nest Documentation: https://docs.nestjs.com/techniques/validation#using-the-built-in-validationpipe
     app.useGlobalPipes(
         new ValidationPipe({
             // Whitelist removes properties from the request which are not specified in the DTO
@@ -66,6 +67,10 @@ async function bootstrap() {
             errorHttpStatusCode: 422,
         }),
     );
+
+    // Configure Sentry to intercept all thrown errors.
+    // https://github.com/ntegral/nestjs-sentry
+    app.useGlobalInterceptors(new SentryInterceptor());
 
     configureSwagger(app);
 

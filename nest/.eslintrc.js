@@ -1,3 +1,4 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
     parser: '@typescript-eslint/parser',
     parserOptions: {
@@ -19,13 +20,14 @@ module.exports = {
         node: true,
         jest: true,
     },
-    ignorePatterns: ['.eslintrc.js'],
+	ignorePatterns: ['.eslintrc.js'],
     rules: {
         '@typescript-eslint/interface-name-prefix': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
 		'tsdoc/syntax': 'warn',
-		'linebreak-style': ["warn", 'windows']
+		'linebreak-style': ['warn', 'windows'],
+		'quotes': ["warn", "single", { "avoidEscape": true }]
     }
 };
