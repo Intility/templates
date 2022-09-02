@@ -14,7 +14,7 @@ describe('IssueController', () => {
     let service: IssueService;
 
     beforeEach(async () => {
-        // Nest provides utilities for createing a testing module to test classes https://docs.nestjs.com/fundamentals/testing#testing-utilities
+        // Nest provides utilities for creating a testing module to test classes https://docs.nestjs.com/fundamentals/testing#testing-utilities
         const module: TestingModule = await Test.createTestingModule({
             controllers: [IssueController],
             providers: [
