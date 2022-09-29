@@ -1,16 +1,14 @@
 import { NavLink, Routes, Route } from "react-router-dom";
-import { TabBar } from "@intility/bifrost-react";
+import { Tabs } from "@intility/bifrost-react";
 
 const Profile = () => (
   <>
-    <TabBar>
+    <Tabs>
       <NavLink to="" end>
-        <TabBar.Item>Profile</TabBar.Item>
+        Profile
       </NavLink>
-      <NavLink to="settings">
-        <TabBar.Item>Settings</TabBar.Item>
-      </NavLink>
-    </TabBar>
+      <NavLink to="settings">Settings</NavLink>
+    </Tabs>
     <Routes>
       <Route path="/" element={<div>profile</div>} />
       <Route path="/settings" element={<div>settings</div>} />
