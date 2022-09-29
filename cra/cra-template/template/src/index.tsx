@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 import App from "components/App";
@@ -35,13 +35,15 @@ const msal = {
   },
 };
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container!);
+
+root.render(
   <BrowserRouter>
     <MsalBrowserProvider config={msal}>
       <StrictMode>
         <App />
       </StrictMode>
     </MsalBrowserProvider>
-  </BrowserRouter>,
-  document.getElementById("root")
+  </BrowserRouter>
 );
