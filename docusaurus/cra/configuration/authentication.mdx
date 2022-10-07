@@ -5,7 +5,7 @@ sidebar_position: 2
 
 The example code is set up to use authentication. For this to work, an App Registration has to be set up in Azure AD.
 
-### UI
+### Create App Registration
 
 Head over to [Azure -> Azure Active Directory -> App registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
 with your Intility Account, and create a new registration.
@@ -48,56 +48,6 @@ https://{your-project-slug}-dev.apps.int.intility.no
 
 You can also add more later if you create more environments.
 
-## CLI
-
-Login with the Azure CLI and run the following command (rember to modify the displayName)
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs
-  groupId="shell"
-  defaultValue="bash"
-  values={[
-  {
-    label: 'bash',
-    value: 'bash'
-  }, {
-    label: 'PowerShell',
-    value: 'ps'
-  }
-  ]}
->
-<TabItem value="bash">
-
-```bash
-az rest -u https://graph.microsoft.com/v1.0/applications -m post -b '{"displayName":"MyApp","spa":{"redirectUris":["http://localhost:3000"]}}'
-```
-
-</TabItem>
-<TabItem value="ps">
-
-```ps
-az rest -u https://graph.microsoft.com/v1.0/applications -m post -b '{\"displayName\":\"MyApp\",\"spa\":{\"redirectUris\":[\"http://localhost:3000\"]}}'
-```
-
-</TabItem>
-</Tabs>
-
-Copy the `appId` GUID, and paste it into the `clientId` field in your `index.tsx` file.
-
-```jsx title="src/index.tsx"
-const msal = {
-  auth: {
-    clientId: "YOUR_CLIENT_ID",
-    ...
-  },
-  ...
-}
-```
-
-Check out [Enabling authentication in your app](#enabling-authentication-in-your-app) to enable authentication in your app.
-
 ## Enabling authentication in your app
 
 Depending on what your applications scope is, there are different ways of enabling authentication.
@@ -110,14 +60,14 @@ This is the simplest way, and can be enabled by adding the `forced` prop to `Msa
 ReactDOM.render(
   <Router>
     <MsalBrowserProvider config={msal} forced>
-                                       ^^^^^^
+      ^^^^^^
       <React.StrictMode>
         <App />
       </React.StrictMode>
     </MsalBrowserProvider>
   </Router>,
-  document.getElementById("root")
-)
+  document.getElementById('root'),
+);
 ```
 
 This will force user authentication, and your app won't render unless the user is authenticated.
@@ -127,27 +77,25 @@ This will force user authentication, and your app won't render unless the user i
 If you don't want forced auth, you can implement a simple log-in button by using the `useAuth` hook from `@intility/react-msal-browser`.
 
 ```jsx
-import { Button } from "@intility/bifrost-react";
-import { useAuth } from "@intility/react-msal-browser";
+import { Button } from '@intility/bifrost-react';
+import { useAuth } from '@intility/react-msal-browser';
 
 const LoginButton = () => {
   const { login } = useAuth();
-  
-  return (
-    <Button onClick={() => login()}>Login</Button>
-  )
+
+  return <Button onClick={() => login()}>Login</Button>;
 };
 ```
 
 And elsewhere in your app you can determin the login status by checking the existance of a user with `useUser`.
 
 ```jsx
-import { useUser } from "@intility/react-msal-browser";
+import { useUser } from '@intility/react-msal-browser';
 
 const MyComponent = () => {
   const user = useUser();
 
-  return <span>{user !== null ? "Hello friend." : "Who are you?"}</span>;
+  return <span>{user !== null ? 'Hello friend.' : 'Who are you?'}</span>;
 };
 ```
 
@@ -168,7 +116,6 @@ const msal = {
 ```
 
 The API base URL can also be dynamically applied from an [Environment Variables](/cra/configuration/environment-variables).
-
 
 <Tabs
   groupId="typed"
@@ -209,8 +156,8 @@ const msal = {
 You can now consume an API with `authorizedFetch`, which uses the `endpoints` config to detect which token to use in a request.
 
 ```jsx
-import { useState, useEffect } from "react";
-import { authorizedFetch } from "@intility/react-msal-browser";
+import { useState, useEffect } from 'react';
+import { authorizedFetch } from '@intility/react-msal-browser';
 
 // This is a simplified example of data fetching in react
 // Please don't use in production
@@ -220,7 +167,7 @@ const DataComponent = () => {
   const [error, setError] = useState();
 
   useEffect(() => {
-    authorizedFetch("my-api/resource")
+    authorizedFetch('my-api/resource')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => setError(error));
@@ -261,14 +208,14 @@ Integrating `authenticatedFetch` with SWR is very simple. All you need to do is 
 <TabItem value="typed">
 
 ```tsx
-import useSWR from "swr";
-import { authorizedFetch } from "@intility/react-msal-browser";
+import useSWR from 'swr';
+import { authorizedFetch } from '@intility/react-msal-browser';
 
 const authFetcher = (url: string) =>
   authorizedFetch(url).then((result) => result.json());
 
 const SwrComponent = () => {
-  const { data, error } = useSWR("my-api/resource", { fetcher: authFetcher });
+  const { data, error } = useSWR('my-api/resource', { fetcher: authFetcher });
 
   return (
     <>
@@ -284,14 +231,14 @@ const SwrComponent = () => {
 <TabItem value="plain">
 
 ```jsx
-import useSWR from "swr";
-import { authorizedFetch } from "@intility/react-msal-browser";
+import useSWR from 'swr';
+import { authorizedFetch } from '@intility/react-msal-browser';
 
 const authFetcher = (url) =>
   authorizedFetch(url).then((result) => result.json());
 
 const SwrComponent = () => {
-  const { data, error } = useSWR("my-api/resource", { fetcher: authFetcher });
+  const { data, error } = useSWR('my-api/resource', { fetcher: authFetcher });
 
   return (
     <>
@@ -319,74 +266,73 @@ We could take this one step further, and assign the fetcher globally using `SWRC
 <TabItem value="typed">
 
 ```tsx title="src/index.tsx"
-import { SWRConfig } from "swr";
-import { authorizedFetch } from "@intility/react-msal-browser";
+import { SWRConfig } from 'swr';
+import { authorizedFetch } from '@intility/react-msal-browser';
 
 // Note that we apply a base url to every request
 const swr = {
   fetcher: (path: string) =>
-    authorizedFetch((process.env.REACT_APP_API_URL as string) + path)
-    .then(response => response.json())
+    authorizedFetch((process.env.REACT_APP_API_URL as string) + path).then(
+      (response) => response.json(),
+    ),
 };
 
 ReactDOM.render(
   <Router>
     <MsalBrowserProvider config={msal} forced>
       <SWRConfig value={swr}>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
       </SWRConfig>
     </MsalBrowserProvider>
   </Router>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
 ```
 
 </TabItem>
 <TabItem value="plain">
 
-
 ```jsx title="src/index.tsx"
-import { SWRConfig } from "swr";
-import { authorizedFetch } from "@intility/react-msal-browser";
+import { SWRConfig } from 'swr';
+import { authorizedFetch } from '@intility/react-msal-browser';
 
 // Note that we apply a base url to every request
 const swr = {
   fetcher: (path) =>
-    authorizedFetch(process.env.REACT_APP_API_URL + path)
-    .then(response => response.json())
+    authorizedFetch(process.env.REACT_APP_API_URL + path).then((response) =>
+      response.json(),
+    ),
 };
 
 ReactDOM.render(
   <Router>
     <MsalBrowserProvider config={msal} forced>
       <SWRConfig value={swr}>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
       </SWRConfig>
     </MsalBrowserProvider>
   </Router>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
 ```
 
 </TabItem>
 </Tabs>
 
-
-
 We can now call `useSWR` somewhere in our app, and it will by default use the authorized fetcher.
 
 ```jsx
-import useSWR from "swr";
-import { authorizedFetch } from "@intility/react-msal-browser";
+import useSWR from 'swr';
+import { authorizedFetch } from '@intility/react-msal-browser';
 
 const SwrComponent = () => {
   // Note that only the resource is requested here
   // that's because the API base URL is prepended in our fetcher
-  const { data, error } = useSWR("resource");
+  const { data, error } = useSWR('resource');
 
   return (
     <>
@@ -421,16 +367,19 @@ Integrating `authenticatedFetch` with React Query is very simple. All you need t
 
 ```tsx
 import { useQuery } from 'react-query';
-import { authorizedFetch } from "@intility/react-msal-browser";
+import { authorizedFetch } from '@intility/react-msal-browser';
 
 const authFetcher = (url: string) =>
   authorizedFetch(url).then((result) => result.json());
 
 const QueryComponent = () => {
-  const { data, error, isLoading, isError } = useQuery("my-api/resource", async () => {
-    let response = await authorizedFetch("my-api/resource");
-    return await response.json();
-  });
+  const { data, error, isLoading, isError } = useQuery(
+    'my-api/resource',
+    async () => {
+      let response = await authorizedFetch('my-api/resource');
+      return await response.json();
+    },
+  );
 
   return (
     <>
@@ -445,12 +394,14 @@ const QueryComponent = () => {
 We could take this one step further, and assign a global default query function using `QueryClient` and `QueryClientProvider`.
 
 ```tsx title="src/index.tsx"
-import { QueryClient, QueryClientProvider } from "react-query";
-import { authorizedFetch } from "@intility/react-msal-browser";
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { authorizedFetch } from '@intility/react-msal-browser';
 
 // Note that we apply a base url to every request
 const defaultQueryFn = async ({ queryKey }) => {
-  let response = await authorizedFetch((process.env.REACT_APP_API_URL as string) + queryKey[0]);
+  let response = await authorizedFetch(
+    (process.env.REACT_APP_API_URL as string) + queryKey[0],
+  );
   return await response.json();
 };
 
@@ -466,26 +417,26 @@ ReactDOM.render(
   <Router>
     <MsalBrowserProvider config={msal} forced>
       <QueryClientProvider value={queryClient}>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
       </QueryClientProvider>
     </MsalBrowserProvider>
   </Router>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
 ```
 
 We can now call `useQuery` somewhere in our app, and it will by default use the authorized fetcher.
 
 ```tsx
-import { useQuery } from "react-query";
-import { authorizedFetch } from "@intility/react-msal-browser";
+import { useQuery } from 'react-query';
+import { authorizedFetch } from '@intility/react-msal-browser';
 
 const QueryComponent = () => {
   // Note that only the resource is requested here
   // that's because the API base URL is prepended in our fetcher
-  const { data, error, isLoading, isError } = useQuery("resource");
+  const { data, error, isLoading, isError } = useQuery('resource');
 
   return (
     <>
