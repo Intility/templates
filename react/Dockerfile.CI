@@ -1,0 +1,4 @@
+FROM intility/nginx-unprivileged-react
+
+# copy build files
+COPY dist/ /usr/share/nginx/html

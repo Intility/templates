@@ -17,16 +17,15 @@ yo @intility/express                        # Use Yeoman CLI to run the template
 
 :::info
 During the project scaffolding you will be asked the following questions:
+
 1. **Project name and description**
-    - These values will be injected into the `package.json` file and will also ble shown in the Swagger documentation.
-    - Default project name will be the name of the folder.
+   - These values will be injected into the `package.json` file and will also ble shown in the Swagger documentation.
+   - Default project name will be the name of the folder.
 2. Do you want to include **demo endpoints** in the generated project?
-    - This is recommended for first time setup or if you are not familiar with Express API architecture 
-    - These files provides example CRUD operations with a router-, controller- and service-layer
-3. **Automatic Git initialization** and push to given Git repository.
-    - Please [create a GitLab](https://gitlab.intility.com/projects/new?namespace_id=978#blank_project) project, and get the SSH key. 
-    - NOTE: Unselect the: 'Initialize repository with a README' under 'Project Configuration'
-:::
+   - This is recommended for first time setup or if you are not familiar with Express API architecture
+   - These files provides example CRUD operations with a router-, controller- and service-layer
+3. **Automatic Git initialization** and push to given Git repository. - Please [create a GitLab](https://gitlab.intility.com/projects/new?namespace_id=978#blank_project) project, and get the SSH key. - NOTE: Unselect the: 'Initialize repository with a README' under 'Project Configuration'
+   :::
 
 :::info
 During dependency installation stage of the project initialization it may be shown an error message for missing Python or C++ compiler.
@@ -43,20 +42,20 @@ code .                                  # Open project in VS Code
 npm run start                           # Start the project
 ```
 
-After starting the project an `Missing Environment variable: INTILITY_TENANT_ID` Error will ber thrown. 
+After starting the project an `Missing Environment variable: INTILITY_TENANT_ID` Error will ber thrown.
 To fix this, create an `.env` file by using the template provided in `.env.template` and setup authentication by following this ([Guide](./setup/ApplicationRegistrations))
 
 For an more comprehensive overview of all included Npm Scripts, have a look at this page: [NPM Scripts](./NpmScripts)
 
 ## What should I do next?
 
-* Generate SonarQube Token ([Guide](https://create.intility.app/cra/configuration/sonarqube))
-  * Add the badge ([Guide](https://gitlab.intility.com/digital-telco/sonarqube/sonarqube-badge-proxy/-/blob/master/README.md))
-* Add Code coverage regexp to Gitlab to make the badge work.
-  * Navigate to: `GitLab Repository -> Settings -> CI/CD -> General pipelines -> Test coverage parsing`
-  * Enter: `All files[^|]*\|[^|]*\s+([\d\.]+)`
-* Create an `.env` file by using the template provided in `.env.template`
-  * Setup authentication ([Guide](./setup/ApplicationRegistrations))
-* Setup your OpenShift environment:
-  * Create a project on OpenShift ([Guide](https://create.intility.app/cra/configuration/deploy))
-  * Create a Deploy Token for your GitLab Repository ([Guide](https://create.intility.app/cra/configuration/gitlab#add-gitlab-deploy-token))
+- Generate SonarQube Token ([Guide](https://create.intility.app/react/configuration/sonarqube))
+  - Add the badge ([Guide](https://gitlab.intility.com/digital-telco/sonarqube/sonarqube-badge-proxy/-/blob/master/README.md))
+- Add Code coverage regexp to Gitlab to make the badge work.
+  - Navigate to: `GitLab Repository -> Settings -> CI/CD -> General pipelines -> Test coverage parsing`
+  - Enter: `All files[^|]*\|[^|]*\s+([\d\.]+)`
+- Create an `.env` file by using the template provided in `.env.template`
+  - Setup authentication ([Guide](./setup/ApplicationRegistrations))
+- Setup your OpenShift environment:
+  - Create a project on OpenShift ([Guide](https://create.intility.app/react/configuration/deploy))
+  - Create a Deploy Token for your GitLab Repository ([Guide](https://create.intility.app/react/configuration/gitlab#add-gitlab-deploy-token))

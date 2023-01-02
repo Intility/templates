@@ -1,0 +1,52 @@
+---
+title: Installation
+sidebar_position: 1
+---
+
+## Prerequisites
+
+- Some experience with React
+- [node.js](https://nodejs.org/)
+- [Visual Studio Code](https://code.visualstudio.com/) with the following plugins
+  - [Node Extension Pack](https://marketplace.visualstudio.com/items?itemName=swellaby.node-pack)
+  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- Set up the Intility NPM registry (optional)
+
+### Intility NPM Registry (optional)
+
+The Intility NPM registry (includes access to `@intility/*` and `@fortawesome/*` packages) can be configured by running:
+
+```bash
+npm config set registry https://artifactory.int.intility.no/artifactory/api/npm/npm/
+```
+
+For other alternatives, see the [guide on developers.intility.no](https://developers.intility.no/guides/tutorials/npm) (login required).
+
+## Create App
+
+```bash
+npx create-react-app my-app --template "@intility"
+cd my-app
+
+npm install
+```
+
+Run it in your terminal, and then open the Visual Studio Code Workspace with the following command.
+
+```bash
+code app.code-workspace
+```
+
+You can now start coding by running the start script.
+
+```bash
+npm start
+```
+
+## Available Scripts
+
+There are 3 scripts included by default, click on each one for more information.
+
+- [`npm start`](https://vitejs.dev/guide/cli.html#dev-server)
+- [`npm run build`](https://vitejs.dev/guide/cli.html#build)
+- [`npm run preview`](https://vitejs.dev/guide/cli.html#vite-preview)

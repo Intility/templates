@@ -5,14 +5,11 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: 'Create React App',
-    href: '/cra',
+    title: 'React',
+    href: '/react',
     Svg: '/img/react-logo.svg',
     description: (
-      <>
-        Get started with React using our templates for Create React App.
-        TypeScript and JavaScript available.
-      </>
+      <>Get started with React and TypeScript using our templates for Vite.</>
     ),
   },
   {
@@ -21,21 +18,22 @@ const FeatureList = [
     Svg: '/img/dotnet-logo.svg',
     description: <>Start developing APIs using our templates for .NET.</>,
   },
-    {
+  {
     title: 'FastAPI',
     href: '/fastapi',
     Svg: '/img/python-logo.svg',
-    description: (
-      <>
-        Create a FastAPI app with batteries included.
-      </>
-    ),
+    description: <>Create a FastAPI app with batteries included.</>,
   },
   {
     title: 'TypeScript & Express.js',
     href: '/express',
     Svg: '/img/node_express.png',
-    description: <>Start developing using TypeScript and build APIs using our template for express.js.</>,
+    description: (
+      <>
+        Start developing using TypeScript and build APIs using our template for
+        express.js.
+      </>
+    ),
   },
   // METROWORKER
   // {

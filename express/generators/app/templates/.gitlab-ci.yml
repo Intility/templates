@@ -115,13 +115,12 @@ publish_prod:
   only:
     - master
     - main
-
 ###
 # DEPLOY STAGE
 # This is left out on purpose, since this requires a bit of setup
 # Head over to the documentation to read more on how to configure this.
-#  - Create a project on OpenShift [Guide](https://create.intility.app/cra/configuration/deploy)
-#  - Create a Deploy Token for your GitLab Repository [Guide](https://create.intility.app/cra/configuration/gitlab#add-gitlab-deploy-token)
+#  - Create a project on OpenShift [Guide](https://create.intility.app/react/configuration/deploy)
+#  - Create a Deploy Token for your GitLab Repository [Guide](https://create.intility.app/react/configuration/gitlab#add-gitlab-deploy-token)
 ###
 
 # .deploy_base:

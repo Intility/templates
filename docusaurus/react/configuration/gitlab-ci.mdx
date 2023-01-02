@@ -1,0 +1,85 @@
+---
+title: .gitlab-ci.yml Overview
+sidebar_position: 4
+---
+
+The `gitlab-ci.yml` file included with the template comes with the following jobs
+
+```
+build
+build:dev
+build:prod
+
+test
+
+sonarqube
+
+image:dev
+image:prod
+
+sentry:dev
+sentry:prod
+
+deploy:dev
+.deploy:prod
+```
+
+:::info
+This page describes jobs of the current version of the templates.
+If you use an old version, they might differ.
+Check out the [pipeline upgrade guide](/react/advanced/upgrade-pipeline) to update to the V1 pipeline.
+:::
+
+:::info
+All `*:dev` jobs is set to run on pushes to `master` or `main` branch.
+:::
+
+:::info
+All `*:prod` jobs are set to run when tags are pushed to the repository.
+:::
+
+## `build`
+
+The main `build` job runs [`vite build`](https://vitejs.dev/guide/cli.html#build) on every push to all branches (except master).
+It will pass some default environment variables;
+
+- `VITE_SENTRY_DSN` will be [`SENTRY_ENV`](/react/configuration/sentry#acquire-token)
+- `VITE_SENTRY_ENVIRONMENT` will be the git branch name
+- `VITE_SENTRY_RELEASE` will be the git commit SHA
+
+It also creates an artifact of the `build` folder that is created,
+which will be passed onto later jobs.
+
+The `build:*` pipeline does the same as build,
+except it adds a GitLab environment.
+The base job uses the GitLab environment name to configure the Sentry environment.
+
+## `sonarqube`
+
+This job uses the [SonarScanner CLI](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/) to upload the source code to SonarQube.
+The pipeline will continue if this job fails, but it should be looked into.
+
+## `image`
+
+The image jobs builds a docker image with the `Dockerfile.CI` dockerfile,
+and with the build output from the `build` jobs.
+
+For the `image:dev` job, it pushes two tags, one with `dev`, and one with the pipeline id.
+For the `image:prod` job, the tags pushed are `latest` and the tag name.
+
+## `sentry`
+
+The `sentry` job uses the [Sentry CLI](https://docs.sentry.io/product/cli/) to create a new release.
+The release name will be the git commit SHA.
+It will connect the release to the current commit, and upload sourcemaps from the build step.
+Lastly it will associate the release with the right env.
+
+## `deploy`
+
+This is the main job for deploying to OpenShift.  
+It will create an environment in GitLab, with the URL to the running app.
+
+It uses Helm to install the app to an OpenShift project.
+
+For `deploy:dev`, the route defaults to `https://{projectSlug}-dev.apps.int.intility.no`.  
+For `deploy:prod`, the route defaults to `https://{projectSlug}.apps.int.intility.no`.

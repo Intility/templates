@@ -11,10 +11,6 @@ More frameworks might be included in the future.
 
 <p align="center">
 <a href="https://github.com/Intility/templates/actions">
-    <img alt="publish cra" src="https://github.com/Intility/templates/actions/workflows/publish-cra.yml/badge.svg" style="max-width:100%;">
-</a>
-
-<a href="https://github.com/Intility/templates/actions">
     <img alt="publish docs" src="https://github.com/Intility/templates/actions/workflows/publish-docs.yml/badge.svg" style="max-width:100%;">
 </a>
 
@@ -29,16 +25,14 @@ More frameworks might be included in the future.
 
 To get started with a project, simply run one of the following commands.
 
-CRA TypeScript:
+Vite + React + TypeScript:
 
 ```bash
-npx create-react-app my-app --template @intility
-```
+npx degit intility/templates/react my-app
+cd my-app
 
-CRA JavaScript:
-
-```bash
-npx create-react-app my-app --template @intility/js
+npm install
+npm start
 ```
 
 dotnet:
@@ -55,16 +49,16 @@ npm install -g yo                           # Install Yeoman CLI
 npm install -g @intility/generator-express  # Install Intility Express project generator
 
 mkdir <projectName> && cd <projectName>     # Create a new project folder
-yo @intility/express                        # Use Yeoman CLI to run the template generator 
+yo @intility/express                        # Use Yeoman CLI to run the template generator
 ```
 
 There is a lot more to it, so please visit the [docs](https://create.intility.app/) for the next steps.
 
 ## Repository structure
 
-### [cra](./cra/)
+### [react](./react/)
 
-Contains all templates for Create React App.
+Contains a Vite + React + Typescript template.
 
 ### [dotnet](./dotnet/)
 
