@@ -25,7 +25,7 @@ More frameworks might be included in the future.
 
 To get started with a project, simply run one of the following commands.
 
-Vite + React + TypeScript:
+Vite + React + TypeScript + Bifrost:
 
 ```bash
 npx degit intility/templates/react my-app
