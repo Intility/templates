@@ -20,6 +20,8 @@ obj
 */cra-template*/template/README.md
 */cra-template*/template/LICENSE
 
+react/package-lock.json
+
 # Generated files
 .docusaurus
 .cache-loader
