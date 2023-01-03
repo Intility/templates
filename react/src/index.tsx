@@ -1,6 +1,6 @@
+import { createRoot } from "react-dom/client";
+import { StrictMode } from "react";
 import { MsalProvider } from "@azure/msal-react";
-import React from "react";
-import ReactDOM from "react-dom/client";
 import { instance } from "./auth";
 import { initializeSentry } from "./utils/initializeSentry";
 import { RouterProvider } from "react-router-dom";
@@ -15,14 +15,14 @@ const rootElement = document.getElementById("root")!;
 // Uncomment next line if using Modal from Bifrost
 // Modal.setAppElement(rootElement);
 
-const root = ReactDOM.createRoot(rootElement);
+const root = createRoot(rootElement);
 
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <MsalProvider instance={instance}>
       <RouterProvider router={router} />
     </MsalProvider>
-  </React.StrictMode>
+  </StrictMode>
 );
 
 initializeSentry();
