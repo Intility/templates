@@ -1,26 +1,28 @@
-import { EventType, PublicClientApplication } from "@azure/msal-browser";
+import {
+  AuthenticationResult,
+  EventType,
+  PublicClientApplication,
+} from "@azure/msal-browser";
 import { config } from "./config";
 
+/**
+ * A PublicClientApplication instance
+ * @see https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-react/docs/getting-started.md
+ */
 const instance = new PublicClientApplication(config);
 
-// when single-account application
-// set active account after login or load to avoid specifying account to instance functions
-function setActiveAccount() {
-  let accounts = instance.getAllAccounts();
-  if (accounts.length > 0) {
-    let account = accounts[0];
-    instance.setActiveAccount(account);
-  }
-}
-
-setActiveAccount();
-
+/**
+ * Register event callback to set the active account atfer successful login
+ * @see https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/accounts.md#active-account-apis
+ * @see https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/events.md
+ */
 instance.addEventCallback((message) => {
   if (
     message.eventType === EventType.LOGIN_SUCCESS ||
     message.eventType === EventType.SSO_SILENT_SUCCESS
   ) {
-    setActiveAccount();
+    const result = message.payload as AuthenticationResult;
+    instance.setActiveAccount(result.account);
   }
 });
 

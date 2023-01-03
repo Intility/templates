@@ -1,3 +1,7 @@
+/**
+ * A generic Error Page, intended to be used as a Route errorElement.
+ * @see https://reactrouter.com/en/main/route/error-element
+ */
 const ErrorPage = () => {
   return (
     <>

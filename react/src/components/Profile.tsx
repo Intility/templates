@@ -1,20 +1,25 @@
-import { NavLink, Routes, Route } from "react-router-dom";
-import { Tabs } from "@intility/bifrost-react";
+import {
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate,
+  useAccount,
+  useMsal,
+} from "@azure/msal-react";
+import { Button } from "@intility/bifrost-react";
 
 const Profile = () => {
+  const { instance } = useMsal();
+  const account = useAccount();
   return (
-    <>
-      <Tabs>
-        <NavLink to="" end>
-          Profile
-        </NavLink>
-        <NavLink to="settings">Settings</NavLink>
-      </Tabs>
-      <Routes>
-        <Route path="/" element={<div>profile</div>} />
-        <Route path="/settings" element={<div>settings</div>} />
-      </Routes>
-    </>
+    <div className="bf-content bfl-page-padding">
+      <AuthenticatedTemplate>
+        <p>Hello, {account?.name}!</p>
+        <Button onClick={() => instance.logout()}>Logout</Button>
+      </AuthenticatedTemplate>
+      <UnauthenticatedTemplate>
+        <p>You are not logged in.</p>
+        <Button onClick={() => instance.loginPopup()}>Login</Button>
+      </UnauthenticatedTemplate>
+    </div>
   );
 };
 
