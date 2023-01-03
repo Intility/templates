@@ -125,7 +125,7 @@ sentry:dev:
     VERSION: $CI_PIPELINE_IID
   script:
     - sentry-cli releases new $VERSION
-    - sentry-cli releases files $VERSION upload-sourcemaps --url-prefix '~/static/js' dist/static/js --rewrite
+    - sentry-cli releases files $VERSION upload-sourcemaps --url-prefix '~/assets' dist/assets --rewrite
     - sentry-cli releases finalize $VERSION
     - sentry-cli releases set-commits --auto $VERSION || echo 'Found no commits to assign to release.'
     - sentry-cli releases deploys $VERSION new -e $SENTRY_ENV

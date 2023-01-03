@@ -23,6 +23,9 @@ export default defineConfig({
     open: "http://localhost:3000",
     port: 3000,
   },
+  build: {
+    sourcemap: true,
+  },
   // https://github.com/vitest-dev/vitest/blob/main/examples/react-testing-lib/vite.config.ts
   // https://vitest.dev/config/
   test: {
