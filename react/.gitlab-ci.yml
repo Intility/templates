@@ -36,7 +36,7 @@ build:
     - npm run build
   artifacts:
     paths:
-      - build
+      - dist
     expire_in: 2 weeks
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
@@ -125,7 +125,7 @@ sentry:dev:
     VERSION: $CI_PIPELINE_IID
   script:
     - sentry-cli releases new $VERSION
-    - sentry-cli releases files $VERSION upload-sourcemaps --url-prefix '~/static/js' build/static/js --rewrite
+    - sentry-cli releases files $VERSION upload-sourcemaps --url-prefix '~/static/js' dist/static/js --rewrite
     - sentry-cli releases finalize $VERSION
     - sentry-cli releases set-commits --auto $VERSION || echo 'Found no commits to assign to release.'
     - sentry-cli releases deploys $VERSION new -e $SENTRY_ENV
