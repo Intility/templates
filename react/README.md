@@ -16,7 +16,7 @@
 <!-- Describe the project briefly here. -->
 <!-- Also, unless it's clear: specify what type of project it is; API, library, application, collection of scripts, etc -->
 
-This project was bootstrapped by with an [Intility Template](https://github.com/Intility/templates/).
+This project was bootstrapped with the [Intility React Template](https://github.com/Intility/templates/).
 
 ## Purpose
 
