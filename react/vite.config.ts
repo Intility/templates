@@ -25,6 +25,7 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
+    chunkSizeWarningLimit: 1000,
   },
   // https://github.com/vitest-dev/vitest/blob/main/examples/react-testing-lib/vite.config.ts
   // https://vitest.dev/config/
