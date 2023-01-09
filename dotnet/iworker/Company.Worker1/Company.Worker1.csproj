@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>dotnet-Company.Worker1-53bc9b9d-9d6a-45d4-8429-2a2761773502</UserSecretsId>
@@ -11,7 +11,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Azure.Identity" Version="1.8.0" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="5.2.0" />
 		<PackageReference Include="Intility.Logging.AspNetCore" Version="1.3.1"/>
 		<PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.3.1"/>

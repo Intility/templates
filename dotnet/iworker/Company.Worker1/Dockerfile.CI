@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
 
 # if you use databases, these lines need to be uncommented
 # RUN apk add --no-cache icu-libs
