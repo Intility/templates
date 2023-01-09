@@ -20,7 +20,7 @@ module.exports = {
       },
       items: [
         {
-          href: '/cra',
+          href: '/react',
           label: 'React',
           position: 'left',
         },
@@ -39,19 +39,6 @@ module.exports = {
           label: 'Express',
           position: 'left',
         },
-        //
-        // METROWORKER
-        // {
-        //   href: '/metroworker',
-        //   label: 'metroworker',
-        //   position: 'left',
-        // },
-        // BLAZOR
-        // {
-        //   href: '/blazor',
-        //   label: 'blazor',
-        //   position: 'left',
-        // },
         {
           href: 'https://github.com/Intility/templates',
           label: 'GitHub',
@@ -74,8 +61,8 @@ module.exports = {
               href: 'https://reactjs.org/',
             },
             {
-              label: 'Create React App',
-              href: 'https://create-react-app.dev/',
+              label: 'Vite',
+              href: 'https://vitejs.dev/',
             },
           ],
         },
@@ -130,10 +117,10 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          sidebarPath: require.resolve('./sidebarsCra.js'),
-          id: 'cra',
-          path: 'cra',
-          routeBasePath: 'cra',
+          sidebarPath: require.resolve('./sidebarsReact.js'),
+          id: 'react',
+          path: 'react',
+          routeBasePath: 'react',
           // Please change this to your repo.
           editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
           sidebarCollapsible: false,
@@ -206,31 +193,5 @@ module.exports = {
         // ... other options
       },
     ],
-    // METROWORKER
-    // [
-    //   '@docusaurus/plugin-content-docs',
-    //   {
-    //     id: 'metroworker',
-    //     path: 'metroworker',
-    //     routeBasePath: 'metroworker',
-    //     sidebarPath: require.resolve('./sidebarsMetroworker.js'),
-    //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
-    //     sidebarCollapsible: false,
-    //     // ... other options
-    //   },
-    // ],
-    // BLAZOR
-    // [
-    //   '@docusaurus/plugin-content-docs',
-    //   {
-    //     id: 'blazor',
-    //     path: 'blazor',
-    //     routeBasePath: 'blazor',
-    //     sidebarPath: require.resolve('./sidebarsBlazor.js'),
-    //     editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
-    //     sidebarCollapsible: false,
-    //     // ... other options
-    //   },
-    // ],
   ],
 };
