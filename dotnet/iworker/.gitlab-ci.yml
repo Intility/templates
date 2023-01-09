@@ -25,7 +25,7 @@ default:
 
 build:
   stage: build
-  image: mcr.microsoft.com/dotnet/sdk:6.0
+  image: mcr.microsoft.com/dotnet/sdk:7.0
   script:
     - dotnet restore
     - cd Company.Worker1
@@ -37,7 +37,7 @@ build:
 
 test:
   stage: test
-  image: mcr.microsoft.com/dotnet/sdk:6.0
+  image: mcr.microsoft.com/dotnet/sdk:7.0
   script:
     - dotnet restore
     - dotnet test
@@ -45,7 +45,7 @@ test:
 
 analyze:
   stage: analyze
-  image: nosinovacao/dotnet-sonar:latest
+  image: ghcr.io/nosinovacao/dotnet-sonar:latest
   script:
     - dotnet restore
     - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin 

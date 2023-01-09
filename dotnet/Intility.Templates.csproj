@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.4.1</PackageVersion>
+    <PackageVersion>1.4.7</PackageVersion>
     <PackageId>Intility.Templates</PackageId>
     <Title>Intility Templates</Title>
     <Authors>Intility</Authors>
