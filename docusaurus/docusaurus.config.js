@@ -35,11 +35,6 @@ module.exports = {
           position: 'left',
         },
         {
-          href: '/express',
-          label: 'Express',
-          position: 'left',
-        },
-        {
           href: 'https://github.com/Intility/templates',
           label: 'GitHub',
           position: 'right',
@@ -78,8 +73,8 @@ module.exports = {
               href: 'https://intility.slack.com/archives/CRVGGS6R1',
             },
             {
-              label: 'developers.intility.no',
-              href: 'https://developers.intility.com/',
+              label: 'Backstage',
+              href: 'https://backstage.apps.aa.intility.com/',
             },
           ],
         },
@@ -166,18 +161,6 @@ module.exports = {
             (c) => !c.label || !c.label.startsWith('_'),
           );
         },
-        // ... other options
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'express',
-        path: 'express',
-        routeBasePath: 'express',
-        sidebarPath: require.resolve('./sidebarsExpress.js'),
-        editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
-        sidebarCollapsible: false,
         // ... other options
       },
     ],
