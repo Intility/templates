@@ -10,17 +10,6 @@ sidebar_position: 1
 - [Visual Studio Code](https://code.visualstudio.com/) with the following plugins
   - [Node Extension Pack](https://marketplace.visualstudio.com/items?itemName=swellaby.node-pack)
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- Set up the Intility NPM registry (optional)
-
-### Intility NPM Registry (optional)
-
-The Intility NPM registry (includes access to `@intility/*` and `@fortawesome/*` packages) can be configured by running:
-
-```bash
-npm config set registry https://artifactory.int.intility.no/artifactory/api/npm/npm/
-```
-
-For other alternatives, see the [guide on developers.intility.no](https://developers.intility.no/guides/tutorials/npm) (login required).
 
 ## Create App
 
@@ -42,6 +31,12 @@ You can now start coding by running the start script.
 ```bash
 npm start
 ```
+
+:::info
+The template includes a `.npmrc` config which sets up a custom registry for `@intility/*` and `@fortawesome/*` packages.
+
+For alternative package registry setup, see the [NPM docs in Backstage](https://backstage.apps.aa.intility.com/docs/default/component/package-registry/npm/).
+:::
 
 ## Available Scripts
 
