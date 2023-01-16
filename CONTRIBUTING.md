@@ -50,7 +50,7 @@ Current frameworks:
 
 - **react**
 - **dotnet**
-- **express**
+- **fastapi**
 
 For the **docs** type, the scope might additionally be the name of a markdown file in the root of the repository (in lowercase).
 

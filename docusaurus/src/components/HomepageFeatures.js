@@ -25,30 +25,16 @@ const FeatureList = [
     description: <>Create a FastAPI app with batteries included.</>,
   },
   {
-    title: 'TypeScript & Express.js',
-    href: '/express',
-    Svg: '/img/node_express.png',
+    title: 'NestJS API',
+    href: 'https://backstage.apps.aa.intility.com/create/templates/default/nest-api-template',
+    Svg: '/img/nestjs.svg',
     description: (
       <>
         Start developing using TypeScript and build APIs using our template for
-        express.js.
+        NestJS.
       </>
     ),
   },
-  // METROWORKER
-  // {
-  //   title: 'Metro Worker',
-  //   href: '/metroworker',
-  //   Svg: '???',
-  //   description: <>Start reacting to Metro events using .NET.</>,
-  // },
-  // BLAZOR
-  // {
-  //   title: 'Blazor',
-  //   href: '/blazor',
-  //   Svg: '???',
-  //   description: <>Start developing Blazor applications.</>,
-  // },
 ];
 
 function Feature({ id, Svg = 'div', title, href, description }) {
