@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+      "swellaby.node-pack",
+      "esbenp.prettier-vscode",
+      "intility.vscode-backstage",
+      "redhat.vscode-yaml"
+    ]
+  }
