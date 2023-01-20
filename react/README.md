@@ -44,6 +44,8 @@ React
 
 ## Getting Started
 
+### First-time setup
+
 <!--
 Provide step by step instructions that will allow a new contributor to get a copy of the project up and running on their local machine.
 Installation of common development tools such as `git`, `docker` and IDEs can be covered here, but is not necessary.
@@ -51,6 +53,8 @@ Installation of common development tools such as `git`, `docker` and IDEs can be
 The granularity and extent of these instructions will depend on the size and type of the project,
 but may extend to things such as platform specific steps, etc.
 -->
+
+Clone the repository, then install dependencies with `npm install`
 
 ### Running the project
 
@@ -68,7 +72,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-## `npm test`
+### `npm test`
 
 Launches the test runner in the interactive watch mode.
 
