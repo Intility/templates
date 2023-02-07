@@ -21,12 +21,12 @@ service:
 resources:
   # It is crucial to specify the resources for this deployment to ensure optimal performance and prevent any potential outages.
   # Failure to set the correct resources can lead to unexpected behavior and degradation of services.
-   limits:
-     cpu: 100m
-     memory: 350Mi
-   requests:
-     cpu: 30m
-     memory: 100Mi
+  limits:
+    cpu: 100m
+    memory: 350Mi
+  requests:
+    cpu: 30m
+    memory: 100Mi
 
 route: ""
 
