@@ -81,8 +81,31 @@ Read the [`@azure/msal-react` docs](https://github.com/AzureAD/microsoft-authent
 
 ## Consuming an authenticated API
 
-Consuming an authenticated API is relativly simple.
-You'll need to modify the `authorizedFetch` method, and acquire the correct scopes for the URL you're trying to call.
+To consume an authenticated API you will need to add permission. You can do this by going to your frontends application registration in Azure, under API Permissions.
+Click "Add a permission" and follow the steps to add the api scope you need.
+
+The permission you add will have a scope looking something like `api://application-guid/scopename`, which you will use as the `'API_SCOPE'` variable in the next steps below.
+
+![API Permissions](/img/azure-api-permissions2.png)
+
+If the API you want to consume requires user consent you'll need to add the api scope to the `authenticationRequest` scopes.
+
+```tsx title="src/index.tsx"
+root.render(
+  <React.StrictMode>
+    <MsalProvider instance={instance}>
+      <MsalAuthenticationTemplate
+        interactionType={InteractionType.Redirect}
+        authenticationRequest={{ scopes: ['User.Read', 'API_SCOPE'] }}
+      >
+        <RouterProvider router={router} />
+      </MsalAuthenticationTemplate>
+    </MsalProvider>
+  </React.StrictMode>,
+);
+```
+
+You'll also need to modify the `authorizedFetch` method, and acquire the correct scopes for the URL you're trying to call.
 
 ```tsx title="src/auth/authorizedFetch.ts"
 async function authorizedFetch() {
@@ -155,6 +178,8 @@ import TabItem from '@theme/TabItem';
 >
 <TabItem value="swr">
 
+Before continuing this step, read about and install [SWR](https://swr.vercel.app/).
+
 Integrating `authenticatedFetch` with SWR is very simple. All you need to do is specify a fetcher for SWR.
 
 ```tsx
@@ -186,8 +211,8 @@ import { authorizedFetch } from '~/auth';
 // Note that we apply a base url to every request
 const swr = {
   fetcher: (path: string) =>
-    authorizedFetch((import.meta.env.VITE_API_URL) + path).then(
-      (response) => response.json(),
+    authorizedFetch(import.meta.env.VITE_API_URL + path).then((response) =>
+      response.json(),
     ),
 };
 
@@ -198,7 +223,7 @@ root.render(
         <RouterProvider router={router} />
       </SWRConfig>
     </MsalProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 ```
 
@@ -299,7 +324,7 @@ root.render(
         <RouterProvider router={router} />
       </QueryClientProvider>
     </MsalProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 ```
 
