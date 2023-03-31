@@ -23,7 +23,7 @@ public class NonGuestsHandler : AuthorizationHandler<NonGuestsRequirement>
         // If the claim is not found, it grants the specified requirement. This ensures that no 
         // guest users in an Azure tenant can access this resource. 
 
-        var idp = context.User.FindFirst(c => c.Type == "idp");
+        var idp = context.User.FindFirst(c => c.Type == "http://schemas.microsoft.com/identity/claims/identityprovider");
         if (idp == null)
         {
             context.Succeed(requirement);
