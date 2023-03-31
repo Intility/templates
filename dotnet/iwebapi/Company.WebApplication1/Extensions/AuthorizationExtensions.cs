@@ -19,10 +19,12 @@ public class NonGuestsHandler : AuthorizationHandler<NonGuestsRequirement>
     protected override Task HandleRequirementAsync(
         AuthorizationHandlerContext context, NonGuestsRequirement requirement)
     {
-        var issuer = context.User.FindFirst(c => c.Type == "iss");
-        var tenantId = context.User.FindFirst(c => c.Type == ClaimConstants.TenantId);
+        // This method checks for the presence of a claim with the type "idp" in the user's context. 
+        // If the claim is not found, it grants the specified requirement. This ensures that no 
+        // guest users in an Azure tenant can access this resource. 
 
-        if (issuer != null && tenantId != null && issuer.Value.Contains(tenantId.Value))
+        var idp = context.User.FindFirst(c => c.Type == "idp");
+        if (idp == null)
         {
             context.Succeed(requirement);
         }
