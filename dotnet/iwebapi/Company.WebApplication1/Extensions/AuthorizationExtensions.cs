@@ -16,15 +16,16 @@ public class NonGuestsRequirement : IAuthorizationRequirement { }
 
 public class NonGuestsHandler : AuthorizationHandler<NonGuestsRequirement>
 {
+    private readonly string idpClaimType = "http://schemas.microsoft.com/identity/claims/identityprovider";
+    private readonly string issClaimType = "iss";
+
     protected override Task HandleRequirementAsync(
         AuthorizationHandlerContext context, NonGuestsRequirement requirement)
     {
-        // This method checks for the presence of a claim with the type "idp" in the user's context. 
-        // If the claim is not found, it grants the specified requirement. This ensures that no 
-        // guest users in an Azure tenant can access this resource. 
+        var iss = context.User.FindFirstValue(issClaimType);
+        var idp = context.User.FindFirstValue(idpClaimType) ?? iss;
 
-        var idp = context.User.FindFirst(c => c.Type == "http://schemas.microsoft.com/identity/claims/identityprovider");
-        if (idp == null)
+        if (idp == iss)
         {
             context.Succeed(requirement);
         }
