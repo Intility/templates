@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
-using Company.WebApplication1.Extensions;
 using Company.WebApplication1.Swagger;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -9,6 +8,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Intility.Extensions.Logging;
 using Azure.Identity;
+using Company.WebApplication1.Policies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,11 +40,10 @@ builder.Host.UseIntilityLogging((ctx, logging) =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
-builder.Services.AddNonGuestsHandler();
 builder.Services.AddAuthorization(options =>
 {
     options.DefaultPolicy = new AuthorizationPolicyBuilder()
-        .RequireNonGuests()
+        .AddRequirements(new DenyGuestsAuthorizationsHandler())
         .Build();
 });
 
