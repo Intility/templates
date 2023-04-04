@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Intility.Extensions.Logging;
 using Azure.Identity;
-using Company.WebApplication1.Policies;
+using Company.WebApplication1.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +43,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization(options =>
 {
     options.DefaultPolicy = new AuthorizationPolicyBuilder()
-        .AddRequirements(new DenyGuestsAuthorizationsHandler())
+        .RequireAuthenticatedUser()
+        .DenyGuests()
         .Build();
 });
 
