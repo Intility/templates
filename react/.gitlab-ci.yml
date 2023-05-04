@@ -96,7 +96,7 @@ image:dev:
     IMAGE_TAG: dev
     IMAGE_VERSION: $CI_PIPELINE_IID
   script:
-    - echo $NEW_DOCKER_AUTH_CONFIG > /kaniko/.docker/config.json
+    - echo $DOCKER_AUTH_CONFIG > /kaniko/.docker/config.json
     - /kaniko/executor
       --context $CI_PROJECT_DIR
       --dockerfile Dockerfile.CI
