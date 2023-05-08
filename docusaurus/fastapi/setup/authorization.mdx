@@ -154,19 +154,4 @@ Under Properties, enable `User assignment required?` and save.
 
 Then, go to Users and groups, and add user/group. Find users or a fitting group and assign it to the role Default Access.
 
-Alternatively, or in addition, you can do an in-code check by adding a dependency:
-
-```python title="security.py"
-from fastapi import Depends
-from fastapi_azure_auth.exceptions import InvalidAuth
-from fastapi_azure_auth.user import User
-
-async def block_guest_users(user: User = Depends(azure_scheme)) -> None:
-    """
-    Check the claim for the `idp` key - if it exist, deny the user
-    """
-    if 'idp' in user.claims:
-        raise InvalidAuth('Guest user not allowed')
-```
-
-Read more about guest users [here](https://intility.github.io/fastapi-azure-auth/single-tenant/guest_users).
+Read more about guest users [here](https://intility.github.io/fastapi-azure-auth/usage-and-faq/guest_users).
