@@ -62,7 +62,8 @@ app.add_middleware(
     allow_origin_regex=settings.BACKEND_CORS_ORIGINS_REGEX,
     allow_credentials=True,
     allow_methods=['*'],
-    allow_headers=['*'],
+    allow_headers=['X-Request-ID'],
+    expose_headers=['X-Request-ID'],
 )
 {% endif %}
 
