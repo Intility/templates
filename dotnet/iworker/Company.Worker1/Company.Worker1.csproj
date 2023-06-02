@@ -12,7 +12,7 @@
 	<ItemGroup>
 		<PackageReference Include="Azure.Identity" Version="1.8.2" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
-		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.0.1" />
 		<PackageReference Include="Intility.Logging.AspNetCore" Version="1.4.0"/>
 		<PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.4.0"/>
 		<PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.4.0"/>
