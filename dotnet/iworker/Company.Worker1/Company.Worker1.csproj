@@ -15,6 +15,6 @@
 		<PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.0.0" />
 		<PackageReference Include="Intility.Logging.AspNetCore" Version="1.4.0"/>
 		<PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.4.0"/>
-		<PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.4.0"/>
+		<PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.5.0"/>
 	</ItemGroup>
 </Project>
