@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'docusaurus/**'
-      - '.github/workflows/publish-docs.yml'
+      - "docusaurus/**"
+      - ".github/workflows/publish-docs.yml"
 
 jobs:
   gh-release:
@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: "20"
       - name: Build
         run: |
           cd docusaurus
