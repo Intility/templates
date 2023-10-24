@@ -1,4 +1,4 @@
-const About = () => {
+export default function About() {
   return (
     <div className="bf-content bfl-page-padding">
       <h1>About</h1>
@@ -66,6 +66,4 @@ const About = () => {
       </p>
     </div>
   );
-};
-
-export default About;
+}

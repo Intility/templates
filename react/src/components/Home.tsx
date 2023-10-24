@@ -2,7 +2,7 @@ import reactLogo from "~/assets/react.svg";
 import viteLogo from "~/assets/vite.svg";
 import "./Home.css";
 
-const Home = () => {
+export default function Home() {
   return (
     <div className="App">
       <div>
@@ -24,6 +24,4 @@ const Home = () => {
       </p>
     </div>
   );
-};
-
-export default Home;
+}

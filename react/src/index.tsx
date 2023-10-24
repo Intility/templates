@@ -22,7 +22,7 @@ root.render(
     <MsalProvider instance={instance}>
       <RouterProvider router={router} />
     </MsalProvider>
-  </StrictMode>
+  </StrictMode>,
 );
 
 initializeSentry();

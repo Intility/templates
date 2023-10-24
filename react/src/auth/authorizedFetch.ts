@@ -11,15 +11,15 @@ import { instance } from "./instance";
  */
 async function authorizedFetch(
   url: string,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<Response> {
-  let scopes: string[] = [];
+  const scopes: string[] = [];
   if (url?.toLowerCase().startsWith("https://graph.microsoft.com")) {
     scopes.push("User.Read");
   }
 
   if (scopes.length > 0) {
-    let token = await instance.acquireTokenSilent({ scopes });
+    const token = await instance.acquireTokenSilent({ scopes });
 
     init = {
       ...init,
