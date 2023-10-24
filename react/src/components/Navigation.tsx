@@ -6,7 +6,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Navigation = ({ children }: React.PropsWithChildren) => {
+export default function Navigation({ children }: React.PropsWithChildren) {
   const navigate = useNavigate();
   return (
     <Nav
@@ -36,6 +36,4 @@ const Navigation = ({ children }: React.PropsWithChildren) => {
       {children}
     </Nav>
   );
-};
-
-export default Navigation;
+}

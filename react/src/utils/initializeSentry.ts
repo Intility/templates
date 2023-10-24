@@ -26,7 +26,7 @@ function initializeSentry() {
             useLocation,
             useNavigationType,
             createRoutesFromChildren,
-            matchRoutes
+            matchRoutes,
           ),
         }),
       ],

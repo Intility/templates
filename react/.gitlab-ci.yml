@@ -29,7 +29,9 @@ build:
   variables:
     VITE_SENTRY_DSN: $SENTRY_DSN
     VITE_SENTRY_ENVIRONMENT: $CI_ENVIRONMENT_NAME
-    VITE_SENTRY_RELEASE: $CI_PIPELINE_IID
+  environment:
+    name: $ENVIRONMENT_NAME
+    action: prepare
   before_script:
     - npm ci
   script:
@@ -39,26 +41,14 @@ build:
       - dist
     expire_in: 2 weeks
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main" || $CI_COMMIT_TAG'
-      when: never
-    - when: always
-
-build:dev:
-  extends: build
-  environment:
-    name: dev
-    action: prepare
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
-
-build:prod:
-  extends: build:dev
-  variables:
-    VITE_SENTRY_RELEASE: $CI_COMMIT_TAG
-  environment:
-    name: prod
-  rules:
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+      variables:
+        ENVIRONMENT_NAME: dev
+        VITE_SENTRY_RELEASE: $CI_PIPELINE_IID
     - if: "$CI_COMMIT_TAG"
+      variables:
+        ENVIRONMENT_NAME: prod
+        VITE_SENTRY_RELEASE: $CI_COMMIT_TAG
 
 # --- test ---
 test:
@@ -87,14 +77,11 @@ sonarqube:
   needs: []
 
 # --- docker image ---
-image:dev:
+image:create:
   stage: image
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
-  variables:
-    IMAGE_TAG: dev
-    IMAGE_VERSION: $CI_PIPELINE_IID
   script:
     - echo $DOCKER_AUTH_CONFIG > /kaniko/.docker/config.json
     - /kaniko/executor
@@ -103,26 +90,23 @@ image:dev:
       --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
       --destination $CI_REGISTRY_IMAGE:$IMAGE_VERSION
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
-  needs: ["build:dev"]
-
-image:prod:
-  extends: image:dev
-  variables:
-    IMAGE_TAG: latest
-    IMAGE_VERSION: $CI_COMMIT_TAG
-  rules:
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+      variables:
+        IMAGE_TAG: dev
+        IMAGE_VERSION: $CI_PIPELINE_IID
     - if: "$CI_COMMIT_TAG"
-  needs: ["build:prod"]
+      variables:
+        IMAGE_TAG: latest
+        IMAGE_VERSION: $CI_COMMIT_TAG
+  needs:
+    - build
 
 # --- sentry ---
-sentry:dev:
+sentry:
   stage: sentry
   image: getsentry/sentry-cli
   variables:
     GIT_DEPTH: 0
-    SENTRY_ENV: dev
-    VERSION: $CI_PIPELINE_IID
   script:
     - sentry-cli releases new $VERSION
     - sentry-cli releases files $VERSION upload-sourcemaps --url-prefix '~/assets' dist/assets --rewrite
@@ -131,17 +115,16 @@ sentry:dev:
     - sentry-cli releases deploys $VERSION new -e $SENTRY_ENV
   retry: 1
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
-  needs: ["build:dev"]
-
-sentry:prod:
-  extends: sentry:dev
-  variables:
-    SENTRY_ENV: prod
-    VERSION: $CI_COMMIT_TAG
-  rules:
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+      variables:
+        SENTRY_ENV: dev
+        VERSION: $CI_PIPELINE_IID
     - if: "$CI_COMMIT_TAG"
-  needs: ["build:prod"]
+      variables:
+        SENTRY_ENV: prod
+        VERSION: $CI_COMMIT_TAG
+  needs:
+    - build
 
 # --- deployment ---
 deploy:dev:
@@ -170,9 +153,12 @@ deploy:dev:
       --set route=$ROUTE
       --set replicaCount=2
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
-  needs: ["test", "image:dev"]
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+  needs:
+    - test
+    - image:create
 
+# example production deployment job, remove the dot to enable
 .deploy:prod:
   extends: deploy:dev
   variables:
@@ -184,4 +170,3 @@ deploy:dev:
   rules:
     - if: "$CI_COMMIT_TAG"
       when: manual
-  needs: ["test", "image:prod"]

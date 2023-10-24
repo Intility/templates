@@ -6,7 +6,7 @@ import {
 } from "@azure/msal-react";
 import { Button } from "@intility/bifrost-react";
 
-const Profile = () => {
+export default function Profile() {
   const { instance } = useMsal();
   const account = useAccount();
   return (
@@ -21,6 +21,4 @@ const Profile = () => {
       </UnauthenticatedTemplate>
     </div>
   );
-};
-
-export default Profile;
+}
