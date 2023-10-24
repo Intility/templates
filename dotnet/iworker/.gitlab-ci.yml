@@ -48,29 +48,26 @@ analyze:
   image: ghcr.io/nosinovacao/dotnet-sonar:latest
   script:
     - dotnet restore
-    - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin 
+    - dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin
       /k:$SONAR_PROJECT
       /d:sonar.host.url=$SONAR_HOST_URL
       /d:sonar.login=$SONAR_TOKEN
       /d:sonar.cs.opencover.reportsPaths=IntegrationTests/coverage.opencover.xml
       /name:$SONAR_PROJECT
-    - dotnet build 
+    - dotnet build
     - dotnet /sonar-scanner/SonarScanner.MSBuild.dll end
-        /d:sonar.login=$SONAR_TOKEN
+      /d:sonar.login=$SONAR_TOKEN
   allow_failure: true
   retry: 2
   needs: []
 
-image:dev:
+image:create:
   stage: image
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
-  variables:
-    IMAGE_TAG: dev
-    IMAGE_VERSION: $CI_PIPELINE_IID
   environment:
-    name: Development
+    name: $ENVIRONMENT_NAME
     action: prepare
   script:
     - echo $DOCKER_AUTH_CONFIG > /kaniko/.docker/config.json
@@ -80,18 +77,18 @@ image:dev:
       --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
       --destination $CI_REGISTRY_IMAGE:$IMAGE_VERSION
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
-  needs: [ "build" ]
-
-image:prod:
-  extends: image:dev
-  variables:
-    IMAGE_TAG: latest
-    IMAGE_VERSION: $CI_COMMIT_TAG
-  environment:
-    name: Production
-  rules:
-    - if: '$CI_COMMIT_TAG'
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+      variables:
+        ENVIRONMENT_NAME: Development
+        IMAGE_TAG: dev
+        IMAGE_VERSION: $CI_PIPELINE_IID
+    - if: "$CI_COMMIT_TAG"
+      variables:
+        ENVIRONMENT_NAME: Production
+        IMAGE_TAG: latest
+        IMAGE_VERSION: $CI_COMMIT_TAG
+  needs:
+    - build
 
 # --- deployment ---
 deploy:dev:
@@ -123,9 +120,12 @@ deploy:dev:
       --set secrets.Sentry__Dsn=$SENTRY_DSN
       --set config.DOTNET_ENVIRONMENT=$CI_ENVIRONMENT_NAME
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"'
-  needs: [ "test", "image:dev" ]
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+  needs:
+    - test
+    - image:create
 
+# example production deployment job, remove the dot to enable
 .deploy:prod:
   extends: deploy:dev
   variables:
@@ -133,6 +133,5 @@ deploy:dev:
   environment:
     name: Production
   rules:
-    - if: '$CI_COMMIT_TAG'
+    - if: "$CI_COMMIT_TAG"
       when: manual
-  needs: [ "test", "image:prod" ]
