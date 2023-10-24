@@ -12,14 +12,14 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Identity.Web" Version="2.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
+    <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="2.15.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Intility.Logging.AspNetCore" Version="1.4.0" />
-    <PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.4.0" />
-    <PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.4.0" />
+    <PackageReference Include="Intility.Logging.AspNetCore" Version="1.5.0" />
+    <PackageReference Include="Intility.Extensions.Logging.Elasticsearch" Version="1.5.0" />
+    <PackageReference Include="Intility.Extensions.Logging.Sentry" Version="1.5.0" />
   </ItemGroup>
 </Project>
