@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Company.WebApplication1.Controllers.V1;
 
