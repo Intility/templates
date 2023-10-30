@@ -28,7 +28,8 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         logging.UseDefaultEnrichers()
             .UseElasticsearch()
-            .UseSentry();
+            .UseSentry()
+            .UseDynatrace();
     })
     .ConfigureServices(services =>
     {

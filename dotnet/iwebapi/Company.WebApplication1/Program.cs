@@ -33,7 +33,8 @@ builder.Host.UseIntilityLogging((ctx, logging) =>
 {
     logging.UseDefaultEnrichers()
         .UseElasticsearch()
-        .UseSentry();
+        .UseSentry()
+        .UseDynatrace();
 });
 
 // Add services to the container.
