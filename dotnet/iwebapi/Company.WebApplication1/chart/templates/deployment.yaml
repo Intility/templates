@@ -37,6 +37,13 @@ spec:
             httpGet:
               path: /health
               port: http
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            failureThreshold: 30
+            initialDelaySeconds: 2
+            timeoutSeconds: 4
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
