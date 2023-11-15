@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
 
 # if you use databases, these lines need to be uncommented
 # RUN apk add --no-cache icu-libs
@@ -11,5 +11,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
 WORKDIR /app
 COPY build .
 
+USER app
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "Company.WebApplication1.dll"]
