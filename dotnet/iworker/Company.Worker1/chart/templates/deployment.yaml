@@ -31,9 +31,6 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          env:
-            - name: ASPNETCORE_URLS
-              value: 'http://*:8080'
           envFrom:
             - configMapRef:
                 name: {{ include "chart.fullname" . }}
