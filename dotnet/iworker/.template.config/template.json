@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Intility",
-  "classifications": [ "Intility", "Worker", "Web" ],
+  "classifications": ["Intility", "Worker", "Web"],
   "name": "Intility Worker",
   "description": "A solution template for creating Intility Worker Services.",
   "identity": "Intility.Templates.WorkerSolution.CSharp",
@@ -22,7 +22,7 @@
       "modifiers": [
         {
           "condition": "(windir == 'C:\\Windows')",
-          "exclude": [ "Company.Worker1/Properties/launchSettings.json" ]
+          "exclude": ["Company.Worker1/Properties/launchSettings.json"]
         },
         {
           "condition": "(HostIdentifier != 'dotnetcli' && !projectOnly)",
@@ -32,18 +32,18 @@
         },
         {
           "condition": "(projectOnly)",
-          "exclude": [ "Company.Worker1.sln", ".gitignore" ],
+          "exclude": ["Company.Worker1.sln", ".gitignore"],
           "rename": {
             "Company.Worker1/": "./"
           }
         },
         {
           "condition": "(cronJob)",
-          "exclude": [ "Company.Worker1/chart/templates/deployment.yaml" ]
+          "exclude": ["Company.Worker1/chart/templates/deployment.yaml"]
         },
         {
           "condition": "(!cronJob)",
-          "exclude": [ "Company.Worker1/chart/templates/cronjob.yaml" ]
+          "exclude": ["Company.Worker1/chart/templates/cronjob.yaml"]
         }
       ]
     }
@@ -55,12 +55,12 @@
       "datatype": "choice",
       "choices": [
         {
-          "choice": "net7.0",
-          "description": "Target .NET 7"
+          "choice": "net8.0",
+          "description": "Target .NET 8"
         }
       ],
-      "replaces": "net7.0",
-      "defaultValue": "net7.0"
+      "replaces": "net8.0",
+      "defaultValue": "net8.0"
     },
     "skipRestore": {
       "type": "parameter",
