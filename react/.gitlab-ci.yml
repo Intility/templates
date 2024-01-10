@@ -4,7 +4,6 @@ variables:
   SENTRY_PROJECT: $CI_PROJECT_NAME
   OPENSHIFT_SERVER: api.openshift.intility.com:6443
   # Configure these variables in Secure Variables:
-  # SONAR_TOKEN: my.sonarqube.token
   # SENTRY_DSN: my.sentry.dsn
   # SENTRY_AUTH_TOKEN: my.sentry.token
   # OPENSHIFT_TOKEN: my.openshift.token
