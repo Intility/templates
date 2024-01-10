@@ -86,10 +86,6 @@ module.exports = {
               href: 'https://gitlab.intility.com/',
             },
             {
-              label: 'SonarQube',
-              href: 'https://sonarqube.intility.no/',
-            },
-            {
               label: 'Sentry',
               href: 'https://sentry.intility.no/',
             },

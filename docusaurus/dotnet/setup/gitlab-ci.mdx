@@ -24,11 +24,6 @@ Builds the project, and creates a build artifact for later stages to use.
 Runs the tests in the project.
 Runs parallel with `build`.
 
-### `analyze`
-
-Analyzes the project with sonar-scanner.
-Runs parallel with `build`.
-
 ### `image`
 
 Uses the artifact from the `build` step, and creates and publish a docker image with the `Dockerfile.CI` file using kaniko.
