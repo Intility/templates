@@ -15,12 +15,13 @@
   "dependencies": {
     "@azure/msal-browser": "^3.3.0",
     "@azure/msal-react": "^2.0.5",
-    "@intility/bifrost-react": "^3.12.0",
+    "@intility/bifrost-react": "^4.3.0",
     "@sentry/react": "^7.75.0",
     "@sentry/tracing": "^7.75.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.17.0"
+    "react-router-dom": "^6.17.0",
+    "use-local-storage-state": "^19.2.0"
   },
   "devDependencies": {
     "@intility/helm-version": "^1.3.1",
