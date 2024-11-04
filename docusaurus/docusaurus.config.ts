@@ -1,4 +1,10 @@
-module.exports = {
+import type { Config } from '@docusaurus/types';
+import type * as Preset from '@docusaurus/preset-classic';
+
+const config: Config = {
+  future: {
+    experimental_faster: true,
+  },
   title: 'Create Intility App',
   tagline: 'Easy to use templates for Intility developers',
   url: 'https://create.intility.app/',
@@ -102,13 +108,13 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Intility AS. Built with Docusaurus.`,
     },
-  },
+  } satisfies Preset.ThemeConfig,
   presets: [
     [
       '@docusaurus/preset-classic',
       {
         docs: {
-          sidebarPath: require.resolve('./sidebarsReact.js'),
+          sidebarPath: undefined,
           id: 'react',
           path: 'react',
           routeBasePath: 'react',
@@ -119,7 +125,7 @@ module.exports = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-      },
+      } satisfies Preset.Options,
     ],
   ],
   plugins: [
@@ -130,7 +136,7 @@ module.exports = {
         id: 'dotnet',
         path: 'dotnet',
         routeBasePath: 'dotnet',
-        sidebarPath: require.resolve('./sidebarsDotnet.js'),
+        sidebarPath: undefined,
         editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
         sidebarCollapsible: false,
 
@@ -166,7 +172,7 @@ module.exports = {
         id: 'fastapi',
         path: 'fastapi',
         routeBasePath: 'fastapi',
-        sidebarPath: require.resolve('./sidebarsFastapi.js'),
+        sidebarPath: undefined,
         editUrl: 'https://github.com/Intility/templates/tree/main/docusaurus',
         sidebarCollapsible: false,
         // ... other options
@@ -174,3 +180,5 @@ module.exports = {
     ],
   ],
 };
+
+export default config;
