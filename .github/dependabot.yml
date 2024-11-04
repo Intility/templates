@@ -10,6 +10,13 @@ updates:
       timezone: "Europe/Oslo"
     commit-message:
       prefix: "ci:"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: "npm"
     directory: "/react"
@@ -19,6 +26,13 @@ updates:
       timezone: "Europe/Oslo"
     commit-message:
       prefix: "build(react):"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: "npm"
     directory: "/docusaurus"
@@ -28,6 +42,13 @@ updates:
       timezone: "Europe/Oslo"
     commit-message:
       prefix: "build(docs):"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: "nuget"
     directory: "/dotnet/iwebapi/Company.WebApplication1"
@@ -38,6 +59,13 @@ updates:
     commit-message:
       # considered fix because it affects the template itself, not the template package
       prefix: "fix(dotnet):"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: "nuget"
     directory: "/dotnet/iworker/Company.Worker1"
@@ -48,3 +76,10 @@ updates:
     commit-message:
       # considered fix because it affects the template itself, not the template package
       prefix: "fix(dotnet):"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
