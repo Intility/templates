@@ -16,7 +16,7 @@
     "@azure/msal-browser": "^3.3.0",
     "@azure/msal-react": "^2.0.5",
     "@intility/bifrost-react": "^4.3.0",
-    "@sentry/react": "^7.75.0",
+    "@sentry/react": "^8.36.0",
     "@sentry/tracing": "^7.75.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
